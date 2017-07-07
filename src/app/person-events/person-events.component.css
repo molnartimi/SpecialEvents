@@ -1,0 +1,22 @@
+.well {
+  width: 70%;
+}
+
+label, .settedDate{
+  font-size: 18px;
+  display: inline;
+}
+
+.settedDate {
+  width: inherit;
+}
+
+.settedName {
+  margin: 1em 2em 1.2em;
+  font-size: 25px;
+}
+
+input {
+  width: 50%;
+}
+

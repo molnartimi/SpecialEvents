@@ -1,0 +1,16 @@
+<h2>Person list</h2>
+<div class="list-group">
+  <button class="list-group-item" *ngFor="let p of personList" (click)="onSelect(p)">
+    <table>
+      <tr>
+        <td>{{p.name}}</td>
+        <td class="tdRight">
+          <button class="btn">
+            Hints
+            <img src="assets/icons/gift.png" title="Hints for gift" height="20">
+          </button>
+        </td>
+      </tr>
+    </table>
+  </button>
+</div>

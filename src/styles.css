@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+h2 {
+  margin: 1em 2em 1.2em;
+}
+
+* {
+  font-family : "Candara";
+}
+
+label {
+  font-weight: bold;
+  font-size: larger;
+}

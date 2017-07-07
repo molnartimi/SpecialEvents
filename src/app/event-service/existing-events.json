@@ -1,0 +1,7 @@
+[
+  {"name": "Anya", "eventType": "birthday", "month" : "12", "day" : "20"},
+  {"name": "Apa", "eventType": "birthday", "month" : "1", "day" : "30"},
+  {"name": "Tomi", "eventType": "birthday", "month" : "12", "day" : "12"},
+  {"name": "Kriszti", "eventType": "nameday", "month" : "8", "day" : "5"},
+  {"name": "Lini", "eventType": "birthday", "month" : "3", "day" : "7"}
+]

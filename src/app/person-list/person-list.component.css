@@ -1,0 +1,15 @@
+.list-group-item{
+  left: 10%;
+  margin-top: 1em;
+  border-radius: 5pt;
+  font-size: 16pt;
+  font-weight: bold;
+  width: 300pt;
+  background-color: #efefef;
+}
+
+.tdRight {
+  position: absolute;
+  right: 2%;
+  bottom: 15%;
+}
