@@ -3,13 +3,15 @@ import {SpecEvent} from "./spec-event.";
  * Created by NB-72 on 2017. 07. 06..
  */
 export class Person {
+  name: string;
   events: SpecEvent[] = [];
-  presents: string[] = [];
 
   constructor(
-    public name: string,
-    public event?: SpecEvent,
+    name: string,
+    event?: SpecEvent
   ) {
+    this.name = name;
     this.events.push(event);
   }
+
 }

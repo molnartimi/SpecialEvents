@@ -4,7 +4,6 @@
 
 import { Component } from '@angular/core';
 import { SpecEvent } from '../common/spec-event.';
-import {EventService} from "../event-service/event.service";
 import {Router} from "@angular/router";
 import {EventListComponent} from "../event-list/event-list.component";
 import {PersonService} from "../person-service/person.service";
@@ -15,21 +14,20 @@ import {PersonService} from "../person-service/person.service";
 })
 export class NewEventComponent{
   eventTypeList = ['birthday', 'nameday', 'anniversary'];
-  model = new SpecEvent('', null, null , null);
+  event = new SpecEvent(null,null,null);
+  name = '';
   name2 = '';
 
   constructor(
-    private eventService: EventService,
     private personService: PersonService,
     private router: Router
   ) {}
 
   saveEvent(): void {
-    if(this.model.eventType === 'anniversary')
-      this.model.name += '-' + this.name2;
+    if(this.event.eventType === 'anniversary')
+      this.name += '-' + this.name2;
 
-    this.personService.addByEvent(this.model);
-    this.eventService.addEvent(this.model);
+    this.personService.addNewEvent(this.name,this.event);
     EventListComponent.newEventsaved();
     this.router.navigate(['/events']);
   };

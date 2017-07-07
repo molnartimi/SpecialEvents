@@ -10,7 +10,6 @@ import {PersonListComponent} from "./person-list.component";
 import {PersonEventsComponent} from "../person-events/person-events.component";
 
 import {PersonService} from "../person-service/person.service";
-import {EventService} from "../event-service/event.service";
 import {PersonsRoutingModule} from "./persons-routing.module";
 
 @NgModule({
@@ -24,8 +23,7 @@ import {PersonsRoutingModule} from "./persons-routing.module";
     PersonEventsComponent
   ],
   providers: [
-    PersonService,
-    EventService
+    PersonService
   ]
 })
 export class PersonsModule {}

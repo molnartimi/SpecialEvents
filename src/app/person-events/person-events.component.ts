@@ -3,7 +3,7 @@
  */
 
 import {Component, OnInit} from "@angular/core";
-import {Person} from "../common/Person";
+import {Person} from "../common/person";
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import {PersonService} from "../person-service/person.service";

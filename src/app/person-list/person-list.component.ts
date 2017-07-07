@@ -4,7 +4,7 @@
 
 import {Component, OnInit} from "@angular/core";
 import {PersonService} from "../person-service/person.service";
-import {Person} from "../common/Person";
+import {Person} from "../common/person";
 import {Router} from "@angular/router";
 @Component({
   templateUrl: 'person-list.component.html',

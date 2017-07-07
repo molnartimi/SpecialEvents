@@ -15,7 +15,7 @@ th {
 }
 
 #snackbar {
-  visibility: hidden;
+  display: none;
   font-size: larger;
   background-color: #333;
   color: #fff;
@@ -23,11 +23,11 @@ th {
   padding: 16px;
   position: fixed;
   left: 50%;
-  margin-left: -138px;
+  margin-left: -140px;
   z-index: 1;
   opacity: .8;
 }
 
 #snackbar.show {
-  visibility: visible;
+  display: inherit;
 }
