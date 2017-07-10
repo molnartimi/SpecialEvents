@@ -27,8 +27,9 @@ export class NewEventComponent{
     if(this.event.eventType === 'anniversary')
       this.name += '-' + this.name2;
 
-    this.personService.addNewEvent(this.name,this.event);
-    EventListComponent.newEventsaved();
-    this.router.navigate(['/events']);
-  } 
+    if(this.personService.addNewEvent(this.name,this.event)) {
+      EventListComponent.newEventsaved();
+      this.router.navigate(['/events']);
+    }
+  }
 }
