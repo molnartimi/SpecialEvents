@@ -14,7 +14,7 @@ import {PersonService} from "../person-service/person.service";
 })
 export class PersonEventsComponent implements OnInit{
   person: Person;
-  settingMode: boolean = false;
+  settingMode: boolean
 
   constructor(
     private route: ActivatedRoute,
@@ -29,5 +29,11 @@ export class PersonEventsComponent implements OnInit{
 
     let name = this.route.snapshot.paramMap.get('name');
     this.person = this.personService.getPerson(name);
+  }
+
+  deleteEvent(eventType: string): void {
+    this.personService.deleteEvent(this.person.name,eventType);
+    if(!this.person.events.length)
+      this.router.navigate(['events']);
   }
 }

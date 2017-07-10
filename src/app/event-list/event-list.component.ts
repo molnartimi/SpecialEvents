@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core'
 import { PersonService } from "../person-service/person.service";
 import { EventItem } from "./event-item";
 import { SortingFilterEnum } from "../common/sorting-filter-enum";
+import {Router} from "@angular/router";
 
 @Component ({
   templateUrl: 'event-list.component.html',
@@ -16,7 +17,10 @@ export class EventListComponent implements OnInit{
   static saved: boolean = false;
   orderBy: SortingFilterEnum = 1;
 
-  constructor(private personService: PersonService) {}
+  constructor(
+    private personService: PersonService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.eventList = this.personService.getEvents();
@@ -56,6 +60,10 @@ export class EventListComponent implements OnInit{
   deleteEvent(event: EventItem): void {
     this.personService.deleteEvent(event.name, event.eventType);
     this.update();
+  }
+
+  onSelect(event: EventItem): void {
+    this.router.navigate(['person', event.name])
   }
 
   orderDateAfterName(e1: EventItem, e2: EventItem): number {

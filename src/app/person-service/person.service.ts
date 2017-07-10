@@ -57,6 +57,10 @@ export class PersonService {
       this.personList.splice(this.personList.indexOf(person),1);
   }
 
+  deletePerson(person: Person){
+    this.personList.splice(this.personList.indexOf(person),1);
+  }
+
   order(): void{
     this.personList = this.personList.sort((p1,p2) => {
       if (p1.name.toLowerCase() < p2.name.toLowerCase())

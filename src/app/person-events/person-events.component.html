@@ -1,22 +1,29 @@
 <h2 *ngIf="!settingMode">{{person.name}}</h2>
 <input class="settedName" *ngIf="settingMode" [(ngModel)]="person.name">
 <div class="container">
-  <div class="row well" *ngFor="let e of person.events, let i=index">
+  <div class="row well" *ngFor="let e of person.events">
     <div class="col-md-5 col-sm-5">
-      <label *ngIf="!settingMode">{{person.events[i].month | number:'2.0'}}.{{person.events[i].day | number:'2.0'}}.</label>
+      <label *ngIf="!settingMode">{{e.month | number:'2.0'}}.{{e.day | number:'2.0'}}.</label>
       <div *ngIf="settingMode">
-        <input class="settedDate" type="number" min="1" max="12"  [(ngModel)]="person.events[i].month">.
-        <input class="settedDate" type="number" min="1" max="31" [(ngModel)]="person.events[i].day">.
+        <input class="settedDate" type="number" min="1" max="12"  [(ngModel)]="e.month">.
+        <input class="settedDate" type="number" min="1" max="31" [(ngModel)]="e.day">.
       </div>
 
     </div>
-    <div class="col-md-5 col-sm-5">
-      <img *ngIf="person.events[i].eventType==='birthday'" src="assets/icons/birth.png" height="40" title="birthday">
-      <img *ngIf="person.events[i].eventType==='nameday'" src="assets/icons/name.png" height="40" title="nameday">
-      <img *ngIf="person.events[i].eventType==='anniversary'" src="assets/icons/anni.png" height="40" title="anniversary">
+    <div class="col-md-5 col-sm-5" *ngIf="!settingMode" [ngSwitch]="e.eventType">
+      <img *ngSwitchCase="'birthday'" src="assets/icons/birth.png" height="40" title="birthday">
+      <img *ngSwitchCase="'nameday'" src="assets/icons/name.png" height="40" title="nameday">
+      <img *ngSwitchCase="'anniversary'" src="assets/icons/anni.png" height="40" title="anniversary">
+    </div>
+    <div class="col-md-5 col-sm-5" *ngIf="settingMode">
+      <select class="form-control" [(ngModel)]="e.eventType" id="type" name="type">
+        <option value='birthday'>birthday</option>
+        <option value='nameday'>nameday</option>
+        <option value='anniversary'>anniversary</option>
+      </select>
     </div>
     <div class="con-md-2 col-sm-2">
-      <button class="btn">
+      <button class="btn" (click)="deleteEvent(e.eventType)">
         <img src="assets/icons/del.png" title="Delete event" height="20">
       </button>
     </div>

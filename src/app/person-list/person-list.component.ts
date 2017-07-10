@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 })
 export class PersonListComponent implements OnInit{
   personList: Person[];
+  private deleted: boolean = false;
 
   constructor(
     private personService: PersonService,
@@ -23,6 +24,14 @@ export class PersonListComponent implements OnInit{
   }
 
   onSelect(p): void{
-    this.router.navigate(['person', p.name])
+    if(!this.deleted)
+      this.router.navigate(['person', p.name]);
+    else
+      this.deleted = false;
+  }
+
+  deletePerson(person: Person){
+    this.deleted = true;
+    this.personService.deletePerson(person);
   }
 }
