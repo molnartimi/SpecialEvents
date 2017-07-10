@@ -39,26 +39,51 @@ export class PersonService {
     return events;
   }
 
-  addNewEvent(name: string, event: SpecEvent): void{
+  addNewEvent(name: string, event: SpecEvent): boolean{
     let person = this.personList.find(p => p.name === name);
-    if( !person )
-      this.personList.push(new Person(name,event));
-    else
-      person.events.push(event);
+    if( !person ) {
+      this.personList.push(new Person(name, event));
+      return true;
+    }
+    else {
+      let eventTemp = person.events.find(e => e.eventType === event.eventType);
+      if(eventTemp){
+        alert(name + "'s " + event.eventType + " is already in the list: " +
+                eventTemp.month + "." + eventTemp.day + ".");
+        return false;
+      }
+      else {
+        let text = "There is already a person with name " + name + " in the list, this is the same person?\n";
+        for(let e of person.events)
+          text += e.month.toString() + "." + e.day.toString() + ". - " + e.eventType + "\n";
+        let c = confirm(text);
+        if(c) {
+          person.events.push(event);
+          return true;
+        }
+        return false;
+      }
+    }
   }
 
   deleteEvent(name: string, eventType: string): void {
-    let person = this.personList.find(p => p.name === name);
-    let event = person.events.find(e => e.eventType === eventType);
-    let index = person.events.indexOf(event,0);
-    person.events.splice(index,1);
+    let c = confirm("Are you sure you want to delete " + name + "'s " + eventType + "?");
+    if (c) {
+      let person = this.personList.find(p => p.name === name);
+      let event = person.events.find(e => e.eventType === eventType);
+      let index = person.events.indexOf(event, 0);
+      person.events.splice(index, 1);
 
-    if(!person.events.length)
-      this.personList.splice(this.personList.indexOf(person),1);
+      if (!person.events.length)
+        this.personList.splice(this.personList.indexOf(person), 1);
+    }
   }
 
   deletePerson(person: Person){
-    this.personList.splice(this.personList.indexOf(person),1);
+    let c = confirm("Are you sure you want to delete " + person.name + " from the list?");
+    if (c) {
+      this.personList.splice(this.personList.indexOf(person), 1);
+    }
   }
 
   order(): void{

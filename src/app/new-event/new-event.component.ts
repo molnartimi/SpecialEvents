@@ -31,4 +31,9 @@ export class NewEventComponent{
     EventListComponent.newEventsaved();
     this.router.navigate(['/events']);
   };
+    if(this.personService.addNewEvent(this.name,this.event)){
+      EventListComponent.newEventsaved();
+      this.router.navigate(['/events']);
+    }
+  }
 }
