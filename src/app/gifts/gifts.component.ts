@@ -5,9 +5,10 @@
 import {Component, OnInit} from "@angular/core";
 import {Person} from "../common/person";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PersonService} from "../person-service/person.service";
-import {Gift, GiftsService} from "../gifts-service/gifts.service";
+import {PersonService} from "../services/person.service";
+import {Gift, GiftsService} from "../services/gifts.service";
 import {Location} from "@angular/common";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   templateUrl: 'gifts.component.html',
@@ -16,6 +17,7 @@ import {Location} from "@angular/common";
 export class GiftsComponent implements OnInit{
   name: string;
   logged: boolean = false;
+  rightpwd: boolean = false;
   wrongpwd: boolean = false;
   pwd: string;
   gifts: Gift[] = [{gift: "alma", done: true}];
@@ -24,6 +26,7 @@ export class GiftsComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private giftsService: GiftsService,
+    private authService: AuthService,
     private location: Location
   ) {}
 
@@ -31,6 +34,7 @@ export class GiftsComponent implements OnInit{
     this.name = this.route.snapshot.paramMap.get('name');
 
     this.gifts = this.giftsService.getGifts(this.name);
+    this.logged = this.authService.isLogged();
   }
 
   saveNewGift(): void{
@@ -53,9 +57,8 @@ export class GiftsComponent implements OnInit{
   }
 
   login() {
-    if ((this.gifts === null && this.giftsService.checkAdminPasswd(this.pwd)) ||
-    (this.gifts !== null && this.giftsService.checkPasswd(this.name, this.pwd)))
-      this.logged = true;
+    if (this.gifts !== null && this.giftsService.checkPasswd(this.name, this.pwd))
+      this.rightpwd = true;
     else
       this.wrongpwd = true;
   }

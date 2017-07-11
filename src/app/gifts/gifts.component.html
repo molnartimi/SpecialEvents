@@ -3,19 +3,24 @@
   Back
 </button>
 <h2>Hints of gifts for {{name}}</h2>
-<div class="container well" *ngIf="!logged">
-  <h3 *ngIf="gifts !== null">Password is needed to access to this list</h3>
-  <h3 *ngIf="gifts === null">Admin password is needed to create new list</h3>
+<div class="container well" *ngIf="gifts !== null && !rightpwd">
+  <h3>Password is needed to access to this list</h3>
   <label>Password: </label>
-  <input type="text" [(ngModel)]="pwd">
-  <button class="btn" (click)="login()">Login</button>
-  <div [hidden]="!wrongpwd" class="alert alert-danger">
+  <input type="password" [(ngModel)]="pwd">
+  <label [hidden]="!wrongpwd" class="alert-danger">
     Wrong password!
+  </label>
+  <div>
+    <button class="btn" (click)="login()">Login</button>
   </div>
+</div>
+<div class="container well" *ngIf="!logged && gifts === null">
+  <h3>You have to be logged in as an ADMIN to create new list!</h3>
 </div>
 
 
-<div class="container" *ngIf="logged">
+
+<div class="container" *ngIf="rightpwd">
   <table class="well">
       <label *ngIf="gifts==null">No elements...</label>
       <tr class="row" *ngFor="let g of gifts, let i=index">

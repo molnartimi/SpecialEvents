@@ -6,6 +6,7 @@ import {Injectable} from "@angular/core";
 import {Person} from "../common/person";
 import {SpecEvent} from "../common/spec-event.";
 import {EventItem} from "../event-list/event-item";
+import {AuthService} from "./auth.service";
 
 @Injectable()
 export class PersonService {
@@ -18,6 +19,8 @@ export class PersonService {
     {id: 6, name: "Lini", events: [{eventType: 'birthday', month: 3, day: 7}]},
     {id: 7, name: "Kriszti", events: [{eventType: 'birthday', month: 10, day: 27}, {eventType: 'nameday', month: 8, day: 5}]}
   ];
+
+  constructor(private authService: AuthService) {}
 
   getPersons(): Person[] {
     this.order();
@@ -66,22 +69,32 @@ export class PersonService {
   }
 
   deleteEvent(name: string, eventType: string): void {
-    let c = confirm("Are you sure you want to delete " + name + "'s " + eventType + "?");
-    if (c) {
-      let person = this.personList.find(p => p.name === name);
-      let event = person.events.find(e => e.eventType === eventType);
-      let index = person.events.indexOf(event, 0);
-      person.events.splice(index, 1);
+    if(this.authService.isLogged()){
+      let c = confirm("Are you sure you want to delete " + name + "'s " + eventType + "?");
+      if (c) {
+        let person = this.personList.find(p => p.name === name);
+        let event = person.events.find(e => e.eventType === eventType);
+        let index = person.events.indexOf(event, 0);
+        person.events.splice(index, 1);
 
-      if (!person.events.length)
-        this.personList.splice(this.personList.indexOf(person), 1);
+        if (!person.events.length)
+          this.personList.splice(this.personList.indexOf(person), 1);
+      }
+    }
+    else {
+      alert("You have to be logged in as an ADMIN to delete event!");
     }
   }
 
   deletePerson(person: Person){
-    let c = confirm("Are you sure you want to delete " + person.name + " from the list?");
-    if (c) {
-      this.personList.splice(this.personList.indexOf(person), 1);
+    if(this.authService.isLogged()){
+      let c = confirm("Are you sure you want to delete " + person.name + " from the list?");
+      if (c) {
+        this.personList.splice(this.personList.indexOf(person), 1);
+      }
+    }
+    else {
+      alert("You have to be logged in as an ADMIN to delete person!")
     }
   }
 

@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 import { SpecEvent } from '../common/spec-event.';
 import {Router} from "@angular/router";
 import {EventListComponent} from "../event-list/event-list.component";
-import {PersonService} from "../person-service/person.service";
+import {PersonService} from "../services/person.service";
 
 @Component({
   templateUrl: 'new-event.component.html',

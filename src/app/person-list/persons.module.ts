@@ -9,7 +9,7 @@ import {FormsModule} from "@angular/forms";
 import {PersonListComponent} from "./person-list.component";
 import {PersonEventsComponent} from "../person-events/person-events.component";
 
-import {PersonService} from "../person-service/person.service";
+import {PersonService} from "../services/person.service";
 import {PersonsRoutingModule} from "./persons-routing.module";
 import {GiftsComponent} from "../gifts/gifts.component";
 

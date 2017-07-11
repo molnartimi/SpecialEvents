@@ -3,10 +3,11 @@
  */
 
 import { Component, OnInit } from '@angular/core'
-import { PersonService } from "../person-service/person.service";
+import { PersonService } from "../services/person.service";
 import { EventItem } from "./event-item";
 import { SortingFilterEnum } from "../common/sorting-filter-enum";
 import {Router} from "@angular/router";
+import {AuthService} from "../services/auth.service";
 
 @Component ({
   templateUrl: 'event-list.component.html',
@@ -19,6 +20,7 @@ export class EventListComponent implements OnInit{
 
   constructor(
     private personService: PersonService,
+    private authService: AuthService,
     private router: Router
   ) {}
 

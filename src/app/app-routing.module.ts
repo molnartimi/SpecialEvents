@@ -6,18 +6,19 @@ import { RouterModule }  from '@angular/router';
 
 import { NewEventComponent } from "./new-event/new-event.component";
 import { EventListComponent } from "./event-list/event-list.component";
+import { SettingComponent } from "./setting/setting.component";
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
-        {path: 'events', component: EventListComponent},
-        {path: 'new-event', component: NewEventComponent},
-        {
-          path: '',
-          redirectTo: '/events',
-          pathMatch: 'full'
-        }
-      ]
+      {path: 'events', component: EventListComponent},
+      {path: 'new-event', component: NewEventComponent},
+      {path: 'settings', component: SettingComponent},
+      {
+        path: '',
+        redirectTo: '/events',
+        pathMatch: 'full'
+      }]
     )
   ],
   exports: [

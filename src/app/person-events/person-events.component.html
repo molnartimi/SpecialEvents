@@ -1,4 +1,4 @@
-<div *ngIf="!settingMode">
+<div *ngIf="!isSettingMode()">
   <button class="btn backbtn" (click)="goBack()">
     <img src="assets/icons/back.png" title="Go back" height="20">
     Back
@@ -24,13 +24,13 @@
       Hints
       <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
     </button>
-    <button class="btn" (click)="settingMode=!settingMode">
+    <button class="btn" (click)="onSettingMode()">
       <img src="assets/icons/setting.png" title="Setting event" height="20">
     </button>
   </div>
 </div>
 
-<form *ngIf="settingMode" #setting="ngForm" (submit)="settingMode=false">
+<form *ngIf="isSettingMode() && logged" #setting="ngForm" (submit)="save()">
   <button class="btn backbtn" (click)="goBack()">
     <img src="assets/icons/back.png" title="Go back" height="20">
     Back

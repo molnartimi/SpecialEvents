@@ -1,0 +1,31 @@
+<h2>Settings</h2>
+<div class="container well">
+  <div class="row">
+    <div class="col-2-md">
+      <label>Password: </label>
+    </div>
+    <div class="col-3-md">
+      <input type="password" name="old" [(ngModel)]="old">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2-md">
+      <label>New password: </label>
+    </div>
+    <div class="col-3-md">
+      <input type="password" name="new1" [(ngModel)]="new1">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2-md">
+      <label>New password again: </label>
+    </div>
+    <div class="col-3-md">
+      <input type="password" name="new2" [(ngModel)]="new2">
+    </div>
+  </div>
+  <div [hidden]="!wrong" class="alert alert-danger">
+    Wrong old password OR the new passwords are different
+  </div>
+  <button class="btn" (click)="save()">Save</button>
+</div>

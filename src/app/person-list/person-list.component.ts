@@ -3,7 +3,7 @@
  */
 
 import {Component, OnInit} from "@angular/core";
-import {PersonService} from "../person-service/person.service";
+import {PersonService} from "../services/person.service";
 import {Person} from "../common/person";
 import {Router} from "@angular/router";
 @Component({

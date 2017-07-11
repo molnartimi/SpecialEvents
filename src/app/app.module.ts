@@ -6,16 +6,19 @@ import { AppRoutingModule } from './app-routing.module'
 import {FormBuilder, FormsModule} from "@angular/forms";
 import { NewEventComponent } from "./new-event/new-event.component";
 import { EventListComponent } from "./event-list/event-list.component";
-import { PersonService } from "./person-service/person.service";
+import { PersonService } from "./services/person.service";
+import { AuthService } from "./services/auth.service";
 import { PersonsModule } from "./person-list/persons.module";
-import {GiftsService} from "./gifts-service/gifts.service";
+import {GiftsService} from "./services/gifts.service";
+import {SettingComponent} from "./setting/setting.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     EventListComponent,
-    NewEventComponent
+    NewEventComponent,
+    SettingComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +29,7 @@ import {GiftsService} from "./gifts-service/gifts.service";
   providers: [
     PersonService,
     GiftsService,
+    AuthService,
     FormBuilder
   ],
   bootstrap: [AppComponent]
