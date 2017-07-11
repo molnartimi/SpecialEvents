@@ -62,8 +62,12 @@ export class EventListComponent implements OnInit{
     this.update();
   }
 
-  onSelect(event: EventItem): void {
+  goToEvent(event: EventItem): void {
     this.router.navigate(['person', event.name])
+  }
+
+  goToHints(event: EventItem): void {
+    this.router.navigate(['person', event.name, 'gifts']);
   }
 
   orderDateAfterName(e1: EventItem, e2: EventItem): number {

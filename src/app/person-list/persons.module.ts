@@ -11,6 +11,7 @@ import {PersonEventsComponent} from "../person-events/person-events.component";
 
 import {PersonService} from "../person-service/person.service";
 import {PersonsRoutingModule} from "./persons-routing.module";
+import {GiftsComponent} from "../gifts/gifts.component";
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import {PersonsRoutingModule} from "./persons-routing.module";
   ],
   declarations: [
     PersonListComponent,
-    PersonEventsComponent
+    PersonEventsComponent,
+    GiftsComponent
   ],
   providers: [
     PersonService

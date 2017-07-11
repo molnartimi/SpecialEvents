@@ -30,6 +30,10 @@ export class PersonListComponent implements OnInit{
       this.deleted = false;
   }
 
+  goToHints(person: Person): void {
+    this.router.navigate(['person', person.name, 'gifts']);
+  }
+
   deletePerson(person: Person){
     this.deleted = true;
     this.personService.deletePerson(person);

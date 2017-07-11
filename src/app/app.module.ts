@@ -3,11 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module'
-import { FormsModule } from "@angular/forms";
+import {FormBuilder, FormsModule} from "@angular/forms";
 import { NewEventComponent } from "./new-event/new-event.component";
 import { EventListComponent } from "./event-list/event-list.component";
 import { PersonService } from "./person-service/person.service";
 import { PersonsModule } from "./person-list/persons.module";
+import {GiftsService} from "./gifts-service/gifts.service";
 
 
 @NgModule({
@@ -23,7 +24,9 @@ import { PersonsModule } from "./person-list/persons.module";
     AppRoutingModule
   ],
   providers: [
-    PersonService
+    PersonService,
+    GiftsService,
+    FormBuilder
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,6 @@
 .well {
   width: 70%;
+  margin-top: 1em;
 }
 
 label, .settedDate{
@@ -20,3 +21,11 @@ input {
   width: 50%;
 }
 
+h2 {
+  display: inline;
+  margin-left: 1em;
+}
+
+.backbtn {
+  margin-left: 2em;
+}

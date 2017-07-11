@@ -7,12 +7,14 @@ import {RouterModule} from "@angular/router";
 
 import {PersonListComponent} from "./person-list.component";
 import {PersonEventsComponent} from "../person-events/person-events.component";
+import {GiftsComponent} from "../gifts/gifts.component";
 
 @NgModule({
   imports: [
     RouterModule.forChild([
       {path: 'persons', component: PersonListComponent},
-      {path: 'person/:name', component: PersonEventsComponent}
+      {path: 'person/:name', component: PersonEventsComponent},
+      {path: 'person/:name/gifts', component: GiftsComponent}
     ])
   ],
   exports: [

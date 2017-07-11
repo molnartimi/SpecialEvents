@@ -20,14 +20,14 @@
         <img *ngIf="e.eventType==='anniversary'" src="assets/icons/anni.png" height="40" title="anniversary">
       </td>
       <td class="lastCol">
-        <button class="btn">
+        <button class="btn" (click)="goToHints(e)">
           Hints
           <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
         </button>
         <button class="btn"  (click)="deleteEvent(e)">
           <img src="assets/icons/del.png" title="Delete event" height="20">
         </button>
-        <button class="btn" (click)="onSelect(e)">
+        <button class="btn" (click)="goToEvent(e)">
           <img src="assets/icons/setting.png" title="Setting person's events" height="20">
         </button>
       </td>

@@ -1,0 +1,22 @@
+<button class="btn backbtn" (click)="goBack()">
+  <img src="assets/icons/back.png" title="Go back" height="20">
+  Back
+</button>
+<h2>Hints of gifts for {{name}}</h2>
+<div class="container">
+  <div class="well">
+    <ol>
+      <label *ngIf="gifts==null">No elements...</label>
+      <li *ngFor="let g of gifts">
+        <input type="checkbox" value="g.done">
+        {{g.gift}}
+      </li>
+    </ol>
+  </div>
+  <div class="well">
+    <div>
+      <input [(ngModel)]="newGift" placeholder="Type new gift hint">
+      <button class="btn btn-success" (click)="saveNewGift()">Save</button>
+    </div>
+  </div>
+</div>
