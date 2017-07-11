@@ -15,9 +15,10 @@ export class Gift{
   }
 }
 
-export class GiftList{
+class GiftList{
   name: string;
   gifts: Gift[] = [];
+  passwd: string = "aaa";
 
   constructor(name: string, gift?: Gift){
     this.name = name;
@@ -30,10 +31,11 @@ export class GiftList{
 @Injectable()
 export class GiftsService {
   private giftMap: GiftList[] = [
-    {name: "Apa", gifts: [{gift: "Fúrógép", done: false}, {gift: "Szerszámos láda", done: true}]},
-    {name: "Tomi", gifts: [{gift: "Dechatlonos törülköző", done: true}, {gift: "Pici Biblia", done: false}]},
-    {name: "Lini", gifts: [{gift: "körömlakk készlet", done: false}]}
+    {name: "Apa", passwd: 'aaa', gifts: [{gift: "Fúrógép", done: false}, {gift: "Szerszámos láda", done: true}]},
+    {name: "Tomi", passwd: 'aaa', gifts: [{gift: "Dechatlonos törülköző", done: true}, {gift: "Pici Biblia", done: false}]},
+    {name: "Lini", passwd: 'aaa', gifts: [{gift: "körömlakk készlet", done: false}]}
   ];
+  private adminpwd: string = 'bbb';
 
   getGifts(name: string): Gift[] {
     let list = this.giftMap.find(g => g.name === name);
@@ -51,11 +53,18 @@ export class GiftsService {
     else{
       this.giftMap.push(new GiftList(name,new Gift(gift)));
     }
-
-
   }
 
   deleteGift(name: string, gift: Gift): void {
-    this.giftMap.splice(this.giftMap.indexOf(this.giftMap.find(g => g.name === name)),1);
+    let list = this.giftMap.find(l => l.name === name);
+    list.gifts.splice(list.gifts.indexOf(gift),1);
+  }
+
+  checkPasswd(name: string, pwd: string): boolean{
+    return this.giftMap.find(l => l.name === name).passwd === pwd;
+  }
+
+  checkAdminPasswd(pwd: string): boolean{
+    return this.adminpwd === pwd;
   }
 }

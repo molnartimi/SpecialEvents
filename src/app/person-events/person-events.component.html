@@ -30,17 +30,17 @@
   </div>
 </div>
 
-<form *ngIf="settingMode" #setting="ngForm" (submit)="saveChanges()">
+<form *ngIf="settingMode" #setting="ngForm" (submit)="settingMode=false">
   <button class="btn backbtn" (click)="goBack()">
     <img src="assets/icons/back.png" title="Go back" height="20">
     Back
   </button>
-  <input class="settedName" name="name" [(ngModel)]="settedPerson.name" #name="ngModel" required>
+  <input class="settedName" name="name" [(ngModel)]="person.name" #name="ngModel" required>
   <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
     Name is required!
   </div>
   <div class="container">
-    <div class="row well" *ngFor="let e of settedPerson.events">
+    <div class="row well" *ngFor="let e of person.events">
       <div class="col-md-5 col-sm-5">
         <div>
           <input class="settedDate" type="number" min="1" max="12" [(ngModel)]="e.month" name="month" #month="ngModel" required>.

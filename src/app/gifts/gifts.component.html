@@ -3,20 +3,32 @@
   Back
 </button>
 <h2>Hints of gifts for {{name}}</h2>
-<div class="container">
-  <div class="well">
-    <ol>
-      <label *ngIf="gifts==null">No elements...</label>
-      <li *ngFor="let g of gifts">
-        <input type="checkbox" value="g.done">
-        {{g.gift}}
-      </li>
-    </ol>
+<div class="container well" *ngIf="!logged">
+  <h3 *ngIf="gifts !== null">Password is needed to access to this list</h3>
+  <h3 *ngIf="gifts === null">Admin password is needed to create new list</h3>
+  <label>Password: </label>
+  <input type="text" [(ngModel)]="pwd">
+  <button class="btn" (click)="login()">Login</button>
+  <div [hidden]="!wrongpwd" class="alert alert-danger">
+    Wrong password!
   </div>
+</div>
+
+
+<div class="container" *ngIf="logged">
+  <table class="well">
+      <label *ngIf="gifts==null">No elements...</label>
+      <tr class="row" *ngFor="let g of gifts, let i=index">
+        <td><label>{{i+1}}</label></td>
+        <td><input type="checkbox" [(ngModel)]="g.done"></td>
+        <td><label>{{g.gift}}</label></td>
+        <td><button class="btn col-md-1 deletebtn" (click)="deleteGift(g)">x</button></td>
+      </tr>
+  </table>
   <div class="well">
     <div>
       <input [(ngModel)]="newGift" placeholder="Type new gift hint">
-      <button class="btn btn-success" (click)="saveNewGift()">Save</button>
+      <button class="btn btn-success" (click)="saveNewGift()" [disabled]="newGift == ''">Save</button>
     </div>
   </div>
 </div>

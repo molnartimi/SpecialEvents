@@ -10,3 +10,15 @@ h2 {
 .well {
   margin-top: 1em;
 }
+
+label {
+  font-size: larger;
+}
+
+.deletebtn {
+  width: auto;
+}
+
+td {
+  padding: .5em .5em .5em 1em;
+}

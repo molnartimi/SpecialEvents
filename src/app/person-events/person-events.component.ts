@@ -7,6 +7,8 @@ import {Person} from "../common/person";
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import {PersonService} from "../person-service/person.service";
+import {Location} from "@angular/common";
+import {SpecEvent} from "../common/spec-event.";
 
 @Component({
   templateUrl: 'person-events.component.html',
@@ -14,12 +16,13 @@ import {PersonService} from "../person-service/person.service";
 })
 export class PersonEventsComponent implements OnInit{
   person: Person;
-  settingMode: boolean
+  settingMode: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private personService: PersonService
+    private personService: PersonService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -31,9 +34,17 @@ export class PersonEventsComponent implements OnInit{
     this.person = this.personService.getPerson(name);
   }
 
+  goToHints(): void {
+    this.router.navigate(['person', this.person.name, 'gifts']);
+  }
+
   deleteEvent(eventType: string): void {
     this.personService.deleteEvent(this.person.name,eventType);
     if(!this.person.events.length)
       this.router.navigate(['events']);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }
