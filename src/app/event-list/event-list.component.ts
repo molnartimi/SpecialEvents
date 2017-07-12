@@ -20,7 +20,6 @@ export class EventListComponent implements OnInit{
 
   constructor(
     private personService: PersonService,
-    private authService: AuthService,
     private router: Router
   ) {}
 
