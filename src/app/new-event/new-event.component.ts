@@ -32,4 +32,24 @@ export class NewEventComponent{
       this.router.navigate(['/events']);
     }
   }
+
+  validDate(): boolean {
+    let shortMonths = [4,6,9,11];
+    if(this.event.month == null || this.event.day == null)
+      return true;
+    if(this.event.month<1 || this.event.month>12 || this.event.day<1 || this.event.day>31)
+      return false;
+    if(shortMonths.find(n => n == this.event.month))
+      if(this.event.day>30)
+        return false;
+      else
+        return true;
+    else if (this.event.month == 2)
+      if(this.event.day>29)
+        return false;
+      else
+        return true;
+    else
+      return true;
+  }
 }

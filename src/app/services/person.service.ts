@@ -7,6 +7,7 @@ import {Person} from "../common/person";
 import {SpecEvent} from "../common/spec-event.";
 import {EventItem} from "../event-list/event-item";
 import {AuthService} from "./auth.service";
+import {GiftsService} from "./gifts.service";
 
 @Injectable()
 export class PersonService {
@@ -20,22 +21,25 @@ export class PersonService {
     {id: 7, name: "Kriszti", events: [{eventType: 'birthday', month: 10, day: 27}, {eventType: 'nameday', month: 8, day: 5}]}
   ];
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private giftService: GiftsService
+  ) {}
 
   getPersons(): Person[] {
     this.order();
     return this.personList;
   }
 
-  getPerson(name: string): Person {
-    return this.personList.find(p => p.name === name);
+  getPerson(id: number): Person {
+    return this.personList.find(p => p.id === id);
   }
 
   getEvents() : EventItem[] {
     let events: EventItem[] = [];
     for(let p of this.personList){
       for(let e of p.events){
-        events.push(new EventItem(p.name, e.eventType, e.month, e.day));
+        events.push(new EventItem(p.id,p.name, e.eventType, e.month, e.day));
       }
     }
     return events;
@@ -68,17 +72,19 @@ export class PersonService {
     }
   }
 
-  deleteEvent(name: string, eventType: string): void {
+  deleteEvent(id: number, eventType: string): void {
     if(this.authService.isLogged()){
-      let c = confirm("Are you sure you want to delete " + name + "'s " + eventType + "?");
+      let person = this.getPerson(id);
+      let c = confirm("Are you sure you want to delete " + person.name + "'s " + eventType + "?");
       if (c) {
-        let person = this.personList.find(p => p.name === name);
         let event = person.events.find(e => e.eventType === eventType);
         let index = person.events.indexOf(event, 0);
         person.events.splice(index, 1);
 
-        if (!person.events.length)
+        if (!person.events.length){
           this.personList.splice(this.personList.indexOf(person), 1);
+          this.giftService.deletePerson(person.id);
+        }
       }
     }
     else {
@@ -91,16 +97,12 @@ export class PersonService {
       let c = confirm("Are you sure you want to delete " + person.name + " from the list?");
       if (c) {
         this.personList.splice(this.personList.indexOf(person), 1);
+        this.giftService.deletePerson(person.id);
       }
     }
     else {
       alert("You have to be logged in as an ADMIN to delete person!")
     }
-  }
-
-  updatePerson(old: Person, newp: Person):void {
-    this.personList.splice(this.personList.indexOf(old), 1);
-    this.personList.push(newp);
   }
 
   order(): void{

@@ -60,16 +60,16 @@ export class EventListComponent implements OnInit{
   }
 
   deleteEvent(event: EventItem): void {
-    this.personService.deleteEvent(event.name, event.eventType);
+    this.personService.deleteEvent(event.id, event.eventType);
     this.update();
   }
 
   goToEvent(event: EventItem): void {
-    this.router.navigate(['person', event.name])
+    this.router.navigate(['person', event.id]);
   }
 
   goToHints(event: EventItem): void {
-    this.router.navigate(['person', event.name, 'gifts']);
+    this.router.navigate(['person', event.id, 'gifts']);
   }
 
   orderDateAfterName(e1: EventItem, e2: EventItem): number {

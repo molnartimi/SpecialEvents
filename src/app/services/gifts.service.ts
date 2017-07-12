@@ -16,12 +16,11 @@ export class Gift{
 }
 
 class GiftList{
-  name: string;
+  id: number;
   gifts: Gift[] = [];
-  passwd: string = "aaa";
 
-  constructor(name: string, gift?: Gift){
-    this.name = name;
+  constructor(id: number, gift?: Gift){
+    this.id = id;
     if(gift)
       this.gifts.push(gift);
   }
@@ -31,39 +30,35 @@ class GiftList{
 @Injectable()
 export class GiftsService {
   private giftMap: GiftList[] = [
-    {name: "Apa", passwd: 'aaa', gifts: [{gift: "Fúrógép", done: false}, {gift: "Szerszámos láda", done: true}]},
-    {name: "Tomi", passwd: 'aaa', gifts: [{gift: "Dechatlonos törülköző", done: true}, {gift: "Pici Biblia", done: false}]},
-    {name: "Lini", passwd: 'aaa', gifts: [{gift: "körömlakk készlet", done: false}]}
+    {id: 4, gifts: [{gift: "Fúrógép", done: false}, {gift: "Szerszámos láda", done: true}]},
+    {id: 3, gifts: [{gift: "Dechatlonos törülköző", done: true}, {gift: "Pici Biblia", done: false}]},
+    {id: 6, gifts: [{gift: "körömlakk készlet", done: false}]}
   ];
-  private adminpwd: string = 'bbb';
 
-  getGifts(name: string): Gift[] {
-    let list = this.giftMap.find(g => g.name === name);
+  getGifts(id: number): Gift[] {
+    let list = this.giftMap.find(g => g.id == id);
     if(list)
       return list.gifts;
     else
       return null;
   }
 
-  addGift(name:string, gift: string): void {
-    let person = this.giftMap.find(g => g.name === name);
+  addGift(id: number, gift: string): void {
+    let person = this.giftMap.find(g => g.id == id);
     if(person){
       person.gifts.push(new Gift(gift,false));
     }
     else{
-      this.giftMap.push(new GiftList(name,new Gift(gift)));
+      this.giftMap.push(new GiftList(id,new Gift(gift)));
     }
   }
 
-  deleteGift(name: string, gift: Gift): void {
-    let list = this.giftMap.find(l => l.name === name);
+  deleteGift(id: number, gift: Gift): void {
+    let list = this.giftMap.find(l => l.id === id);
     list.gifts.splice(list.gifts.indexOf(gift),1);
   }
 
-  changeName(oldn: string, newn: string){
-    let person = this.giftMap.find(g => g.name === oldn);
-    if(person){
-      person.name = newn;
-    }
+  deletePerson(id: number): void {
+    this.giftMap.splice(this.giftMap.indexOf(this.giftMap.find(l => l.id === id)), 1);
   }
 }

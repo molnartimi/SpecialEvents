@@ -16,9 +16,18 @@ export class SettingComponent {
   constructor(private authService: AuthService) {}
 
   save(): void{
-    if(this.authService.changePwd(this.old, this.new1, this.new2))
+    if(this.authService.changePwd(this.old, this.new1, this.new2)) {
       this.wrong = false;
-    else
+      let snack = document.getElementById("snackbar");
+      snack.className = "show";
+      setTimeout(() => {
+        snack.className = snack.className.replace("show","")
+      }, 2000);
+    }
+    else {
       this.wrong = true;
+    }
+
+
   }
 }

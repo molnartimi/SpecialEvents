@@ -57,7 +57,7 @@ import {Router} from "@angular/router";
       background-color: #dddddd;
     }
     
-    input, .logged { margin-left: .2em; }
+    input, .logged { margin-left: .2em; margin-top: .5em; }
     
     .wrong {
       border-color: #ce1218;

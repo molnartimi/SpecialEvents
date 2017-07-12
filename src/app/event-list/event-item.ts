@@ -4,6 +4,7 @@
 
 export class EventItem{
   constructor(
+    public id: number,
     public name: string,
     public eventType: string,
     public month: number,

@@ -13,8 +13,8 @@ import {GiftsComponent} from "../gifts/gifts.component";
   imports: [
     RouterModule.forChild([
       {path: 'persons', component: PersonListComponent},
-      {path: 'person/:name', component: PersonEventsComponent},
-      {path: 'person/:name/gifts', component: GiftsComponent}
+      {path: 'person/:id', component: PersonEventsComponent},
+      {path: 'person/:id/gifts', component: GiftsComponent}
     ])
   ],
   exports: [

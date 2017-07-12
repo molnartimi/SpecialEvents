@@ -49,6 +49,9 @@
         <div [hidden]="(month.valid || month.pristine) && (day.valid || day.pristine)" class="alert alert-danger">
           Date is required!
         </div>
+        <div *ngIf="!validDate(e.month,e.day)" class="alert alert-danger">
+          Invalid date!
+        </div>
       </div>
       <div class="col-md-5 col-sm-5">
         <select class="form-control" [(ngModel)]="e.eventType" id="type" name="type">
@@ -67,7 +70,7 @@
       Hints
       <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
     </button>
-    <button type="submit" class="btn btn-success" [disabled]="!setting.form.valid">
+    <button type="submit" class="btn btn-success" [disabled]="!setting.form.valid || !valid">
       <img src="assets/icons/tick.png" title="Save event" height="20">
     </button>
   </div>

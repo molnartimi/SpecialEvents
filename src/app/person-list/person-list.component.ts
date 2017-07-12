@@ -25,13 +25,13 @@ export class PersonListComponent implements OnInit{
 
   onSelect(p): void{
     if(!this.deleted)
-      this.router.navigate(['person', p.name]);
+      this.router.navigate(['person', p.id]);
     else
       this.deleted = false;
   }
 
   goToHints(person: Person): void {
-    this.router.navigate(['person', person.name, 'gifts']);
+    this.router.navigate(['person', person.id, 'gifts']);
   }
 
   deletePerson(person: Person){

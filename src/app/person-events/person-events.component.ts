@@ -2,13 +2,12 @@
  * Created by NB-72 on 2017. 07. 06..
  */
 
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Person} from "../common/person";
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import {PersonService} from "../services/person.service";
 import {Location} from "@angular/common";
-import {SpecEvent} from "../common/spec-event.";
 import {AuthService} from "../services/auth.service";
 import {GiftsService} from "../services/gifts.service";
 
@@ -16,17 +15,17 @@ import {GiftsService} from "../services/gifts.service";
   templateUrl: 'person-events.component.html',
   styleUrls: ['person-events.component.css']
 })
-export class PersonEventsComponent implements OnInit, OnDestroy{
+export class PersonEventsComponent implements OnInit{
   logged: boolean;
   person: Person;
   private originName: string;
   private settingMode: boolean;
+  valid: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private personService: PersonService,
-    private giftService: GiftsService,
     private authService: AuthService,
     private location: Location
   ) {
@@ -38,8 +37,8 @@ export class PersonEventsComponent implements OnInit, OnDestroy{
       .switchMap((params: ParamMap) => this.personService.getPerson(params.get('name')))
       .subscribe((person: Person) => this.person = person);*/
 
-    let name = this.route.snapshot.paramMap.get('name');
-    this.person = this.personService.getPerson(name);
+    let id = this.route.snapshot.paramMap.get('id');
+    this.person = this.personService.getPerson(Number(id));
     this.originName = this.person.name;
     this.settingMode = false;
   }
@@ -60,11 +59,11 @@ export class PersonEventsComponent implements OnInit, OnDestroy{
   }
 
   goToHints(): void {
-    this.router.navigate(['person', this.person.name, 'gifts']);
+    this.router.navigate(['person', this.person.id, 'gifts']);
   }
 
   deleteEvent(eventType: string): void {
-    this.personService.deleteEvent(this.person.name,eventType);
+    this.personService.deleteEvent(this.person.id,eventType);
     if(!this.person.events.length)
       this.router.navigate(['events']);
   }
@@ -73,7 +72,32 @@ export class PersonEventsComponent implements OnInit, OnDestroy{
     this.location.back();
   }
 
-  ngOnDestroy(): void {
-    this.giftService.changeName(this.originName,this.person.name);
+  validDate(month: number, day: number): boolean {
+    let shortMonths = [4, 6, 9, 11];
+    if (month == null || day == null) {
+      this.valid = true;
+    }
+
+    if (month < 1 || month > 12 || day < 1 || day > 31) {
+      this.valid = false;
+    }
+
+    if (shortMonths.find(n => n == month)) {
+      if (day > 30)
+        this.valid = false;
+      else
+        this.valid = true;
+    }
+    else if (month == 2) {
+      if (day > 29)
+        this.valid = false;
+      else
+        this.valid = true;
+    }
+    else {
+      this.valid = true;
+    }
+
+    return this.valid;
   }
 }

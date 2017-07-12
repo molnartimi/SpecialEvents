@@ -7,12 +7,14 @@ import {ActivatedRoute} from "@angular/router";
 import {Gift, GiftsService} from "../services/gifts.service";
 import {Location} from "@angular/common";
 import {AuthService} from "../services/auth.service";
+import {PersonService} from "../services/person.service";
 
 @Component({
   templateUrl: 'gifts.component.html',
   styleUrls: ['gifts.component.css']
 })
 export class GiftsComponent implements OnInit{
+  id: number;
   name: string;
   logged: boolean = false;
   gifts: Gift[] = [{gift: "alma", done: true}];
@@ -21,19 +23,21 @@ export class GiftsComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private giftsService: GiftsService,
+    private personService: PersonService,
     private authService: AuthService,
     private location: Location
   ) {}
 
   ngOnInit() {
-    this.name = this.route.snapshot.paramMap.get('name');
+    this.id = +this.route.snapshot.paramMap.get('id');
+    this.name = this.personService.getPerson(this.id).name;
 
-    this.gifts = this.giftsService.getGifts(this.name);
+    this.gifts = this.giftsService.getGifts(this.id);
     this.logged = this.authService.isLogged();
   }
 
   saveNewGift(): void{
-    this.giftsService.addGift(this.name,this.newGift);
+    this.giftsService.addGift(this.id,this.newGift);
     this.update();
   }
 
@@ -42,12 +46,12 @@ export class GiftsComponent implements OnInit{
   }
 
   deleteGift(gift: Gift): void {
-    this.giftsService.deleteGift(this.name,gift);
+    this.giftsService.deleteGift(this.id,gift);
     this.update();
   }
 
   update(): void {
-    this.gifts = this.giftsService.getGifts(this.name);
+    this.gifts = this.giftsService.getGifts(this.id);
     this.newGift = "";
   }
 }

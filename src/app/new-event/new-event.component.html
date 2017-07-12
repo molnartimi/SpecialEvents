@@ -33,8 +33,11 @@
       <div [hidden]="(month.valid || month.pristine) && (day.valid || day.pristine)" class="alert alert-danger">
         Date is required!
       </div>
+      <div *ngIf="!validDate()" class="alert alert-danger">
+        Invalid date!
+      </div>
     </div>
-    <button type="submit" class="btn btn-success" [disabled]="!newEvent.form.valid">Save event</button>
+    <button type="submit" class="btn btn-success" [disabled]="!newEvent.form.valid || !validDate()">Save event</button>
   </form>
 </div>
 
