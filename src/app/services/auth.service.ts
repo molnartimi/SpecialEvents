@@ -2,7 +2,7 @@
  * Created by NB-72 on 2017. 07. 11..
  */
 
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 @Injectable()
 export class AuthService {
   private pwd = 'bbb';

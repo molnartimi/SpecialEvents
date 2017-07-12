@@ -98,6 +98,11 @@ export class PersonService {
     }
   }
 
+  updatePerson(old: Person, newp: Person):void {
+    this.personList.splice(this.personList.indexOf(old), 1);
+    this.personList.push(newp);
+  }
+
   order(): void{
     this.personList = this.personList.sort((p1,p2) => {
       if (p1.name.toLowerCase() < p2.name.toLowerCase())

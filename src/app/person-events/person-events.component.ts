@@ -2,7 +2,7 @@
  * Created by NB-72 on 2017. 07. 06..
  */
 
-import {Component, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Person} from "../common/person";
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
@@ -10,20 +10,23 @@ import {PersonService} from "../services/person.service";
 import {Location} from "@angular/common";
 import {SpecEvent} from "../common/spec-event.";
 import {AuthService} from "../services/auth.service";
+import {GiftsService} from "../services/gifts.service";
 
 @Component({
   templateUrl: 'person-events.component.html',
   styleUrls: ['person-events.component.css']
 })
-export class PersonEventsComponent implements OnInit{
+export class PersonEventsComponent implements OnInit, OnDestroy{
   logged: boolean;
   person: Person;
-  private settingMode: boolean = false;
+  private originName: string;
+  private settingMode: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private personService: PersonService,
+    private giftService: GiftsService,
     private authService: AuthService,
     private location: Location
   ) {
@@ -37,6 +40,8 @@ export class PersonEventsComponent implements OnInit{
 
     let name = this.route.snapshot.paramMap.get('name');
     this.person = this.personService.getPerson(name);
+    this.originName = this.person.name;
+    this.settingMode = false;
   }
 
   onSettingMode(): void {
@@ -66,5 +71,9 @@ export class PersonEventsComponent implements OnInit{
 
   goBack(): void {
     this.location.back();
+  }
+
+  ngOnDestroy(): void {
+    this.giftService.changeName(this.originName,this.person.name);
   }
 }

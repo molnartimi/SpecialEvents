@@ -3,9 +3,7 @@
  */
 
 import {Component, OnInit} from "@angular/core";
-import {Person} from "../common/person";
-import {ActivatedRoute, Router} from "@angular/router";
-import {PersonService} from "../services/person.service";
+import {ActivatedRoute} from "@angular/router";
 import {Gift, GiftsService} from "../services/gifts.service";
 import {Location} from "@angular/common";
 import {AuthService} from "../services/auth.service";
@@ -17,9 +15,6 @@ import {AuthService} from "../services/auth.service";
 export class GiftsComponent implements OnInit{
   name: string;
   logged: boolean = false;
-  rightpwd: boolean = false;
-  wrongpwd: boolean = false;
-  pwd: string;
   gifts: Gift[] = [{gift: "alma", done: true}];
   newGift: string = '';
 
@@ -54,12 +49,5 @@ export class GiftsComponent implements OnInit{
   update(): void {
     this.gifts = this.giftsService.getGifts(this.name);
     this.newGift = "";
-  }
-
-  login() {
-    if (this.gifts !== null && this.giftsService.checkPasswd(this.name, this.pwd))
-      this.rightpwd = true;
-    else
-      this.wrongpwd = true;
   }
 }

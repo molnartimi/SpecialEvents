@@ -1,6 +1,7 @@
 import { Component, } from '@angular/core';
 import {GiftsService} from "./services/gifts.service";
 import {AuthService} from "./services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -25,11 +26,11 @@ import {AuthService} from "./services/auth.service";
             <li class="nav-item" *ngIf="logged">
               <a class="nav-link" routerLink="/settings" routerLinkActive="active">Settings</a>
             </li>
-            <li class="nav-item pwd" *ngIf="!logged">
-              <input type="password" name="pwd" [(ngModel)]="pwd" placeholder="Admin password">
+            <li class="nav-item pwdGroup" *ngIf="!logged">
+              <input type="password" name="pwd" id="pwdid" [(ngModel)]="pwd" placeholder="Admin password">
               <button class="btn" (click)="login()">Login</button>
             </li>
-            <li class="nav-item pwd" *ngIf="logged">
+            <li class="nav-item pwdGroup" *ngIf="logged">
               <label class="logged">Admin</label>
               <button class="btn" (click)="logout()">Logout</button>
             </li>
@@ -45,14 +46,22 @@ import {AuthService} from "./services/auth.service";
       font-weight: bold;
     }
     
-    .nav-link {
-      font-size: large;
-    }
+    .nav-link { font-size: large; }
     
-    .pwd {
+    .pwdGroup {
+      position: absolute;
+      right: 10px;
+      margin-top: 5px;
       padding: .2em;
       border-radius: 2pt;
       background-color: #dddddd;
+    }
+    
+    input, .logged { margin-left: .2em; }
+    
+    .wrong {
+      border-color: #ce1218;
+      border-radius: 2pt;
     }
   `
   ]
@@ -62,19 +71,28 @@ export class AppComponent {
   logged: boolean = false;
   pwd: string;
 
-  constructor( private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   login(): void{
     if(this.authService.login(this.pwd)){
       this.logged = true;
-      this.pwd = null;
+
+      this.router.navigate(['events']);
     }
+    else{
+      document.getElementById("pwdid").className = "wrong";
+    }
+
   }
 
   logout(): void{
     this.authService.logout();
     this.logged = false;
     this.pwd = null;
+    this.router.navigate(['events']);
   }
 }
 

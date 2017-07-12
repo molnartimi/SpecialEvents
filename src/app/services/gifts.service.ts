@@ -60,11 +60,10 @@ export class GiftsService {
     list.gifts.splice(list.gifts.indexOf(gift),1);
   }
 
-  checkPasswd(name: string, pwd: string): boolean{
-    return this.giftMap.find(l => l.name === name).passwd === pwd;
-  }
-
-  checkAdminPasswd(pwd: string): boolean{
-    return this.adminpwd === pwd;
+  changeName(oldn: string, newn: string){
+    let person = this.giftMap.find(g => g.name === oldn);
+    if(person){
+      person.name = newn;
+    }
   }
 }
