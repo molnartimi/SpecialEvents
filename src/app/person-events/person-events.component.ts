@@ -9,7 +9,6 @@ import 'rxjs/add/operator/switchMap';
 import {PersonService} from "../services/person.service";
 import {Location} from "@angular/common";
 import {AuthService} from "../services/auth.service";
-import {GiftsService} from "../services/gifts.service";
 
 @Component({
   templateUrl: 'person-events.component.html',
@@ -18,7 +17,6 @@ import {GiftsService} from "../services/gifts.service";
 export class PersonEventsComponent implements OnInit{
   logged: boolean;
   person: Person;
-  private originName: string;
   private settingMode: boolean;
   valid: boolean;
 
@@ -39,7 +37,6 @@ export class PersonEventsComponent implements OnInit{
 
     let id = this.route.snapshot.paramMap.get('id');
     this.person = this.personService.getPerson(Number(id));
-    this.originName = this.person.name;
     this.settingMode = false;
   }
 
