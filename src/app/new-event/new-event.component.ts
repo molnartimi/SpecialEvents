@@ -7,13 +7,14 @@ import { SpecEvent } from '../common/spec-event.';
 import {Router} from "@angular/router";
 import {EventListComponent} from "../event-list/event-list.component";
 import {PersonService} from "../services/person.service";
+import {EventTypeEnum} from "../common/event-type-enum";
 
 @Component({
   templateUrl: 'new-event.component.html',
   styleUrls: [ 'new-event.component.css']
 })
 export class NewEventComponent{
-  eventTypeList = ['birthday', 'nameday', 'anniversary'];
+  eventTypeList = [EventTypeEnum.BIRTHDAY, EventTypeEnum.NAMEDAY, EventTypeEnum.ANNIVERSARY];
   event = new SpecEvent(null,null,null);
   name = '';
   name2 = '';
@@ -24,7 +25,7 @@ export class NewEventComponent{
   ) {}
 
   saveEvent(): void {
-    if(this.event.eventType === 'anniversary')
+    if(this.event.eventType === EventTypeEnum.ANNIVERSARY)
       this.name += '-' + this.name2;
 
     if(this.personService.addNewEvent(this.name,this.event)) {

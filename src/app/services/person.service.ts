@@ -9,6 +9,7 @@ import {EventItem} from "../event-list/event-item";
 import {AuthService} from "./auth.service";
 import {GiftsService} from "./gifts.service";
 import {PERSONS} from "./mock-datas"
+import {EventTypeEnum} from "../common/event-type-enum";
 
 @Injectable()
 export class PersonService {
@@ -66,7 +67,7 @@ export class PersonService {
     }
   }
 
-  deleteEvent(id: number, eventType: string): void {
+  deleteEvent(id: number, eventType: EventTypeEnum): void {
     if(this.authService.isLogged()){
       let person = this.personList.find(p => p.id === id);
       let c = confirm("Are you sure you want to delete " + person.name + "'s " + eventType + "?");

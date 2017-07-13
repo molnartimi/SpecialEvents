@@ -8,6 +8,7 @@ import { EventItem } from "./event-item";
 import { SortingFilterEnum } from "../common/sorting-filter-enum";
 import {Router} from "@angular/router";
 import {AuthService} from "../services/auth.service";
+import {EventTypeEnum} from "../common/event-type-enum";
 
 @Component ({
   templateUrl: 'event-list.component.html',
@@ -98,11 +99,11 @@ export class EventListComponent implements OnInit{
   }
 
   orderType(e1: EventItem, e2: EventItem): number {
-    if ((e1.eventType === 'birthday' && e2.eventType !== 'birthday') ||
-      (e1.eventType !== 'anniversary' && e2.eventType === 'anniversary'))
+    if ((e1.eventType === EventTypeEnum.BIRTHDAY && e2.eventType !== EventTypeEnum.BIRTHDAY) ||
+      (e1.eventType !== EventTypeEnum.ANNIVERSARY && e2.eventType === EventTypeEnum.ANNIVERSARY))
       return -1;
-    if ((e2.eventType === 'birthday' && e1.eventType !== 'birthday') ||
-      (e1.eventType === 'anniversary' && e2.eventType !== 'anniversary'))
+    if ((e2.eventType === EventTypeEnum.BIRTHDAY && e1.eventType !== EventTypeEnum.BIRTHDAY) ||
+      (e1.eventType === EventTypeEnum.ANNIVERSARY && e2.eventType !== EventTypeEnum.ANNIVERSARY))
       return 1;
     if (e1.month < e2.month || (e1.month == e2.month && e1.day < e2.day))
        return -1;

@@ -9,6 +9,7 @@ import 'rxjs/add/operator/switchMap';
 import {PersonService} from "../services/person.service";
 import {Location} from "@angular/common";
 import {AuthService} from "../services/auth.service";
+import {EventTypeEnum} from "../common/event-type-enum";
 
 @Component({
   templateUrl: 'person-events.component.html',
@@ -58,7 +59,7 @@ export class PersonEventsComponent implements OnInit{
     this.router.navigate(['person', this.person.id, 'gifts']);
   }
 
-  deleteEvent(eventType: string): void {
+  deleteEvent(eventType: EventTypeEnum): void {
     this.personService.deleteEvent(this.person.id,eventType);
     if(!this.person.events.length)
       this.router.navigate(['events']);

@@ -16,7 +16,7 @@
         Name is required!
       </div>
     </div>
-    <div *ngIf="event.eventType==='anniversary'" class="form-group">
+    <div *ngIf="event.eventType===EventTypeEnum.ANNIVERSARY" class="form-group">
       <label>Name:</label>
       <input type="text" class="form-control" id="name2" name="name2" required [(ngModel)]="name2"  #nameb="ngModel"
              placeholder="Type the other name">

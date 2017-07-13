@@ -15,9 +15,9 @@
       <td>{{e.month | number:'2.0'}}.{{e.day | number:'2.0'}}.</td>
       <td>{{e.name}}</td>
       <td class="eventCol">
-        <img *ngIf="e.eventType==='birthday'" src="assets/icons/birth.png" height="40" title="birthday">
-        <img *ngIf="e.eventType==='nameday'" src="assets/icons/name.png" height="40" title="nameday">
-        <img *ngIf="e.eventType==='anniversary'" src="assets/icons/anni.png" height="40" title="anniversary">
+        <img *ngIf="e.eventType===EventTypeEnum.BIRTHDAY" src="assets/icons/birth.png" height="40" title="birthday">
+        <img *ngIf="e.eventType===EventTypeEnum.NAMEDAY" src="assets/icons/name.png" height="40" title="nameday">
+        <img *ngIf="e.eventType===EventTypeEnum.ANNIVERSARY" src="assets/icons/anni.png" height="40" title="anniversary">
       </td>
       <td class="lastCol">
         <button class="btn" (click)="goToHints(e)">
