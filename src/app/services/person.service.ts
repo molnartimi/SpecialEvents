@@ -70,7 +70,7 @@ export class PersonService {
   deleteEvent(id: number, eventType: EventTypeEnum): void {
     if(this.authService.isLogged()){
       let person = this.personList.find(p => p.id === id);
-      let c = confirm("Are you sure you want to delete " + person.name + "'s " + eventType + "?");
+      let c = confirm("Are you sure you want to delete " + person.name + "'s event?");
       if (c) {
         let event = person.events.find(e => e.eventType === eventType);
         let index = person.events.indexOf(event, 0);

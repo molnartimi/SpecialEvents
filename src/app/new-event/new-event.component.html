@@ -5,7 +5,9 @@
       <label for="type">Event type: </label>
       <select class="form-control" [(ngModel)]="event.eventType" id="type" name="type" required #type="ngModel">
         <option hidden value="null">choose type</option>
-        <option *ngFor="let e of eventTypeList" [value]="e">{{e}}</option>
+        <option [value]="1">birthday</option>
+        <option [value]="2">nameday</option>
+        <option [value]="3">anniversary</option>
       </select>
     </div>
     <div class="form-group">
@@ -16,7 +18,7 @@
         Name is required!
       </div>
     </div>
-    <div *ngIf="event.eventType===EventTypeEnum.ANNIVERSARY" class="form-group">
+    <div *ngIf="event.eventType==3" class="form-group">
       <label>Name:</label>
       <input type="text" class="form-control" id="name2" name="name2" required [(ngModel)]="name2"  #nameb="ngModel"
              placeholder="Type the other name">

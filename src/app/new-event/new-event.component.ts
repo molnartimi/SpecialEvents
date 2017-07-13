@@ -25,7 +25,7 @@ export class NewEventComponent{
   ) {}
 
   saveEvent(): void {
-    if(this.event.eventType === EventTypeEnum.ANNIVERSARY)
+    if(this.event.eventType == 3)
       this.name += '-' + this.name2;
 
     if(this.personService.addNewEvent(this.name,this.event)) {

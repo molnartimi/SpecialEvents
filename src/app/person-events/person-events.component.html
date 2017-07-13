@@ -9,9 +9,9 @@
       <label>{{e.month | number:'2.0'}}.{{e.day | number:'2.0'}}.</label>
     </div>
     <div class="col-md-5 col-sm-5" [ngSwitch]="e.eventType">
-      <img *ngSwitchCase="EventTypeEnum.BIRTHDAY" src="assets/icons/birth.png" height="40" title="birthday">
-      <img *ngSwitchCase="EventTypeEnum.NAMEDAY" src="assets/icons/name.png" height="40" title="nameday">
-      <img *ngSwitchCase="EventTypeEnum.ANNIVERSARY" src="assets/icons/anni.png" height="40" title="anniversary">
+      <img *ngSwitchCase="1" src="assets/icons/birth.png" height="40" title="birthday">
+      <img *ngSwitchCase="2" src="assets/icons/name.png" height="40" title="nameday">
+      <img *ngSwitchCase="3" src="assets/icons/anni.png" height="40" title="anniversary">
     </div>
     <div class="con-md-2 col-sm-2">
       <button class="btn" (click)="deleteEvent(e.eventType)" [disabled]="settingMode">

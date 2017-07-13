@@ -3,7 +3,7 @@
  */
 
 export enum EventTypeEnum {
-  BIRTHDAY,
-  NAMEDAY,
-  ANNIVERSARY
+  BIRTHDAY = 1,
+  NAMEDAY = 2,
+  ANNIVERSARY = 3
 }

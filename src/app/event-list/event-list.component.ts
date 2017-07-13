@@ -40,7 +40,7 @@ export class EventListComponent implements OnInit{
     }
   }
 
-  order(by: number): void{
+  order(by: SortingFilterEnum): void{
     this.orderBy = by;
 
     switch (this.orderBy){
@@ -113,7 +113,9 @@ export class EventListComponent implements OnInit{
   }
 
   update(): void {
-    this.personService.getEvents().then(events => this.eventList = events);
-    this.order(this.orderBy);
+    this.personService.getEvents().then(events => {
+      this.eventList = events;
+      this.order(this.orderBy);
+    });
   }
 }
