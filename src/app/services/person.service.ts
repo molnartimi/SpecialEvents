@@ -8,7 +8,7 @@ import {SpecEvent} from "../common/spec-event.";
 import {EventItem} from "../event-list/event-item";
 import {AuthService} from "./auth.service";
 import {GiftsService} from "./gifts.service";
-import {PERSONS} from "./mock-persons"
+import {PERSONS} from "./mock-datas"
 
 @Injectable()
 export class PersonService {
@@ -19,23 +19,24 @@ export class PersonService {
     private giftService: GiftsService
   ) {}
 
-  getPersons(): Person[] {
+  getPersons(): Promise<Person[]> {
     this.order();
-    return this.personList;
+    return Promise.resolve(this.personList);
   }
 
-  getPerson(id: number): Person {
-    return this.personList.find(p => p.id === id);
+  getPerson(id: number): Promise<Person> {
+    let person = this.personList.find(p => p.id === id);
+    return Promise.resolve(person);
   }
 
-  getEvents() : EventItem[] {
+  getEvents() : Promise<EventItem[]> {
     let events: EventItem[] = [];
     for(let p of this.personList){
       for(let e of p.events){
         events.push(new EventItem(p.id,p.name, e.eventType, e.month, e.day));
       }
     }
-    return events;
+    return Promise.resolve(events);
   }
 
   addNewEvent(name: string, event: SpecEvent): boolean{
@@ -67,7 +68,7 @@ export class PersonService {
 
   deleteEvent(id: number, eventType: string): void {
     if(this.authService.isLogged()){
-      let person = this.getPerson(id);
+      let person = this.personList.find(p => p.id === id);
       let c = confirm("Are you sure you want to delete " + person.name + "'s " + eventType + "?");
       if (c) {
         let event = person.events.find(e => e.eventType === eventType);

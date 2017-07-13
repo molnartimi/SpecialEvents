@@ -1,78 +1,30 @@
-<div *ngIf="!isSettingMode()">
-  <button class="btn backbtn" (click)="goBack()">
-    <img src="assets/icons/back.png" title="Go back" height="20">
-    Back
-  </button>
-  <h2>{{person.name}}</h2>
-  <div class="container">
-    <div class="row well" *ngFor="let e of person.events">
-      <div class="col-md-5 col-sm-5">
-        <label>{{e.month | number:'2.0'}}.{{e.day | number:'2.0'}}.</label>
-      </div>
-      <div class="col-md-5 col-sm-5" [ngSwitch]="e.eventType">
-        <img *ngSwitchCase="'birthday'" src="assets/icons/birth.png" height="40" title="birthday">
-        <img *ngSwitchCase="'nameday'" src="assets/icons/name.png" height="40" title="nameday">
-        <img *ngSwitchCase="'anniversary'" src="assets/icons/anni.png" height="40" title="anniversary">
-      </div>
-      <div class="con-md-2 col-sm-2">
-        <button class="btn" (click)="deleteEvent(e.eventType)">
-          <img src="assets/icons/del.png" title="Delete event" height="20">
-        </button>
-      </div>
+<button class="btn backbtn" (click)="goBack()">
+  <img src="assets/icons/back.png" title="Go back" height="20">
+  Back
+</button>
+<h2>{{person.name}}</h2>
+<div class="container">
+  <div class="row well" *ngFor="let e of person.events">
+    <div class="col-md-5 col-sm-5">
+      <label>{{e.month | number:'2.0'}}.{{e.day | number:'2.0'}}.</label>
     </div>
-    <button class="btn" (click)="goToHints()">
-      Hints
-      <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
-    </button>
-    <button class="btn" (click)="onSettingMode()">
-      <img src="assets/icons/setting.png" title="Setting event" height="20">
-    </button>
+    <div class="col-md-5 col-sm-5" [ngSwitch]="e.eventType">
+      <img *ngSwitchCase="'birthday'" src="assets/icons/birth.png" height="40" title="birthday">
+      <img *ngSwitchCase="'nameday'" src="assets/icons/name.png" height="40" title="nameday">
+      <img *ngSwitchCase="'anniversary'" src="assets/icons/anni.png" height="40" title="anniversary">
+    </div>
+    <div class="con-md-2 col-sm-2">
+      <button class="btn" (click)="deleteEvent(e.eventType)" [disabled]="settingMode">
+        <img src="assets/icons/del.png" title="Delete event" height="20">
+      </button>
+    </div>
   </div>
+  <button class="btn" (click)="goToHints()">
+    Hints
+    <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
+  </button>
+  <button class="btn" (click)="onSettingMode()" [disabled]="settingMode">
+    <img src="assets/icons/setting.png" title="Setting event" height="20">
+  </button>
 </div>
-
-<form *ngIf="isSettingMode() && logged" #setting="ngForm" (submit)="save()">
-  <button class="btn backbtn" (click)="goBack()">
-    <img src="assets/icons/back.png" title="Go back" height="20">
-    Back
-  </button>
-  <input class="settedName" name="name" [(ngModel)]="person.name" #name="ngModel" required>
-  <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-    Name is required!
-  </div>
-  <div class="container">
-    <div class="row well" *ngFor="let e of person.events">
-      <div class="col-md-5 col-sm-5">
-        <div>
-          <input class="settedDate" type="number" min="1" max="12" [(ngModel)]="e.month" name="month" #month="ngModel" required>.
-          <input class="settedDate" type="number" min="1" max="31" [(ngModel)]="e.day" name="day" #day="ngModel" required>.
-        </div>
-        <div [hidden]="(month.valid || month.pristine) && (day.valid || day.pristine)" class="alert alert-danger">
-          Date is required!
-        </div>
-        <div *ngIf="!validDate(e.month,e.day)" class="alert alert-danger">
-          Invalid date!
-        </div>
-      </div>
-      <div class="col-md-5 col-sm-5">
-        <select class="form-control" [(ngModel)]="e.eventType" id="type" name="type">
-          <option value='birthday'>birthday</option>
-          <option value='nameday'>nameday</option>
-          <option value='anniversary'>anniversary</option>
-        </select>
-      </div>
-      <div class="con-md-2 col-sm-2">
-        <button class="btn" (click)="deleteEvent(e.eventType)">
-          <img src="assets/icons/del.png" title="Delete event" height="20">
-        </button>
-      </div>
-    </div>
-    <button class="btn" (click)="goToHints()">
-      Hints
-      <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
-    </button>
-    <button type="submit" class="btn btn-success" [disabled]="!setting.form.valid || !valid">
-      <img src="assets/icons/tick.png" title="Save event" height="20">
-    </button>
-  </div>
-</form>
-
+<person-settings *ngIf="settingMode" [person]="person" (save)="onSave($event)"></person-settings>

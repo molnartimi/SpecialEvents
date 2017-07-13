@@ -2,7 +2,7 @@
  * Created by NB-72 on 2017. 07. 06..
  */
 
-import {Component, OnInit} from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {Person} from "../common/person";
 import {Router, ActivatedRoute} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
@@ -17,7 +17,7 @@ import {AuthService} from "../services/auth.service";
 export class PersonEventsComponent implements OnInit{
   logged: boolean;
   person: Person;
-  private settingMode: boolean;
+  settingMode: boolean;
   valid: boolean;
 
   constructor(
@@ -36,7 +36,7 @@ export class PersonEventsComponent implements OnInit{
       .subscribe((person: Person) => this.person = person);*/
 
     let id = this.route.snapshot.paramMap.get('id');
-    this.person = this.personService.getPerson(Number(id));
+    this.personService.getPerson(Number(id)).then(person => this.person = person);
     this.settingMode = false;
   }
 
@@ -47,12 +47,11 @@ export class PersonEventsComponent implements OnInit{
       alert("You have to be logged in as ADMIN to edit events!");
   }
 
-  isSettingMode(): boolean {
-    return this.settingMode;
-  }
+  onSave(event): void {
+    setTimeout((() => this.settingMode = false), 500);
 
-  save(): void {
-    this.settingMode = false;
+    this.person.name = event.name;
+    this.person.events = event.events;
   }
 
   goToHints(): void {
@@ -67,34 +66,5 @@ export class PersonEventsComponent implements OnInit{
 
   goBack(): void {
     this.location.back();
-  }
-
-  validDate(month: number, day: number): boolean {
-    let shortMonths = [4, 6, 9, 11];
-    if (month == null || day == null) {
-      this.valid = true;
-    }
-
-    if (month < 1 || month > 12 || day < 1 || day > 31) {
-      this.valid = false;
-    }
-
-    if (shortMonths.find(n => n == month)) {
-      if (day > 30)
-        this.valid = false;
-      else
-        this.valid = true;
-    }
-    else if (month == 2) {
-      if (day > 29)
-        this.valid = false;
-      else
-        this.valid = true;
-    }
-    else {
-      this.valid = true;
-    }
-
-    return this.valid;
   }
 }

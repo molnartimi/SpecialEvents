@@ -1,4 +1,5 @@
 import {Person} from "../common/person";
+import {GiftList} from "./gifts.service";
 /**
  * Created by NB-72 on 2017. 07. 12..
  */
@@ -11,4 +12,10 @@ export const PERSONS: Person[] = [
   {id: 5, name: "Kriszti-Laci", events: [{eventType: 'anniversary', month: 8, day: 25}]},
   {id: 6, name: "Lini", events: [{eventType: 'birthday', month: 3, day: 7}]},
   {id: 7, name: "Kriszti", events: [{eventType: 'birthday', month: 10, day: 27}, {eventType: 'nameday', month: 8, day: 5}]}
+];
+
+export const GIFTLISTS: GiftList[] = [
+  {id: 4, gifts: [{gift: "Fúrógép", done: false}, {gift: "Szerszámos láda", done: true}]},
+  {id: 3, gifts: [{gift: "Dechatlonos törülköző", done: true}, {gift: "Pici Biblia", done: false}]},
+  {id: 6, gifts: [{gift: "körömlakk készlet", done: false}]}
 ];

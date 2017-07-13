@@ -29,10 +29,10 @@ export class GiftsComponent implements OnInit{
   ) {}
 
   ngOnInit() {
-    this.id = +this.route.snapshot.paramMap.get('id');
-    this.name = this.personService.getPerson(this.id).name;
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.personService.getPerson(this.id).then(person => this.name = person.name);
 
-    this.gifts = this.giftsService.getGifts(this.id);
+    this.giftsService.getGifts(this.id).then(gifts => this.gifts = gifts);
     this.logged = this.authService.isLogged();
   }
 
@@ -51,7 +51,7 @@ export class GiftsComponent implements OnInit{
   }
 
   update(): void {
-    this.gifts = this.giftsService.getGifts(this.id);
+    this.giftsService.getGifts(this.id).then(gifts => this.gifts = gifts);
     this.newGift = "";
   }
 }

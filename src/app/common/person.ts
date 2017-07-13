@@ -14,7 +14,8 @@ export class Person {
   ) {
     this.id = Person.counter++;
     this.name = name;
-    this.events.push(event);
+    if(event)
+      this.events.push(event);
   }
 
 }

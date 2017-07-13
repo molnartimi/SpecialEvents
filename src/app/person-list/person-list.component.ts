@@ -20,7 +20,7 @@ export class PersonListComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.personList = this.personService.getPersons();
+    this.personService.getPersons().then(persons => this.personList = persons);
   }
 
   onSelect(p): void{

@@ -24,8 +24,10 @@ export class EventListComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.eventList = this.personService.getEvents();
-    this.order(this.orderBy);
+    this.personService.getEvents().then(events => {
+      this.eventList = events;
+      this.order(this.orderBy);
+    });
 
     if(EventListComponent.saved){
       let snack = document.getElementById("snackbar");
@@ -110,7 +112,7 @@ export class EventListComponent implements OnInit{
   }
 
   update(): void {
-    this.eventList = this.personService.getEvents();
+    this.personService.getEvents().then(events => this.eventList = events);
     this.order(this.orderBy);
   }
 }

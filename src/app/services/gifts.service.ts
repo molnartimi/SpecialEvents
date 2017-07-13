@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Person} from "../common/person";
+import {GIFTLISTS} from "./mock-datas"
 /**
  * Created by NB-72 on 2017. 07. 10..
  */
@@ -15,7 +15,7 @@ export class Gift{
   }
 }
 
-class GiftList{
+export class GiftList{
   id: number;
   gifts: Gift[] = [];
 
@@ -29,18 +29,14 @@ class GiftList{
 
 @Injectable()
 export class GiftsService {
-  private giftMap: GiftList[] = [
-    {id: 4, gifts: [{gift: "Fúrógép", done: false}, {gift: "Szerszámos láda", done: true}]},
-    {id: 3, gifts: [{gift: "Dechatlonos törülköző", done: true}, {gift: "Pici Biblia", done: false}]},
-    {id: 6, gifts: [{gift: "körömlakk készlet", done: false}]}
-  ];
+  private giftMap: GiftList[] = GIFTLISTS;
 
-  getGifts(id: number): Gift[] {
+  getGifts(id: number): Promise<Gift[]> {
     let list = this.giftMap.find(g => g.id == id);
     if(list)
-      return list.gifts;
+      return Promise.resolve(list.gifts);
     else
-      return null;
+      return Promise.resolve(null);
   }
 
   addGift(id: number, gift: string): void {
