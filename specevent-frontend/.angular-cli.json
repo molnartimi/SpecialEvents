@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "C:/Users/NB-72/Desktop/angular/special-events/src/main/resources/static/home",
       "assets": [
         "assets",
         "favicon.ico"

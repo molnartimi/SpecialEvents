@@ -7,8 +7,8 @@ import {PersonService} from "../services/person.service";
 import {Person} from "../common/person";
 import {Router} from "@angular/router";
 @Component({
-  templateUrl: 'person-list.component.html',
-  styleUrls: ['person-list.component.css']
+  templateUrl: 'persons.component.html',
+  styleUrls: ['persons.component.css']
 })
 export class PersonListComponent implements OnInit{
   personList: Person[];

@@ -5,8 +5,8 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
-import {PersonListComponent} from "./person-list.component";
-import {PersonEventsComponent} from "../person-events/person-events.component";
+import {PersonListComponent} from "./persons.component";
+import {PersonEventsComponent} from "./personal-events/person-events.component";
 import {GiftsComponent} from "../gifts/gifts.component";
 
 @NgModule({

@@ -3,13 +3,13 @@
  */
 
 import {Component, EventEmitter, OnInit, Output} from "@angular/core";
-import {Person} from "../common/person";
+import {Person} from "../../common/person";
 import {Router, ActivatedRoute} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
-import {PersonService} from "../services/person.service";
+import {PersonService} from "../../services/person.service";
 import {Location} from "@angular/common";
-import {AuthService} from "../services/auth.service";
-import {EventTypeEnum} from "../common/event-type-enum";
+import {AuthService} from "../../services/auth.service";
+import {EventTypeEnum} from "../../common/event-type-enum";
 
 @Component({
   templateUrl: 'person-events.component.html',
