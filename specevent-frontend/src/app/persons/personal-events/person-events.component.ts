@@ -18,7 +18,7 @@ import {EventTypeEnum} from "../../common/event-type-enum";
 export class PersonEventsComponent implements OnInit{
   logged: boolean;
   person: Person;
-  settingMode: boolean;
+  settingMode = false;
   valid: boolean;
 
   constructor(
@@ -38,7 +38,6 @@ export class PersonEventsComponent implements OnInit{
 
     let id = this.route.snapshot.paramMap.get('id');
     this.personService.getPerson(Number(id)).then(person => this.person = person);
-    this.settingMode = false;
   }
 
   onSettingMode(): void {

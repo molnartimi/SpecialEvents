@@ -7,10 +7,10 @@ public class SpecEventDto {
 	protected String name;
 	protected int month;
 	protected int day;
-	protected SpecEventTypeEnum eventType;
+	protected int eventType;
 	
 	public SpecEventDto() {}
-	public SpecEventDto(long id, String p, int m, int d, SpecEventTypeEnum t) {
+	public SpecEventDto(long id, String p, int m, int d, int t) {
 		this.id = id;
 		name = p;
 		month = m;
@@ -42,11 +42,11 @@ public class SpecEventDto {
 		this.day = day;
 	}
 
-	public SpecEventTypeEnum getEventType() {
+	public int getEventType() {
 		return eventType;
 	}
 
-	public void setEventType(SpecEventTypeEnum eventType) {
+	public void setEventType(int eventType) {
 		this.eventType = eventType;
 	}
 }

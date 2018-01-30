@@ -1,13 +1,15 @@
-import {EventTypeEnum} from "./event-type-enum";
 /**
  * Created by NB-72 on 2017. 07. 04..
  */
 
-export class SpecEvent {
+import {EventTypeEnum} from "./event-type-enum";
 
-  constructor(
-    public eventType: EventTypeEnum,
-    public month: number,
-    public day: number
-  ) {}
+export class SpecEvent {
+    id: number;
+    
+    constructor(public name: string,
+                public eventType: EventTypeEnum,
+                public month: number,
+                public day: number) {
+    }
 }

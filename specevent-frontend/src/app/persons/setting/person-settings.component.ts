@@ -19,7 +19,7 @@ export class PersonSettingsComponent implements OnInit{
   ngOnInit(): void {
     this.newPerson = new Person(this.person.name);
     for(let e of this.person.events){
-      this.newPerson.events.push(new SpecEvent(e.eventType,e.month,e.day));
+      this.newPerson.events.push(new SpecEvent(this.person.name,e.eventType,e.month,e.day));
     }
   }
   savePerson() {

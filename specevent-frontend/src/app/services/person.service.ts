@@ -8,9 +8,8 @@ import {SpecEvent} from "../common/spec-event.";
 import {EventItem} from "../event-list/event-item";
 import {AuthService} from "./auth.service";
 import {GiftsService} from "./gifts.service";
-import {PERSONS} from "./mock-datas"
 import {EventTypeEnum} from "../common/event-type-enum";
-import {Http} from "@angular/http";
+import {Http, RequestOptions, Headers, URLSearchParams} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -18,6 +17,7 @@ export class PersonService {
     private eventsUrl = "api/events";
     private personsUrl = "api/persons";
     private personUrl = "api/person";
+    private newEventUrl = "api/new-event"
     private personList;
 
     constructor(private authService: AuthService,
@@ -32,7 +32,13 @@ export class PersonService {
     }
 
     getPerson(id: number): Promise<Person> {
-        return this.http.get(this.personUrl + '/' + id)
+        let myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        let myParams = new URLSearchParams();
+        myParams.append('id', id.toString());
+        let options = new RequestOptions({ headers: myHeaders, params: myParams });
+        
+        return this.http.get(this.personUrl, options)
             .toPromise()
             .then(response => response.json() as Person);
     }
@@ -43,31 +49,8 @@ export class PersonService {
             .then(response => response.json() as EventItem[]);
     }
 
-    addNewEvent(name: string, event: SpecEvent): boolean {
-        let person = this.personList.find(p => p.name === name);
-        if (!person) {
-            this.personList.push(new Person(name, event));
-            return true;
-        }
-        else {
-            let eventTemp = person.events.find(e => e.eventType === event.eventType);
-            if (eventTemp) {
-                alert(name + "'s " + event.eventType + " is already in the list: " +
-                    eventTemp.month + "." + eventTemp.day + ".");
-                return false;
-            }
-            else {
-                let text = "There is already a person with name " + name + " in the list, this is the same person?\n";
-                for (let e of person.events)
-                    text += e.month.toString() + "." + e.day.toString() + ". - " + e.eventType + "\n";
-                let c = confirm(text);
-                if (c) {
-                    person.events.push(event);
-                    return true;
-                }
-                return false;
-            }
-        }
+    addNewEvent(event: SpecEvent): Promise<any> {
+        return this.http.post(this.newEventUrl, event).toPromise();
     }
 
     deleteEvent(id: number, eventType: EventTypeEnum): void {
