@@ -6,7 +6,6 @@ import {Injectable} from "@angular/core";
 import {Person} from "../common/person";
 import {SpecEvent} from "../common/spec-event.";
 import {EventItem} from "../event-list/event-item";
-import {AuthService} from "./auth.service";
 import {GiftsService} from "./gifts.service";
 import {EventTypeEnum} from "../common/event-type-enum";
 import {Http, RequestOptions, Headers, URLSearchParams} from "@angular/http";
@@ -22,8 +21,7 @@ export class PersonService {
     private deletePersonUrl = "api/delete-person";
     private personList;
 
-    constructor(private authService: AuthService,
-                private giftService: GiftsService,
+    constructor(private giftService: GiftsService,
                 private http: Http) {
     }
 
@@ -38,8 +36,8 @@ export class PersonService {
         myHeaders.append('Content-Type', 'application/json');
         let myParams = new URLSearchParams();
         myParams.append('id', id.toString());
-        let options = new RequestOptions({ headers: myHeaders, params: myParams });
-        
+        let options = new RequestOptions({headers: myHeaders, params: myParams});
+
         return this.http.get(this.personUrl, options)
             .toPromise()
             .then(response => response.json() as Person);
@@ -56,37 +54,31 @@ export class PersonService {
     }
 
     deleteEvent(id: number): Promise<any> {
-        if (this.authService.isLogged()) {
-            let myHeaders = new Headers();
-            myHeaders.append('Content-Type', 'application/json');
-            let myParams = new URLSearchParams();
-            myParams.append('id', id.toString());
-            let options = new RequestOptions({ headers: myHeaders, params: myParams });
-            
-            return this.http.delete(this.deleteEventUrl, options)
-                .toPromise()
-                .then(() => window.location.reload())
-        }
-        else {
-            alert("You have to be logged in as an ADMIN to delete event!");
-        }
+
+        let myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        let myParams = new URLSearchParams();
+        myParams.append('id', id.toString());
+        let options = new RequestOptions({headers: myHeaders, params: myParams});
+
+        return this.http.delete(this.deleteEventUrl, options)
+            .toPromise()
+            .then(() => window.location.reload())
+
     }
 
     deletePerson(id: number) {
-        if (this.authService.isLogged()) {
-            let myHeaders = new Headers();
-            myHeaders.append('Content-Type', 'application/json');
-            let myParams = new URLSearchParams();
-            myParams.append('id', id.toString());
-            let options = new RequestOptions({ headers: myHeaders, params: myParams });
 
-            this.http.delete(this.deletePersonUrl, options)
-                .toPromise()
-                .then(() => window.location.reload())
-        }
-        else {
-            alert("You have to be logged in as an ADMIN to delete person!")
-        }
+        let myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        let myParams = new URLSearchParams();
+        myParams.append('id', id.toString());
+        let options = new RequestOptions({headers: myHeaders, params: myParams});
+
+        this.http.delete(this.deletePersonUrl, options)
+            .toPromise()
+            .then(() => window.location.reload())
+
     }
 
     order(persons): Person[] {

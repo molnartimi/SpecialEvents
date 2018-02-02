@@ -8,7 +8,6 @@ import {Router, ActivatedRoute} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import {PersonService} from "../../services/person.service";
 import {Location} from "@angular/common";
-import {AuthService} from "../../services/auth.service";
 import {EventTypeEnum} from "../../common/event-type-enum";
 
 @Component({
@@ -25,11 +24,8 @@ export class PersonEventsComponent implements OnInit{
     private route: ActivatedRoute,
     private router: Router,
     private personService: PersonService,
-    private authService: AuthService,
     private location: Location
-  ) {
-    this.logged = authService.isLogged();
-  }
+  ) {}
 
   ngOnInit(): void {
     /*this.route.paramMap

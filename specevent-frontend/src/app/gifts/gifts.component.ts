@@ -6,7 +6,6 @@ import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Gift, GiftsService} from "../services/gifts.service";
 import {Location} from "@angular/common";
-import {AuthService} from "../services/auth.service";
 import {PersonService} from "../services/person.service";
 
 @Component({
@@ -16,7 +15,6 @@ import {PersonService} from "../services/person.service";
 export class GiftsComponent implements OnInit{
   id: number;
   name: string;
-  logged: boolean = false;
   gifts: Gift[] = [{gift: "alma", done: true}];
   newGift: string = '';
 
@@ -24,7 +22,6 @@ export class GiftsComponent implements OnInit{
     private route: ActivatedRoute,
     private giftsService: GiftsService,
     private personService: PersonService,
-    private authService: AuthService,
     private location: Location
   ) {}
 
@@ -33,7 +30,6 @@ export class GiftsComponent implements OnInit{
     this.personService.getPerson(this.id).then(person => this.name = person.name);
 
     this.giftsService.getGifts(this.id).then(gifts => this.gifts = gifts);
-    this.logged = this.authService.isLogged();
   }
 
   saveNewGift(): void{

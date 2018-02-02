@@ -7,10 +7,8 @@ import {FormBuilder, FormsModule} from "@angular/forms";
 import {NewEventComponent} from "./new-event/new-event.component";
 import {EventListComponent} from "./event-list/event-list.component";
 import {PersonService} from "./services/person.service";
-import {AuthService} from "./services/auth.service";
 import {PersonsModule} from "./persons/persons.module";
 import {GiftsService} from "./services/gifts.service";
-import {SettingComponent} from "./setting/setting.component";
 import {HttpModule} from "@angular/http";
 
 
@@ -18,8 +16,7 @@ import {HttpModule} from "@angular/http";
     declarations: [
         AppComponent,
         EventListComponent,
-        NewEventComponent,
-        SettingComponent
+        NewEventComponent
     ],
     imports: [
         BrowserModule,
@@ -31,7 +28,6 @@ import {HttpModule} from "@angular/http";
     providers: [
         PersonService,
         GiftsService,
-        AuthService,
         FormBuilder
     ],
     bootstrap: [AppComponent]

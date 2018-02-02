@@ -7,7 +7,6 @@ import { PersonService } from "../services/person.service";
 import { EventItem } from "./event-item";
 import { SortingFilterEnum } from "../common/sorting-filter-enum";
 import {Router} from "@angular/router";
-import {AuthService} from "../services/auth.service";
 import {EventTypeEnum} from "../common/event-type-enum";
 
 @Component ({
