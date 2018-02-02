@@ -17,7 +17,9 @@ export class PersonService {
     private eventsUrl = "api/events";
     private personsUrl = "api/persons";
     private personUrl = "api/person";
-    private newEventUrl = "api/new-event"
+    private newEventUrl = "api/new-event";
+    private deleteEventUrl = "api/delete-event";
+    private deletePersonUrl = "api/delete-person";
     private personList;
 
     constructor(private authService: AuthService,
@@ -53,33 +55,34 @@ export class PersonService {
         return this.http.post(this.newEventUrl, event).toPromise();
     }
 
-    deleteEvent(id: number, eventType: EventTypeEnum): void {
+    deleteEvent(id: number): Promise<any> {
         if (this.authService.isLogged()) {
-            let person = this.personList.find(p => p.id === id);
-            let c = confirm("Are you sure you want to delete " + person.name + "'s event?");
-            if (c) {
-                let event = person.events.find(e => e.eventType === eventType);
-                let index = person.events.indexOf(event, 0);
-                person.events.splice(index, 1);
-
-                if (!person.events.length) {
-                    this.personList.splice(this.personList.indexOf(person), 1);
-                    this.giftService.deletePerson(person.id);
-                }
-            }
+            let myHeaders = new Headers();
+            myHeaders.append('Content-Type', 'application/json');
+            let myParams = new URLSearchParams();
+            myParams.append('id', id.toString());
+            let options = new RequestOptions({ headers: myHeaders, params: myParams });
+            
+            return this.http.delete(this.deleteEventUrl, options)
+                .toPromise()
+                .then(() => window.location.reload())
         }
         else {
             alert("You have to be logged in as an ADMIN to delete event!");
         }
     }
 
-    deletePerson(person: Person) {
+    deletePerson(id: number) {
         if (this.authService.isLogged()) {
-            let c = confirm("Are you sure you want to delete " + person.name + " from the list?");
-            if (c) {
-                this.personList.splice(this.personList.indexOf(person), 1);
-                this.giftService.deletePerson(person.id);
-            }
+            let myHeaders = new Headers();
+            myHeaders.append('Content-Type', 'application/json');
+            let myParams = new URLSearchParams();
+            myParams.append('id', id.toString());
+            let options = new RequestOptions({ headers: myHeaders, params: myParams });
+
+            this.http.delete(this.deletePersonUrl, options)
+                .toPromise()
+                .then(() => window.location.reload())
         }
         else {
             alert("You have to be logged in as an ADMIN to delete person!")

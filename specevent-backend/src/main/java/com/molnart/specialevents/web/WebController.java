@@ -62,6 +62,23 @@ public class WebController {
 		eventRepository.save(convertSpecEventDtoToEntity(event, person));
 	}
 
+	@DeleteMapping(value = "/delete-event", produces = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteEvent(@RequestParam("id") String id) {
+		Long longId = Long.parseLong(id);
+		PersonEntity person = eventRepository.findOne(longId).getPerson();
+		eventRepository.delete(longId);
+		
+		SpecEventEntity[] events = eventRepository.findAllByPerson(person);
+		if (events.length == 0) {
+			deletePerson(String.valueOf(person.getId()));
+		}
+	}
+
+	@DeleteMapping(value = "/delete-person", produces = MediaType.APPLICATION_JSON_VALUE)
+	public void deletePerson(@RequestParam("id") String id) {
+		personRepository.delete(Long.parseLong(id));
+	}
+
 	private SpecEventDto convertSpecEventEntityToDto(SpecEventEntity event) {
 		return new SpecEventDto(event.getId(),
 				event.getPerson().getName(),

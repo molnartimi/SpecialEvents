@@ -34,8 +34,8 @@ export class PersonListComponent implements OnInit{
     this.router.navigate(['person', person.id, 'gifts']);
   }
 
-  deletePerson(person: Person){
+  deletePerson(id: number){
     this.deleted = true;
-    this.personService.deletePerson(person);
+    this.personService.deletePerson(id);
   }
 }

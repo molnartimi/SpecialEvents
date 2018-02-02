@@ -58,8 +58,8 @@ export class PersonEventsComponent implements OnInit{
     this.router.navigate(['person', this.person.id, 'gifts']);
   }
 
-  deleteEvent(eventType: EventTypeEnum): void {
-    this.personService.deleteEvent(this.person.id,eventType);
+  deleteEvent(eventId: number): void {
+    this.personService.deleteEvent(eventId);
     if(!this.person.events.length)
       this.router.navigate(['events']);
   }
