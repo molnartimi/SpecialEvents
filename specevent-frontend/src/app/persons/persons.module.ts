@@ -15,19 +15,20 @@ import {GiftsComponent} from "../gifts/gifts.component";
 import {PersonSettingsComponent} from "./setting/person-settings.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    PersonsRoutingModule
-  ],
-  declarations: [
-    PersonListComponent,
-    PersonEventsComponent,
-    PersonSettingsComponent,
-    GiftsComponent
-  ],
-  providers: [
-    PersonService
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        PersonsRoutingModule
+    ],
+    declarations: [
+        PersonListComponent,
+        PersonEventsComponent,
+        PersonSettingsComponent,
+        GiftsComponent
+    ],
+    providers: [
+        PersonService
+    ]
 })
-export class PersonsModule {}
+export class PersonsModule {
+}

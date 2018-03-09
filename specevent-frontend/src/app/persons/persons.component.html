@@ -1,19 +1,19 @@
 <h2>Person list</h2>
 <div class="list-group">
-  <button class="list-group-item" *ngFor="let p of personList" (click)="onSelect(p)">
-    <table>
-      <tr>
-        <td>{{p.name}}</td>
-        <td class="tdRight">
-          <button class="btn" (click)="goToHints(p)">
-            Hints
-            <img src="assets/icons/gift.png" title="Hints for gift" height="20">
-          </button>
-          <button class="btn"  (click)="deletePerson(p.id)">
-            <img src="assets/icons/del.png" title="Delete person" height="20">
-          </button>
-        </td>
-      </tr>
-    </table>
-  </button>
+    <button class="list-group-item" *ngFor="let p of personList" (click)="onSelect(p)">
+        <table>
+            <tr>
+                <td>{{p.name}}</td>
+                <td class="tdRight">
+                    <button class="btn" (click)="goToHints(p)">
+                        Hints
+                        <img src="assets/icons/gift.png" title="Hints for gift" height="20">
+                    </button>
+                    <button class="btn" (click)="deletePerson(p.id)">
+                        <img src="assets/icons/del.png" title="Delete person" height="20">
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </button>
 </div>

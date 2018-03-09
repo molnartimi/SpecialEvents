@@ -2,10 +2,10 @@
  * Created by NB-72 on 2017. 07. 05..
  */
 
-import { Component, OnInit } from '@angular/core'
-import { PersonService } from "../services/person.service";
-import { EventItem } from "./event-item";
-import { SortingFilterEnum } from "../common/sorting-filter-enum";
+import {Component, OnInit} from '@angular/core'
+import {PersonService} from "../services/person.service";
+import {EventItem} from "./event-item";
+import {SortingFilterEnum} from "../common/sorting-filter-enum";
 import {Router} from "@angular/router";
 import {EventTypeEnum} from "../common/event-type-enum";
 

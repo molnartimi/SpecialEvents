@@ -1,36 +1,48 @@
-.settedDate{
-  font-size: 18px;
-  display: inline;
+.settedDate {
+    font-size: 18px;
+    display: inline;
 }
 
 .settedDate {
-  width: inherit;
+    width: inherit;
 }
 
 .settedName {
-  margin: 1em 2em 1.2em;
-  font-size: 25px;
+    margin: 1em 2em 1.2em;
+    font-size: 25px;
 }
 
 input {
-  width: 50%;
+    width: 50%;
 }
 
 #setterPanel {
-  animation: appear .8s;
-  position: relative;
+    animation: appear .8s;
+    position: relative;
 }
 
 #setterPanel.exit {
-  animation: disappear .5s;
+    animation: disappear .5s;
 }
 
 @keyframes appear {
-  from {left: -100px; opacity: 0;}
-  to {left: 0px; opacity: 1;}
+    from {
+        left: -100px;
+        opacity: 0;
+    }
+    to {
+        left: 0px;
+        opacity: 1;
+    }
 }
 
 @keyframes disappear {
-  from {left: 0px; opacity: 1;}
-  to {left: -100px; opacity: 0;}
+    from {
+        left: 0px;
+        opacity: 1;
+    }
+    to {
+        left: -100px;
+        opacity: 0;
+    }
 }

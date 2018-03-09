@@ -10,15 +10,16 @@ import {PersonEventsComponent} from "./personal-events/person-events.component";
 import {GiftsComponent} from "../gifts/gifts.component";
 
 @NgModule({
-  imports: [
-    RouterModule.forChild([
-      {path: 'persons', component: PersonListComponent},
-      {path: 'person/:id', component: PersonEventsComponent},
-      {path: 'person/:id/gifts', component: GiftsComponent}
-    ])
-  ],
-  exports: [
-    RouterModule
-  ]
+    imports: [
+        RouterModule.forChild([
+            {path: 'persons', component: PersonListComponent},
+            {path: 'person/:id', component: PersonEventsComponent},
+            {path: 'person/:id/gifts', component: GiftsComponent}
+        ])
+    ],
+    exports: [
+        RouterModule
+    ]
 })
-export class PersonsRoutingModule {}
+export class PersonsRoutingModule {
+}
