@@ -70,7 +70,7 @@ public class WebController {
 		
 		SpecEventEntity[] events = eventRepository.findAllByPerson(person);
 		if (events.length == 0) {
-			deletePerson(String.valueOf(person.getId()));
+			// TODO something message to frontend?
 		}
 	}
 

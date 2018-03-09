@@ -61,13 +61,10 @@ export class PersonService {
         myParams.append('id', id.toString());
         let options = new RequestOptions({headers: myHeaders, params: myParams});
 
-        return this.http.delete(this.deleteEventUrl, options)
-            .toPromise()
-            .then(() => window.location.reload())
-
+        return this.http.delete(this.deleteEventUrl, options).toPromise();
     }
 
-    deletePerson(id: number) {
+    deletePerson(id: number): Promise<any> {
 
         let myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
@@ -75,9 +72,7 @@ export class PersonService {
         myParams.append('id', id.toString());
         let options = new RequestOptions({headers: myHeaders, params: myParams});
 
-        this.http.delete(this.deletePersonUrl, options)
-            .toPromise()
-            .then(() => window.location.reload())
+        return this.http.delete(this.deletePersonUrl, options).toPromise();
 
     }
 

@@ -36,6 +36,8 @@ export class PersonListComponent implements OnInit{
 
   deletePerson(id: number){
     this.deleted = true;
-    this.personService.deletePerson(id);
+    this.personService.deletePerson(id).then(() => {
+      this.personService.getPersons().then(persons => this.personList = persons);
+    });
   }
 }
