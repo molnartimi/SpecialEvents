@@ -1,18 +1,19 @@
 package com.molnart.specialevents.domain.dto;
 
-import com.molnart.specialevents.domain.events.SpecEventTypeEnum;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SpecEventDto {
 	protected long id;
-	protected String name;
+	protected Set<PersonDto> persons = new HashSet<PersonDto>();
 	protected int month;
 	protected int day;
-	protected int eventType;
+	protected String eventType;
 	
 	public SpecEventDto() {}
-	public SpecEventDto(long id, String p, int m, int d, int t) {
+	public SpecEventDto(long id, Set<PersonDto> p, int m, int d, String t) {
 		this.id = id;
-		name = p;
+		persons = p;
 		month = m;
 		day = d;
 		eventType = t;
@@ -22,8 +23,8 @@ public class SpecEventDto {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public Set<PersonDto> getPersons() {
+		return persons;
 	}
 
 	public int getMonth() {
@@ -42,11 +43,11 @@ public class SpecEventDto {
 		this.day = day;
 	}
 
-	public int getEventType() {
+	public String getEventType() {
 		return eventType;
 	}
 
-	public void setEventType(int eventType) {
+	public void setEventType(String eventType) {
 		this.eventType = eventType;
 	}
 }

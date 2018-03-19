@@ -4,5 +4,7 @@ import com.molnart.specialevents.domain.person.PersonEntity;
 import org.springframework.data.repository.CrudRepository;
 
 public interface SpecEventRepository extends CrudRepository<SpecEventEntity, Long> {
-	SpecEventEntity[] findAllByPerson(PersonEntity person);
+	SpecEventEntity[] findAllByPersons_Id(long id);
+
+	SpecEventEntity[] findAllByPersons(PersonEntity person);
 }

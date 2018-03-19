@@ -3,6 +3,8 @@ package com.molnart.specialevents.domain.events;
 import com.molnart.specialevents.domain.person.PersonEntity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "events")
@@ -10,8 +12,8 @@ public class SpecEventEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@ManyToOne
-	private PersonEntity person;
+	@ManyToMany(mappedBy = "events")
+	private Set<PersonEntity> persons = new HashSet<PersonEntity>();
 	private int month;
 	private int day;
 	@Column(name = "eventtype")
@@ -19,8 +21,8 @@ public class SpecEventEntity {
 	
 	protected SpecEventEntity(){}
 	
-	public SpecEventEntity(PersonEntity person, int month, int day, SpecEventTypeEnum type) {
-		this.person = person;
+	public SpecEventEntity(Set<PersonEntity> persons, int month, int day, SpecEventTypeEnum type) {
+		this.persons = persons;
 		this.month = month;
 		this.day = day;
 		this.eventType = type;
@@ -38,8 +40,8 @@ public class SpecEventEntity {
 		return day;
 	}
 
-	public PersonEntity getPerson() {
-		return person;
+	public Set<PersonEntity> getPersons() {
+		return persons;
 	}
 
 	public SpecEventTypeEnum getEventType() {
