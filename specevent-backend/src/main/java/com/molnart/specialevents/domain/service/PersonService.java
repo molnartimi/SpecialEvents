@@ -26,12 +26,25 @@ public class PersonService {
 		return list;
 	}
 	
-	public PersonDto getPerson(String id) {
-		return toDto(personRepository.findOne(Long.parseLong(id)));
-	}
-	
 	public void add(PersonDto person) {
 		personRepository.save(new PersonEntity(person.getName()));
+	}
+	
+	@Transactional
+	public void addEvent(Set<PersonEntity> persons, SpecEventEntity eventEntity) {
+		for (PersonEntity p: persons) {
+			personRepository.findOne(p.getId()).addEvent(eventEntity);
+		}
+	}
+	
+	@Transactional
+	public void edit(PersonDto person) {
+		PersonEntity entity = personRepository.findOne(person.getId());
+		if (entity != null) {
+			entity.setName(person.getName());
+		} else {
+			add(person);
+		}
 	}
 	
 	public PersonEntity delete(String id) {
@@ -49,5 +62,17 @@ public class PersonService {
 	
 	private PersonDto toDto(PersonEntity person) {
 		return new PersonDto(person.getId(), person.getName());
+	}
+	
+	public PersonEntity toEntity(PersonDto person) {
+		return personRepository.findOne(person.getId());
+	}
+	
+	public Set<PersonEntity> toEntity(Set<PersonDto> persons) {
+		Set<PersonEntity> result = new HashSet<PersonEntity>();
+		for (PersonDto p: persons) {
+			result.add(personRepository.findOne(p.getId()));
+		}
+		return result;
 	}
 }

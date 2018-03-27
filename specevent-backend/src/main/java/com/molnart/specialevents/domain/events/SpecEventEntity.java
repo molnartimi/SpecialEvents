@@ -47,6 +47,10 @@ public class SpecEventEntity {
 	public SpecEventTypeEnum getEventType() {
 		return eventType;
 	}
+	
+	public void setPersons(Set<PersonEntity> persons) {
+		this.persons = persons;
+	}
 
 	public void setMonth(int month) {
 		this.month = month;

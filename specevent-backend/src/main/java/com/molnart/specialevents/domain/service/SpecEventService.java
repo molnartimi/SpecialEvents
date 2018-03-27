@@ -22,8 +22,7 @@ public class SpecEventService {
 	public Set<SpecEventDto> getEvents() {
 		Set<SpecEventDto> result = new HashSet<SpecEventDto>();
 		for (SpecEventEntity event: specEventRepository.findAll()) {
-			result.add(toDto(event))
-			;
+			result.add(toDto(event));
 		}
 		return result;
 	}
@@ -36,12 +35,21 @@ public class SpecEventService {
 		return result;
 	}
 	
-	public void add(SpecEventDto event) {
-		Set<PersonEntity> persons = new HashSet<PersonEntity>();
-		for (PersonDto person: event.getPersons()) {
-			persons.add(new PersonEntity(person.getName()));
+	public SpecEventEntity addEvent(SpecEventDto event, Set<PersonEntity> toPersons) {
+		SpecEventEntity newEntity = new SpecEventEntity(toPersons, event.getMonth(), event.getDay(), SpecEventTypeEnum.valueOf(event.getEventType()));
+		specEventRepository.save(newEntity);
+		return newEntity;
+	}
+	
+	@Transactional
+	public void edit(SpecEventDto event) {
+		SpecEventEntity entity = specEventRepository.findOne(event.getId());
+		if (entity != null) {
+			entity.setMonth(event.getMonth());
+			entity.setDay(event.getDay());
+			entity.setEventType(SpecEventTypeEnum.valueOf(event.getEventType()));
+			// TODO	entity.setPersons(event.getPersons());
 		}
-		specEventRepository.save(new SpecEventEntity(persons, event.getMonth(), event.getDay(), SpecEventTypeEnum.valueOf(event.getEventType())));
 	}
 
 	public SpecEventEntity delete(String id) {
@@ -58,15 +66,31 @@ public class SpecEventService {
 	}
 	
 	
-	private SpecEventDto toDto(SpecEventEntity event) {
+	public static SpecEventDto toDto(SpecEventEntity event) {
 		Set<PersonDto> persons = new HashSet<PersonDto>();
 		for (PersonEntity person: event.getPersons()) {
 			persons.add(new PersonDto(person.getId(), person.getName()));
 		}
 		return new SpecEventDto(event.getId(),
-				persons,
-				event.getMonth(),
-				event.getDay(),
-				event.getEventType().value);
+								persons,
+								event.getMonth(),
+								event.getDay(),
+								event.getEventType().value);
 	}
+	
+/*	public static Set<PersonEntity> toEntity(Set<PersonDto> persons) {
+		Set<PersonEntity> result = new HashSet<PersonEntity>();
+		for(PersonDto p: persons) {
+			result.addEvent()
+		}
+	}
+	
+	public static SpecEventEntity toEntity(SpecEventDto dto) {
+		Set<PersonEntity> persons = new HashSet<PersonEntity>();
+		for (PersonDto person: dto.getPersons()) {
+			persons.add(new PersonEntity(person.getName()));
+		}
+		specEventRepository.save(new SpecEventEntity(persons, event.getMonth(), event.getDay(), SpecEventTypeEnum.valueOf(event.getEventType())));
+	}
+*/
 }
