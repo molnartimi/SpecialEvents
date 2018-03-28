@@ -19,6 +19,10 @@ public class SpecEventService {
 	@Autowired
 	SpecEventRepository specEventRepository;
 
+	public SpecEventEntity getEntity(long id) {
+		return specEventRepository.findOne(id);
+	}
+	
 	public Set<SpecEventDto> getEvents() {
 		Set<SpecEventDto> result = new HashSet<SpecEventDto>();
 		for (SpecEventEntity event: specEventRepository.findAll()) {
@@ -48,7 +52,6 @@ public class SpecEventService {
 			entity.setMonth(event.getMonth());
 			entity.setDay(event.getDay());
 			entity.setEventType(SpecEventTypeEnum.valueOf(event.getEventType()));
-			// TODO	entity.setPersons(event.getPersons());
 		}
 	}
 
@@ -77,20 +80,4 @@ public class SpecEventService {
 								event.getDay(),
 								event.getEventType().value);
 	}
-	
-/*	public static Set<PersonEntity> toEntity(Set<PersonDto> persons) {
-		Set<PersonEntity> result = new HashSet<PersonEntity>();
-		for(PersonDto p: persons) {
-			result.addEvent()
-		}
-	}
-	
-	public static SpecEventEntity toEntity(SpecEventDto dto) {
-		Set<PersonEntity> persons = new HashSet<PersonEntity>();
-		for (PersonDto person: dto.getPersons()) {
-			persons.add(new PersonEntity(person.getName()));
-		}
-		specEventRepository.save(new SpecEventEntity(persons, event.getMonth(), event.getDay(), SpecEventTypeEnum.valueOf(event.getEventType())));
-	}
-*/
 }

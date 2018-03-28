@@ -26,6 +26,10 @@ public class SpecEventDto {
 	public Set<PersonDto> getPersons() {
 		return persons;
 	}
+	
+	public void setPersons(Set<PersonDto> persons) {
+		this.persons = persons;
+	}
 
 	public int getMonth() {
 		return month;

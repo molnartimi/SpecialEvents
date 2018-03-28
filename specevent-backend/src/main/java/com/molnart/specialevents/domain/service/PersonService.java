@@ -1,6 +1,7 @@
 package com.molnart.specialevents.domain.service;
 
 import com.molnart.specialevents.domain.dto.PersonDto;
+import com.molnart.specialevents.domain.dto.SpecEventDto;
 import com.molnart.specialevents.domain.events.SpecEventEntity;
 import com.molnart.specialevents.domain.person.PersonEntity;
 import com.molnart.specialevents.domain.person.PersonRepository;
@@ -16,6 +17,10 @@ public class PersonService {
 
 	@Autowired
 	private PersonRepository personRepository;
+	
+	public PersonEntity getEntity(String id) {
+		return personRepository.findOne(Long.parseLong(id));
+	}
 	
 	public Set<PersonDto> getPersons() {
 		Set<PersonDto> list = new HashSet<PersonDto>();
@@ -42,8 +47,6 @@ public class PersonService {
 		PersonEntity entity = personRepository.findOne(person.getId());
 		if (entity != null) {
 			entity.setName(person.getName());
-		} else {
-			add(person);
 		}
 	}
 	
@@ -51,6 +54,11 @@ public class PersonService {
 		PersonEntity person = personRepository.findOne(Long.parseLong(id));
 		personRepository.delete(person);
 		return person;
+	}
+
+	public void deleteEventFromPerson(SpecEventEntity event, String personId) {
+		PersonEntity person = personRepository.findOne(Long.parseLong(personId));
+		person.getEvents().remove(event);
 	}
 
 	@Transactional

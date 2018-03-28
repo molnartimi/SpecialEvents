@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface PersonRepository extends CrudRepository<PersonEntity, Long> {
 	PersonEntity[] findAllByEvents(SpecEventEntity event);
+	
+	PersonEntity[] findAllByEvents_Id(long id);
 }

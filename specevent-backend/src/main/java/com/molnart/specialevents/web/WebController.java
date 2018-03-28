@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.util.HashSet;
 import java.util.Set;
 
 @RestController
@@ -54,23 +55,41 @@ public class WebController {
 		personService.addEvent(persons, eventEntity);
 	}
 
-	
+	// Edit only the persons's name!
 	@PutMapping(value = "/edit-person", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void editPerson(@RequestBody PersonDto person) {
 		personService.edit(person);
 	}
-
+	
+	// Event modification for all person of event
 	@PutMapping(value = "/edit-event", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void editEvent(@RequestBody SpecEventDto event) {
 		specEventService.edit(event);
 	}
 
+	// Event modification for one person
+	// Create new event for him
+	@PutMapping(value = "/edit-person-event", produces = MediaType.APPLICATION_JSON_VALUE)
+	public void editEvent(@RequestBody SpecEventDto event, @RequestParam String personId) {
+		personService.deleteEventFromPerson(specEventService.getEntity(event.getId()), personId);
+		
+		Set<PersonDto> person = new HashSet<PersonDto>();
+		PersonEntity personEntity = personService.getEntity(personId);
+		person.add(new PersonDto(personEntity.getId(), personEntity.getName()));
+		
+		addNewEvent(new SpecEventDto(event.getId(), null, event.getMonth(), event.getDay(), event.getEventType()));
+	}
+
+	// Delete person
+	// Also delete event relations from all events
 	@DeleteMapping(value = "/delete-person", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void deletePerson(@RequestParam("id") String id) {
 		PersonEntity person = personService.delete(id);
 		specEventService.deletePerson(person);
 	}
 
+	// Delete event
+	// ALso delete person relations from all persons
 	@DeleteMapping(value = "/delete-event", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void deleteEvent(@RequestParam("id") String id) {
 		SpecEventEntity event = specEventService.delete(id);
