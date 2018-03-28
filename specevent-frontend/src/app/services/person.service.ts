@@ -10,12 +10,14 @@ import {GiftsService} from "./gifts.service";
 import {EventTypeEnum} from "../common/event-type-enum";
 import {Http, RequestOptions, Headers, URLSearchParams} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
+import {PersonDto} from "../common/person.dto";
 
 @Injectable()
 export class PersonService {
     private eventsUrl = "api/events";
     private personsUrl = "api/persons";
     private personUrl = "api/person";
+    private newPersonUrl = "api/new-person";
     private newEventUrl = "api/new-event";
     private deleteEventUrl = "api/delete-event";
     private deletePersonUrl = "api/delete-person";
@@ -86,4 +88,7 @@ export class PersonService {
         });
     }
 
+    savePerson(newPerson: PersonDto): Promise<any> {
+        return this.http.post(this.newPersonUrl, newPerson).toPromise();
+    }
 }

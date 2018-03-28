@@ -1,19 +1,37 @@
-<h2>Person list</h2>
-<div class="list-group">
-    <button class="list-group-item" *ngFor="let p of personList" (click)="onSelect(p)">
-        <table>
-            <tr>
-                <td>{{p.name}}</td>
-                <td class="tdRight">
-                    <button class="btn" (click)="goToHints(p)">
-                        Hints
-                        <img src="assets/icons/gift.png" title="Hints for gift" height="20">
-                    </button>
-                    <button class="btn" (click)="deletePerson(p.id)">
-                        <img src="assets/icons/del.png" title="Delete person" height="20">
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </button>
+<div class="inner-content">
+    <h2>Person list</h2>
+    <div class="list-group">
+        <button class="list-group-item" *ngFor="let p of personList" (click)="onSelect(p)">
+            <table>
+                <tr>
+                    <td>{{p.name}}</td>
+                    <td class="tdRight">
+                        <button class="btn" (click)="goToHints(p)">
+                            Hints
+                            <img src="assets/icons/gift.png" title="Hints for gift" height="20">
+                        </button>
+                        <button class="btn" (click)="deletePerson(p.id)">
+                            <img src="assets/icons/del.png" title="Delete person" height="20">
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </button>
+    </div>
+    <div *ngIf="!addNewActive">
+        <button class="bnt btn-info" (click)="addnew()">Add new</button>
+    </div>
+    <div *ngIf="addNewActive">
+        <form #newPerson="ngForm" (ngSubmit)="savePerson()">
+            <div class="form-group">
+                <label for="name">Name: </label>
+                <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="newName" #namea="ngModel"
+                       placeholder="Type the name">
+                <div [hidden]="namea.valid || namea.pristine" class="alert alert-danger">
+                    Name is required!
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success" [disabled]="false">Save person</button>
+        </form>
+    </div>
 </div>

@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 h2 {
-  margin: 1em 2em 1.2em;
+  margin: 1em 0 1.2em;
 }
 
 * {
@@ -14,4 +14,8 @@ label {
 
 .pwd {
   top: .5em;
+}
+
+.inner-content {
+  margin: 2em 5em;
 }

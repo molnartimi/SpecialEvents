@@ -4,15 +4,17 @@
 
 import {Component, OnInit} from "@angular/core";
 import {PersonService} from "../services/person.service";
-import {Person} from "../common/person";
 import {Router} from "@angular/router";
+import {PersonDto} from "../common/person.dto";
 
 @Component({
     templateUrl: 'persons.component.html',
     styleUrls: ['persons.component.css']
 })
 export class PersonListComponent implements OnInit {
-    personList: Person[];
+    personList: PersonDto[];
+    newName: string;
+    addNewActive: boolean = false;
     private deleted: boolean = false;
 
     constructor(private personService: PersonService,
@@ -30,7 +32,7 @@ export class PersonListComponent implements OnInit {
             this.deleted = false;
     }
 
-    goToHints(person: Person): void {
+    goToHints(person): void {
         this.router.navigate(['person', person.id, 'gifts']);
     }
 
@@ -38,6 +40,18 @@ export class PersonListComponent implements OnInit {
         this.deleted = true;
         this.personService.deletePerson(id).then(() => {
             this.personService.getPersons().then(persons => this.personList = persons);
+        });
+    }
+    
+    addnew() {
+        this.addNewActive = true;
+    }
+    
+    savePerson() {
+        this.addNewActive = false;
+        this.personService.savePerson(new PersonDto(0, this.newName)).then(() => {
+            this.personService.getPersons().then(persons => this.personList = persons);
+            this.newName = null;
         });
     }
 }
