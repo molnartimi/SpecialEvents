@@ -11,12 +11,18 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="name">Name: </label>
-            <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="persons[0].name" #namea="ngModel"
-                   placeholder="Type the name">
-            <div [hidden]="namea.valid || namea.pristine" class="alert alert-danger">
-                Name is required!
+            <div class="name-div" *ngFor="let person of persons; let i=index">
+                <label for="name">Name: </label> <br>
+                <div class="name-input">
+                    <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="person.name" #namea="ngModel"
+                           placeholder="Type the name">
+                </div>
+                <button *ngIf="i>0" class="bnt btn-danger x-btn" (click)="removePerson(i)">X</button>
+                <div [hidden]="namea.valid || namea.pristine" class="alert alert-danger">
+                    Name is required!
+                </div>
             </div>
+            <button type="button" class="bnt btn-info plus-btn" (click)="addNewPerson()">+</button>
         </div>
         <div class="form-group">
             <label for="month">Date: </label><br/>

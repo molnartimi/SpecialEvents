@@ -14,3 +14,20 @@ select, input {
 .ng-invalid:not(form) {
     border-left: 5px solid #a94442; /* red */
 }
+
+.x-btn {
+    margin-left: 1em;
+    display: inline-block;
+}
+
+.plus-btn {
+    margin-top: 1em;
+}
+
+.name-div {
+    margin-top: 0.5em;
+}
+
+.name-input {
+    display: inline-block;
+}

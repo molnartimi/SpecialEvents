@@ -26,7 +26,15 @@ export class NewEventComponent implements OnInit{
     }
     
     ngOnInit() {
+        this.addNewPerson();
+    }
+    
+    addNewPerson() {
         this.persons.push(new PersonDto(0, ""));
+    }
+    
+    removePerson(index: number) {
+        this.persons.splice(index, 1);
     }
 
     saveEvent(): void {
