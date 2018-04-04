@@ -3,7 +3,7 @@
     <form #newEvent="ngForm" (ngSubmit)="saveEvent()">
         <div class="form-group">
             <label for="type">Event type: </label>
-            <select class="form-control" [(ngModel)]="event.eventType" id="type" name="type" required #type="ngModel">
+            <select class="form-control" [(ngModel)]="eventType" id="type" name="type" required #type="ngModel">
                 <option hidden value="null">choose type</option>
                 <option [value]="1">birthday</option>
                 <option [value]="2">nameday</option>
@@ -12,29 +12,20 @@
         </div>
         <div class="form-group">
             <label for="name">Name: </label>
-            <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="name" #namea="ngModel"
+            <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="persons[0].name" #namea="ngModel"
                    placeholder="Type the name">
             <div [hidden]="namea.valid || namea.pristine" class="alert alert-danger">
                 Name is required!
             </div>
         </div>
-        <div *ngIf="event.eventType==3" class="form-group">
-            <label>Name:</label>
-            <input type="text" class="form-control" id="name2" name="name2" required [(ngModel)]="name2"
-                   #nameb="ngModel"
-                   placeholder="Type the other name">
-            <div [hidden]="nameb.valid || nameb.pristine" class="alert alert-danger">
-                Name is required in case of anniversary!
-            </div>
-        </div>
         <div class="form-group">
             <label for="month">Date: </label><br/>
-            <input class="month form-control" type="number" min="1" max="12" [(ngModel)]="event.month" id="month"
+            <input class="month form-control" type="number" min="1" max="12" [(ngModel)]="month" id="month"
                    name="month"
-                   required placeholder="xx" #month="ngModel">.
-            <input class="day form-control" type="number" min="1" max="31" [(ngModel)]="event.day" id="day" name="day"
-                   required placeholder="xx" #day="ngModel">.
-            <div [hidden]="(month.valid || month.pristine) && (day.valid || day.pristine)" class="alert alert-danger">
+                   required placeholder="xx" #montha="ngModel">.
+            <input class="day form-control" type="number" min="1" max="31" [(ngModel)]="day" id="day" name="day"
+                   required placeholder="xx" #daya="ngModel">.
+            <div [hidden]="(montha.valid || montha.pristine) && (daya.valid || daya.pristine)" class="alert alert-danger">
                 Date is required!
             </div>
             <div *ngIf="!validDate()" class="alert alert-danger">

@@ -15,8 +15,9 @@ import {EventTypeEnum} from "../common/event-type-enum";
 })
 export class EventListComponent implements OnInit {
     eventList: EventItem[];
-    static saved: boolean = false;
+    saved: boolean = false;
     orderBy: SortingFilterEnum = 1;
+    addNewActive: boolean = false;
 
     constructor(private personService: PersonService,
                 private router: Router) {
@@ -28,13 +29,13 @@ export class EventListComponent implements OnInit {
             this.order(this.orderBy);
         });
 
-        if (EventListComponent.saved) {
+        if (this.saved) {
             let snack = document.getElementById("snackbar");
             snack.className = "show";
             setTimeout(() => {
                 snack.className = snack.className.replace("show", "")
             }, 2000);
-            EventListComponent.saved = false;
+            this.saved = false;
         }
     }
 
@@ -52,10 +53,6 @@ export class EventListComponent implements OnInit {
                 this.eventList = this.eventList.sort((e1, e2) => this.orderType(e1, e2));
                 break;
         }
-    }
-
-    static newEventsaved(): void {
-        this.saved = true;
     }
 
     deleteEvent(event: EventItem): void {
@@ -114,5 +111,15 @@ export class EventListComponent implements OnInit {
             this.eventList = events;
             this.order(this.orderBy);
         });
+    }
+    
+    addNew() {
+        this.addNewActive = true;
+    }
+
+    newEventAdded() {
+        this.saved = true;
+        this.addNewActive = false;
+        this.update();
     }
 }

@@ -11,6 +11,7 @@ import {EventTypeEnum} from "../common/event-type-enum";
 import {Http, RequestOptions, Headers, URLSearchParams} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import {PersonDto} from "../common/person.dto";
+import {SpecEventDto} from "../common/spec-event.dto";
 
 @Injectable()
 export class PersonService {
@@ -51,7 +52,7 @@ export class PersonService {
             .then(response => response.json() as EventItem[]);
     }
 
-    addNewEvent(event: SpecEvent): Promise<any> {
+    addNewEvent(event: SpecEventDto): Promise<any> {
         return this.http.post(this.newEventUrl, event).toPromise();
     }
 

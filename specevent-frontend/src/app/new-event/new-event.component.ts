@@ -2,53 +2,49 @@
  * Created by NB-72 on 2017. 07. 04..
  */
 
-import {Component} from '@angular/core';
-import {SpecEvent} from '../common/spec-event.';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
-import {EventListComponent} from "../event-list/event-list.component";
 import {PersonService} from "../services/person.service";
+import {SpecEventDto} from "../common/spec-event.dto";
+import {PersonDto} from "../common/person.dto";
 import {EventTypeEnum} from "../common/event-type-enum";
 
 @Component({
+    selector: "app-new-event",
     templateUrl: 'new-event.component.html',
     styleUrls: ['new-event.component.css']
 })
-export class NewEventComponent {
-    eventTypeList = [EventTypeEnum.BIRTHDAY, EventTypeEnum.NAMEDAY, EventTypeEnum.ANNIVERSARY];
-    event = new SpecEvent(null, null, null, null);
-    name = '';
-    name2 = '';
+export class NewEventComponent implements OnInit{
+    eventType: EventTypeEnum;
+    month: number;
+    day: number;
+    persons: PersonDto[] = [];
+    @Output()
+    addNew: EventEmitter<void> = new EventEmitter<void>();
 
-    constructor(private personService: PersonService,
-                private router: Router) {
+    constructor(private personService: PersonService) {
+    }
+    
+    ngOnInit() {
+        this.persons.push(new PersonDto(0, ""));
     }
 
     saveEvent(): void {
-        if (this.event.eventType == 3)
-            this.name += '-' + this.name2;
-        this.event.name = this.name;
-        this.personService.addNewEvent(this.event).then(() => {
-            EventListComponent.newEventsaved();
-            this.router.navigate(['/events'])
+        this.personService.addNewEvent(new SpecEventDto(0, this.month, this.day, this. eventType, this.persons)).then(() => {
+            this.addNew.emit();
         });
     }
 
     validDate(): boolean {
         let shortMonths = [4, 6, 9, 11];
-        if (this.event.month == null || this.event.day == null)
+        if (this.month == null || this.day == null)
             return true;
-        if (this.event.month < 1 || this.event.month > 12 || this.event.day < 1 || this.event.day > 31)
+        if (this.month < 1 || this.month > 12 || this.day < 1 || this.day > 31)
             return false;
-        if (shortMonths.find(n => n == this.event.month))
-            if (this.event.day > 30)
-                return false;
-            else
-                return true;
-        else if (this.event.month == 2)
-            if (this.event.day > 29)
-                return false;
-            else
-                return true;
+        if (shortMonths.find(n => n == this.month))
+            return (this.day <= 30);
+        else if (this.month == 2)
+            return (this.day <= 29);
         else
             return true;
     }
