@@ -40,7 +40,7 @@ public class SpecEventService {
 	}
 	
 	public SpecEventEntity addEvent(SpecEventDto event, Set<PersonEntity> toPersons) {
-		SpecEventEntity newEntity = new SpecEventEntity(toPersons, event.getMonth(), event.getDay(), SpecEventTypeEnum.valueOf(event.getEventType()));
+		SpecEventEntity newEntity = new SpecEventEntity(toPersons, event.getMonth(), event.getDay(), event.getEventType());
 		specEventRepository.save(newEntity);
 		return newEntity;
 	}
@@ -51,7 +51,7 @@ public class SpecEventService {
 		if (entity != null) {
 			entity.setMonth(event.getMonth());
 			entity.setDay(event.getDay());
-			entity.setEventType(SpecEventTypeEnum.valueOf(event.getEventType()));
+			entity.setEventType(event.getEventType());
 		}
 	}
 
@@ -78,6 +78,6 @@ public class SpecEventService {
 								persons,
 								event.getMonth(),
 								event.getDay(),
-								event.getEventType().value);
+								event.getEventType().toString());
 	}
 }

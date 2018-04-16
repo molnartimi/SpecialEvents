@@ -16,12 +16,12 @@ public class SpecEventEntity {
 	private Set<PersonEntity> persons = new HashSet<PersonEntity>();
 	private int month;
 	private int day;
-	@Column(name = "eventtype")
-	private SpecEventTypeEnum eventType;
+	@Column(name = "type")
+	private String eventType;
 	
 	protected SpecEventEntity(){}
 	
-	public SpecEventEntity(Set<PersonEntity> persons, int month, int day, SpecEventTypeEnum type) {
+	public SpecEventEntity(Set<PersonEntity> persons, int month, int day, String type) {
 		this.persons = persons;
 		this.month = month;
 		this.day = day;
@@ -44,7 +44,7 @@ public class SpecEventEntity {
 		return persons;
 	}
 
-	public SpecEventTypeEnum getEventType() {
+	public String getEventType() {
 		return eventType;
 	}
 	
@@ -60,7 +60,7 @@ public class SpecEventEntity {
 		this.day = day;
 	}
 
-	public void setEventType(SpecEventTypeEnum eventType) {
+	public void setEventType(String eventType) {
 		this.eventType = eventType;
 	}
 }

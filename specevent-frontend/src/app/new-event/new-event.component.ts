@@ -19,6 +19,7 @@ export class NewEventComponent implements OnInit{
     month: number;
     day: number;
     persons: PersonDto[] = [];
+    existPersons: PersonDto[] = [];
     @Output()
     addNew: EventEmitter<void> = new EventEmitter<void>();
 
@@ -27,6 +28,7 @@ export class NewEventComponent implements OnInit{
     
     ngOnInit() {
         this.addNewPerson();
+        this.personService.getPersons().then(persons => this.existPersons = persons);
     }
     
     addNewPerson() {
@@ -38,6 +40,7 @@ export class NewEventComponent implements OnInit{
     }
 
     saveEvent(): void {
+        this.persons.map(p => p.id = this.existPersons.find(p2 => p.name === p2.name).id);
         this.personService.addNewEvent(new SpecEventDto(0, this.month, this.day, this. eventType, this.persons)).then(() => {
             this.addNew.emit();
         });

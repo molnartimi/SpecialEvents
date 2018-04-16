@@ -1,12 +1,9 @@
 package com.molnart.specialevents.domain.events;
 
-public enum SpecEventTypeEnum {
-	BIRTHDAY("BIRTH"), NAMEDAY("NAME"), ANNIVERSARY("ANNY");
+public class SpecEventTypeEnum {
+	public static final String BIRTH = "BIRTH";
+	public static final String NAME = "NAME";
+	public static final String ANNY = "ANNY";
 	
-	public final String value;
-	
-	private SpecEventTypeEnum(String value) {
-		this.value = value;
-	}
 	
 }
