@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {GIFTLISTS} from "./mock-datas"
 
 /**
  * Created by NB-72 on 2017. 07. 10..
@@ -28,7 +27,7 @@ export class GiftList {
 
 @Injectable()
 export class GiftsService {
-    private giftMap: GiftList[] = GIFTLISTS;
+    private giftMap: GiftList[] = [];
 
     getGifts(id: number): Promise<Gift[]> {
         let list = this.giftMap.find(g => g.id == id);

@@ -4,14 +4,14 @@
 </button>
 <h2>{{person.name}}</h2>
 <div class="container">
-    <div class="row well" *ngFor="let e of person.events">
+    <div class="row well" *ngFor="let e of events">
         <div class="col-md-5 col-sm-5">
             <label>{{e.month | number:'2.0'}}.{{e.day | number:'2.0'}}.</label>
         </div>
         <div class="col-md-5 col-sm-5" [ngSwitch]="e.eventType">
-            <img *ngSwitchCase="1" src="assets/icons/birth.png" height="40" title="birthday">
-            <img *ngSwitchCase="2" src="assets/icons/name.png" height="40" title="nameday">
-            <img *ngSwitchCase="3" src="assets/icons/anni.png" height="40" title="anniversary">
+            <img *ngSwitchCase="'BIRTH'" src="assets/icons/birth.png" height="40" title="birthday">
+            <img *ngSwitchCase="'NAME'" src="assets/icons/name.png" height="40" title="nameday">
+            <img *ngSwitchCase="'ANNY'" src="assets/icons/anni.png" height="40" title="anniversary">
         </div>
         <div class="con-md-2 col-sm-2">
             <button class="btn" (click)="deleteEvent(e.id)" [disabled]="settingMode">
@@ -27,4 +27,4 @@
         <img src="assets/icons/setting.png" title="Setting event" height="20">
     </button>
 </div>
-<person-settings *ngIf="settingMode" [person]="person" (save)="onSave($event)"></person-settings>
+<person-settings *ngIf="settingMode" [person]="events"></person-settings>

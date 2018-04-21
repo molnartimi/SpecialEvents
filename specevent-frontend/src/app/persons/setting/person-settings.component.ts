@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {Person} from "../../common/person";
-import {SpecEvent} from "../../common/spec-event.";
+import {PersonDto} from "../../common/person.dto";
 
 /**
  * Created by NB-72 on 2017. 07. 12..
@@ -12,16 +11,16 @@ import {SpecEvent} from "../../common/spec-event.";
     styleUrls: ['person-settings.component.css']
 })
 export class PersonSettingsComponent implements OnInit {
-    @Input() person: Person;
-    newPerson: Person;
-    @Output() save: EventEmitter<Person> = new EventEmitter<Person>();
+    @Input() person: PersonDto;
+    newPerson: PersonDto;
+    @Output() save: EventEmitter<PersonDto> = new EventEmitter<PersonDto>();
     valid: boolean = true;
 
     ngOnInit(): void {
-        this.newPerson = new Person(this.person.name);
-        for (let e of this.person.events) {
-            this.newPerson.events.push(new SpecEvent(this.person.name, e.eventType, e.month, e.day));
-        }
+        this.newPerson = new PersonDto(0, this.person.name);
+        // for (let e of this.person.events) {
+        //     this.newPerson.events.push(new SpecEvent(this.person.name, e.eventType, e.month, e.day));
+        // }
     }
 
     savePerson() {

@@ -3,11 +3,9 @@
  */
 
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Router} from "@angular/router";
 import {PersonService} from "../services/person.service";
 import {SpecEventDto} from "../common/spec-event.dto";
 import {PersonDto} from "../common/person.dto";
-import {EventTypeEnum} from "../common/event-type-enum";
 
 @Component({
     selector: "app-new-event",
@@ -15,7 +13,7 @@ import {EventTypeEnum} from "../common/event-type-enum";
     styleUrls: ['new-event.component.css']
 })
 export class NewEventComponent implements OnInit{
-    eventType: EventTypeEnum;
+    eventType: string;
     month: number;
     day: number;
     persons: PersonDto[] = [];

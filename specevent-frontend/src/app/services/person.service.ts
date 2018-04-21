@@ -3,7 +3,6 @@
  */
 
 import {Injectable} from "@angular/core";
-import {Person} from "../common/person";
 import {GiftsService} from "./gifts.service";
 import {Http, RequestOptions, Headers, URLSearchParams} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
@@ -30,16 +29,18 @@ export class PersonService {
             .then(response => this.order(response.json() as PersonDto[]));
     }
 
-    getPerson(id: number): Promise<Person> {
-        let myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
-        let myParams = new URLSearchParams();
-        myParams.append('id', id.toString());
-        let options = new RequestOptions({headers: myHeaders, params: myParams});
-
-        return this.http.get(this.personUrl, options)
+    getPerson(id: number): Promise<PersonDto> {
+        let url = this.personUrl + '/' + id;
+        return this.http.get(url)
             .toPromise()
-            .then(response => response.json() as Person);
+            .then(response => response.json() as PersonDto);
+    }
+
+    getPersonEvents(id: number): Promise<SpecEventDto[]> {
+        let url = this.personUrl + '/' + id + '/events';
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json() as SpecEventDto[]);
     }
 
     getEvents(): Promise<SpecEventDto[]> {
@@ -75,7 +76,7 @@ export class PersonService {
 
     }
 
-    order(persons): Person[] {
+    order(persons): PersonDto[] {
         return persons.sort((p1, p2) => {
             if (p1.name.toLowerCase() < p2.name.toLowerCase())
                 return -1;

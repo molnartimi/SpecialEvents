@@ -34,6 +34,10 @@ public class PersonService {
 	public void add(PersonDto person) {
 		personRepository.save(new PersonEntity(person.getName()));
 	}
+
+	public PersonDto getPerson(Long id) {
+		return toDto(personRepository.findOne(id));
+	}
 	
 	@Transactional
 	public void addEvent(Set<PersonEntity> persons, SpecEventEntity eventEntity) {

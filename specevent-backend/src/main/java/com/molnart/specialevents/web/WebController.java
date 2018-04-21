@@ -36,8 +36,14 @@ public class WebController {
 	
 	// returns one person's events
 	@GetMapping(value = "/person/{id}/events", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Set<SpecEventDto> getPersonEvents(@PathParam("id") String id) {
+	public Set<SpecEventDto> getPersonEvents(@PathVariable("id") Long id) {
 		return specEventService.getPersonEvents(id);
+	}
+
+	// returns one person's datas
+	@GetMapping(value = "/person/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public PersonDto getPerson(@PathVariable("id") Long id) {
+		return personService.getPerson(id);
 	}
 	
 	// Create new person

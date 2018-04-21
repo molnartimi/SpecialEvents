@@ -31,9 +31,9 @@ public class SpecEventService {
 		return result;
 	}
 	
-	public Set<SpecEventDto> getPersonEvents(String id) {
+	public Set<SpecEventDto> getPersonEvents(long id) {
 		Set<SpecEventDto> result = new HashSet<SpecEventDto>();
-		for (SpecEventEntity event: specEventRepository.findAllByPersons_Id(Long.parseLong(id))) {
+		for (SpecEventEntity event: specEventRepository.findAllByPersons_Id(id)) {
 			result.add(toDto(event));
 		}
 		return result;
