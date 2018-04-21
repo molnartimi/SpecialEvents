@@ -39,9 +39,8 @@ export class NewEventComponent implements OnInit{
 
     saveEvent(): void {
         this.persons.map(p => p.id = this.existPersons.find(p2 => p.name === p2.name).id);
-        this.personService.addNewEvent(new SpecEventDto(0, this.month, this.day, this. eventType, this.persons)).then(() => {
-            this.addNew.emit();
-        });
+        this.personService.addNewEvent(new SpecEventDto(0, this.month, this.day, this. eventType, this.persons)).then(() => {});
+        this.addNew.emit();
     }
 
     validDate(): boolean {

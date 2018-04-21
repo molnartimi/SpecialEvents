@@ -53,6 +53,6 @@
         <button class="bnt btn-info" (click)="addNew()">Add new</button>
     </div>
     <div *ngIf="addNewActive">
-        <app-new-event (addedNew)="newEventAdded()"></app-new-event>
+        <app-new-event (addNew)="newEventAdded()"></app-new-event>
     </div>
 </div>
