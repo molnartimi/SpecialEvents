@@ -3,7 +3,7 @@
  */
 
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {PersonService} from "../services/person.service";
+import {RsApiService} from "../services/rs-api.service";
 import {SpecEventDto} from "../common/spec-event.dto";
 import {PersonDto} from "../common/person.dto";
 
@@ -19,14 +19,14 @@ export class NewEventComponent implements OnInit{
     persons: PersonDto[] = [];
     existPersons: PersonDto[] = [];
     @Output()
-    addNew: EventEmitter<void> = new EventEmitter<void>();
+    addNew: EventEmitter<SpecEventDto> = new EventEmitter<SpecEventDto>();
 
-    constructor(private personService: PersonService) {
+    constructor(private rsApiService: RsApiService) {
     }
     
     ngOnInit() {
         this.addNewPerson();
-        this.personService.getPersons().then(persons => this.existPersons = persons);
+        this.rsApiService.getPersons().then(persons => this.existPersons = persons);
     }
     
     addNewPerson() {
@@ -39,8 +39,12 @@ export class NewEventComponent implements OnInit{
 
     saveEvent(): void {
         this.persons.map(p => p.id = this.existPersons.find(p2 => p.name === p2.name).id);
-        this.personService.addNewEvent(new SpecEventDto(0, this.month, this.day, this. eventType, this.persons)).then(() => {});
-        this.addNew.emit();
+        let newEvent = new SpecEventDto(0, this.month, this.day, this. eventType, this.persons);
+        this.rsApiService.addNewEvent(newEvent)
+            .then(id => {
+                newEvent.id = id;
+                this.addNew.emit(newEvent);
+            });
     }
 
     validDate(): boolean {

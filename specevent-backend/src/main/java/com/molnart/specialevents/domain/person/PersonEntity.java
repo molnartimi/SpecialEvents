@@ -15,7 +15,7 @@ public class PersonEntity  implements Serializable {
 	private long id;
 	private String name;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "persons_events",
 			joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))

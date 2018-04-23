@@ -6,7 +6,7 @@ import {AppRoutingModule} from './app-routing.module'
 import {FormBuilder, FormsModule} from "@angular/forms";
 import {NewEventComponent} from "./new-event/new-event.component";
 import {EventListComponent} from "./event-list/event-list.component";
-import {PersonService} from "./services/person.service";
+import {RsApiService} from "./services/rs-api.service";
 import {PersonsModule} from "./persons/persons.module";
 import {GiftsService} from "./services/gifts.service";
 import {HttpModule} from "@angular/http";
@@ -26,7 +26,7 @@ import {HttpModule} from "@angular/http";
         HttpModule
     ],
     providers: [
-        PersonService,
+        RsApiService,
         GiftsService,
         FormBuilder
     ],

@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,17 +47,19 @@ public class WebController {
 	
 	// Create new person
 	@PostMapping(value = "/new-person", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void addNewPerson(@RequestBody PersonDto person) {
-		personService.add(person);
+	public Long addNewPerson(@RequestBody PersonDto person) {
+		Long newId = personService.add(person);
+		return newId;
 	}
 	
 	// Create new event
 	// Check the person list, create new eventEntity, add entity to persons
 	@PostMapping(value = "/new-event", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void addNewEvent(@RequestBody SpecEventDto event) {
+	public Long addNewEvent(@RequestBody SpecEventDto event) {
 		Set<PersonEntity> persons = personService.toEntity(event.getPersons());
 		SpecEventEntity eventEntity = specEventService.addEvent(event, persons);
 		personService.addEvent(persons, eventEntity);
+		return eventEntity.getId();
 	}
 
 	// Edit only the persons's name!
@@ -89,24 +90,27 @@ public class WebController {
 	// Delete person
 	// Also delete event relations from all events
 	@DeleteMapping(value = "/delete-person", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void deletePerson(@RequestParam("id") String id) {
+	public boolean deletePerson(@RequestParam("id") String id) {
 		Set<SpecEventEntity> entities = personService.delete(id);
 		specEventService.deletePerson(entities, id);
+		return true;
 	}
 
 	// Delete event
 	// ALso delete person relations from all persons
 	@DeleteMapping(value = "/delete-event", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void deleteEvent(@RequestParam("id") String id) {
+	public boolean deleteEvent(@RequestParam("id") String id) {
 		SpecEventEntity event = specEventService.getEntity(Long.parseLong(id));
 		personService.deleteEvent(event);
 		specEventService.delete(id);
+		return true;
 	}
 
 	// Delete event from one person
 	@DeleteMapping(value = "/delete-event-person", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void deleteEvent(@RequestParam("personId") String personId, @RequestParam("id") String id) {
+	public boolean deleteEvent(@RequestParam("personId") String personId, @RequestParam("id") String id) {
 		PersonEntity person = personService.deleteEventFromPerson(specEventService.getEntity(Long.parseLong(id)), personId);
 		specEventService.deletePersonFromEvent(id, person);
+		return true;
 	}
 }

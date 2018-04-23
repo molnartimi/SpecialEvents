@@ -32,8 +32,10 @@ public class PersonService {
 		return list;
 	}
 	
-	public void add(PersonDto person) {
-		personRepository.save(new PersonEntity(person.getName()));
+	public Long add(PersonDto person) {
+		PersonEntity newPerson = new PersonEntity(person.getName());
+		personRepository.save(newPerson);
+		return newPerson.getId();
 	}
 
 	public PersonDto getPerson(Long id) {

@@ -10,7 +10,7 @@ import {PersonDto} from "../common/person.dto";
 import {SpecEventDto} from "../common/spec-event.dto";
 
 @Injectable()
-export class PersonService {
+export class RsApiService {
     private eventsUrl = "api/events";
     private personsUrl = "api/persons";
     private personUrl = "api/person";
@@ -50,11 +50,13 @@ export class PersonService {
             .then(response => response.json() as SpecEventDto[]);
     }
 
-    addNewEvent(event: SpecEventDto): Promise<any> {
-        return this.http.post(this.newEventUrl, event).toPromise();
+    addNewEvent(event: SpecEventDto): Promise<number> {
+        return this.http.post(this.newEventUrl, event)
+            .toPromise()
+            .then( response => response.json() as number);
     }
 
-    deleteEvent(id: number): Promise<any> {
+    deleteEvent(id: number): Promise<boolean> {
 
         let myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
@@ -62,10 +64,12 @@ export class PersonService {
         myParams.append('id', id.toString());
         let options = new RequestOptions({headers: myHeaders, params: myParams});
 
-        return this.http.delete(this.deleteEventUrl, options).toPromise();
+        return this.http.delete(this.deleteEventUrl, options)
+            .toPromise()
+            .then( response => response.json() as boolean);
     }
 
-    deleteEventFromPerson(personId: number, id: number): Promise<any> {
+    deleteEventFromPerson(personId: number, id: number): Promise<boolean> {
 
         let myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
@@ -74,10 +78,12 @@ export class PersonService {
         myParams.append('personId', personId.toString());
         let options = new RequestOptions({headers: myHeaders, params: myParams});
 
-        return this.http.delete(this.deleteEventFromPersonUrl, options).toPromise();
+        return this.http.delete(this.deleteEventFromPersonUrl, options)
+            .toPromise()
+            .then( response => response.json() as boolean);
     }
 
-    deletePerson(id: number): Promise<any> {
+    deletePerson(id: number): Promise<boolean> {
 
         let myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
@@ -85,7 +91,9 @@ export class PersonService {
         myParams.append('id', id.toString());
         let options = new RequestOptions({headers: myHeaders, params: myParams});
 
-        return this.http.delete(this.deletePersonUrl, options).toPromise();
+        return this.http.delete(this.deletePersonUrl, options)
+            .toPromise()
+            .then( response => response.json() as boolean);
 
     }
 
@@ -99,7 +107,9 @@ export class PersonService {
         });
     }
 
-    savePerson(newPerson: PersonDto): Promise<any> {
-        return this.http.post(this.newPersonUrl, newPerson).toPromise();
+    savePerson(newPerson: PersonDto): Promise<number> {
+        return this.http.post(this.newPersonUrl, newPerson)
+            .toPromise()
+            .then( response => response.json() as number);
     }
 }

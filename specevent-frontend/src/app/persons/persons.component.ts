@@ -3,7 +3,7 @@
  */
 
 import {Component, OnInit} from "@angular/core";
-import {PersonService} from "../services/person.service";
+import {RsApiService} from "../services/rs-api.service";
 import {Router} from "@angular/router";
 import {PersonDto} from "../common/person.dto";
 
@@ -17,12 +17,12 @@ export class PersonListComponent implements OnInit {
     addNewActive: boolean = false;
     private deleted: boolean = false;
 
-    constructor(private personService: PersonService,
+    constructor(private rsApiService: RsApiService,
                 private router: Router) {
     }
 
     ngOnInit(): void {
-        this.personService.getPersons().then(persons => this.personList = persons);
+        this.rsApiService.getPersons().then(persons => this.personList = persons);
     }
 
     onSelect(p): void {
@@ -36,10 +36,11 @@ export class PersonListComponent implements OnInit {
         this.router.navigate(['person', person.id, 'gifts']);
     }
 
-    deletePerson(id: number) {
+    deletePerson(person: PersonDto) {
         this.deleted = true;
-        this.personService.deletePerson(id).then(() => {
-            this.personService.getPersons().then(persons => this.personList = persons);
+        this.rsApiService.deletePerson(person.id).then(success => {
+            let index = this.personList.indexOf(person);
+            this.personList.splice(index, 1);
         });
     }
     
@@ -49,8 +50,10 @@ export class PersonListComponent implements OnInit {
     
     savePerson() {
         this.addNewActive = false;
-        this.personService.savePerson(new PersonDto(0, this.newName)).then(() => {
-            this.personService.getPersons().then(persons => this.personList = persons);
+        let newPerson = new PersonDto(0, this.newName);
+        this.rsApiService.savePerson(newPerson).then(newId => {
+            newPerson.id = newId;
+            this.personList.push(newPerson);
             this.newName = null;
         });
     }

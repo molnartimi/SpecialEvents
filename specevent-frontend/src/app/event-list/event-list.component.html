@@ -25,7 +25,7 @@
                             <button class="btn" (click)="goToEvent(e)">
                                 <img src="assets/icons/setting.png" title="Setting person's events" height="20">
                             </button>
-                            <button class="btn" (click)="deleteEventFromPerson(person.id, e.id)">
+                            <button class="btn" (click)="deleteEventFromPerson(person, e)">
                                 <img src="assets/icons/del.png" title="Delete event" height="20">
                             </button>
                         </td>
@@ -53,6 +53,6 @@
         <button class="bnt btn-info" (click)="addNew()">Add new</button>
     </div>
     <div *ngIf="addNewActive">
-        <app-new-event (addNew)="newEventAdded()"></app-new-event>
+        <app-new-event (addNew)="newEventAdded($event)"></app-new-event>
     </div>
 </div>

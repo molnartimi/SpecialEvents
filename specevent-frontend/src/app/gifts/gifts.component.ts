@@ -6,7 +6,7 @@ import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Gift, GiftsService} from "../services/gifts.service";
 import {Location} from "@angular/common";
-import {PersonService} from "../services/person.service";
+import {RsApiService} from "../services/rs-api.service";
 
 @Component({
     templateUrl: 'gifts.component.html',
@@ -20,7 +20,7 @@ export class GiftsComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private giftsService: GiftsService,
-                private personService: PersonService,
+                private personService: RsApiService,
                 private location: Location) {
     }
 

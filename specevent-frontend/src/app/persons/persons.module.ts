@@ -9,7 +9,7 @@ import {FormsModule} from "@angular/forms";
 import {PersonListComponent} from "./persons.component";
 import {PersonEventsComponent} from "./personal-events/person-events.component";
 
-import {PersonService} from "../services/person.service";
+import {RsApiService} from "../services/rs-api.service";
 import {PersonsRoutingModule} from "./persons-routing.module";
 import {GiftsComponent} from "../gifts/gifts.component";
 import {PersonSettingsComponent} from "./setting/person-settings.component";
@@ -27,7 +27,7 @@ import {PersonSettingsComponent} from "./setting/person-settings.component";
         GiftsComponent
     ],
     providers: [
-        PersonService
+        RsApiService
     ]
 })
 export class PersonsModule {

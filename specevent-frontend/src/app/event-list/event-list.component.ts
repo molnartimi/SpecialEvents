@@ -3,9 +3,10 @@
  */
 
 import {Component, OnInit} from '@angular/core'
-import {PersonService} from "../services/person.service";
+import {RsApiService} from "../services/rs-api.service";
 import {Router} from "@angular/router";
 import {SpecEventDto} from "../common/spec-event.dto";
+import {PersonDto} from "../common/person.dto";
 
 @Component({
     templateUrl: 'event-list.component.html',
@@ -16,12 +17,12 @@ export class EventListComponent implements OnInit {
     saved: boolean = false;
     addNewActive: boolean = false;
 
-    constructor(private personService: PersonService,
+    constructor(private rsApiService: RsApiService,
                 private router: Router) {
     }
 
     ngOnInit(): void {
-        this.personService.getEvents().then(events => {
+        this.rsApiService.getEvents().then(events => {
             this.eventList = events;
         });
 
@@ -36,11 +37,19 @@ export class EventListComponent implements OnInit {
     }
 
     deleteEvent(event: SpecEventDto): void {
-         this.personService.deleteEvent(event.id).then(() => this.update());
+         this.rsApiService.deleteEvent(event.id).then(success => {
+             let index = this.eventList.indexOf(event);
+             this.eventList.splice(index, 1);
+         });
     }
 
-    deleteEventFromPerson(personId: number, eventId: number): void {
-        this.personService.deleteEventFromPerson(personId, eventId).then(() => this.update());
+    deleteEventFromPerson(person: PersonDto, event: SpecEventDto): void {
+        this.rsApiService.deleteEventFromPerson(person.id, event.id).then(success => {
+            let personIndex = event.persons.indexOf(person);
+            event.persons.splice(personIndex, 1);
+            if (event.persons.length == 0) 
+                this.eventList.splice(this.eventList.indexOf(event), 1);
+        });
     }
 
     goToEvent(event: SpecEventDto): void {
@@ -53,7 +62,7 @@ export class EventListComponent implements OnInit {
 
 
     update(): void {
-        this.personService.getEvents().then(events => {
+        this.rsApiService.getEvents().then(events => {
             this.eventList = events;
         });
     }
@@ -62,9 +71,9 @@ export class EventListComponent implements OnInit {
         this.addNewActive = true;
     }
 
-    newEventAdded() {
+    newEventAdded(event) {
         this.saved = true;
         this.addNewActive = false;
-        this.update();
+        this.eventList.push(event);
     }
 }
