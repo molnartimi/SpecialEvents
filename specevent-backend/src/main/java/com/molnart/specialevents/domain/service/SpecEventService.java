@@ -62,9 +62,20 @@ public class SpecEventService {
 	}
 
 	@Transactional
-	public void deletePerson(PersonEntity person) {
-		for (SpecEventEntity event: specEventRepository.findAllByPersons(person)) {
-			event.getPersons().remove(person);
+	public void deletePerson(Set<SpecEventEntity> entites, String personId) {
+		for (SpecEventEntity event: entites) {
+			if (event.getPersons().size() == 0) {
+				specEventRepository.delete(event); 
+			}
+		}
+	}
+
+	@Transactional
+	public void deletePersonFromEvent(String id, PersonEntity person) {
+		SpecEventEntity event = specEventRepository.findOne(Long.parseLong(id));
+		event.getPersons().remove(person);
+		if (event.getPersons().size() == 0) {
+			specEventRepository.delete(event);
 		}
 	}
 	

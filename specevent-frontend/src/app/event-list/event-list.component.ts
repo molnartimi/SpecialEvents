@@ -36,8 +36,11 @@ export class EventListComponent implements OnInit {
     }
 
     deleteEvent(event: SpecEventDto): void {
-        // this.personService.deleteEvent(event.id)
-        //     .then(() => this.update());
+         this.personService.deleteEvent(event.id).then(() => this.update());
+    }
+
+    deleteEventFromPerson(personId: number, eventId: number): void {
+        this.personService.deleteEventFromPerson(personId, eventId).then(() => this.update());
     }
 
     goToEvent(event: SpecEventDto): void {

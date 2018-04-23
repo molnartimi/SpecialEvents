@@ -17,6 +17,7 @@ export class PersonService {
     private newPersonUrl = "api/new-person";
     private newEventUrl = "api/new-event";
     private deleteEventUrl = "api/delete-event";
+    private deleteEventFromPersonUrl = "api/delete-event-person";
     private deletePersonUrl = "api/delete-person";
 
     constructor(private giftService: GiftsService,
@@ -62,6 +63,18 @@ export class PersonService {
         let options = new RequestOptions({headers: myHeaders, params: myParams});
 
         return this.http.delete(this.deleteEventUrl, options).toPromise();
+    }
+
+    deleteEventFromPerson(personId: number, id: number): Promise<any> {
+
+        let myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        let myParams = new URLSearchParams();
+        myParams.append('id', id.toString());
+        myParams.append('personId', personId.toString());
+        let options = new RequestOptions({headers: myHeaders, params: myParams});
+
+        return this.http.delete(this.deleteEventFromPersonUrl, options).toPromise();
     }
 
     deletePerson(id: number): Promise<any> {

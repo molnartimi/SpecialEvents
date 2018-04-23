@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -54,15 +55,16 @@ public class PersonService {
 		}
 	}
 	
-	public PersonEntity delete(String id) {
+	public Set<SpecEventEntity> delete(String id) {
 		PersonEntity person = personRepository.findOne(Long.parseLong(id));
 		personRepository.delete(person);
-		return person;
+		return person.getEvents();
 	}
 
-	public void deleteEventFromPerson(SpecEventEntity event, String personId) {
+	public PersonEntity deleteEventFromPerson(SpecEventEntity event, String personId) {
 		PersonEntity person = personRepository.findOne(Long.parseLong(personId));
 		person.getEvents().remove(event);
+		return person;
 	}
 
 	@Transactional

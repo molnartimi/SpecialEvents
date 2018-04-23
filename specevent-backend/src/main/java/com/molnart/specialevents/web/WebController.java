@@ -90,15 +90,23 @@ public class WebController {
 	// Also delete event relations from all events
 	@DeleteMapping(value = "/delete-person", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void deletePerson(@RequestParam("id") String id) {
-		PersonEntity person = personService.delete(id);
-		specEventService.deletePerson(person);
+		Set<SpecEventEntity> entities = personService.delete(id);
+		specEventService.deletePerson(entities, id);
 	}
 
 	// Delete event
 	// ALso delete person relations from all persons
 	@DeleteMapping(value = "/delete-event", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void deleteEvent(@RequestParam("id") String id) {
-		SpecEventEntity event = specEventService.delete(id);
+		SpecEventEntity event = specEventService.getEntity(Long.parseLong(id));
 		personService.deleteEvent(event);
+		specEventService.delete(id);
+	}
+
+	// Delete event from one person
+	@DeleteMapping(value = "/delete-event-person", produces = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteEvent(@RequestParam("personId") String personId, @RequestParam("id") String id) {
+		PersonEntity person = personService.deleteEventFromPerson(specEventService.getEntity(Long.parseLong(id)), personId);
+		specEventService.deletePersonFromEvent(id, person);
 	}
 }

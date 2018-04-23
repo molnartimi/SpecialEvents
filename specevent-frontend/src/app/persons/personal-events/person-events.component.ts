@@ -45,10 +45,10 @@ export class PersonEventsComponent implements OnInit {
     }
 
     deleteEvent(eventId: number): void {
-       /* TODO this.personService.deleteEvent(eventId)
+        this.personService.deleteEventFromPerson(this.person.id, eventId)
             .then(() => {
-                this.personService.getPerson(this.events.id).then(person => this.events = person)
-            });*/
+                this.personService.getPersonEvents(this.person.id).then(events => this.events = events)
+            });
     }
 
     goBack(): void {
