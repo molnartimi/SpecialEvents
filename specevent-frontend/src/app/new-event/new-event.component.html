@@ -15,13 +15,13 @@
                 <label for="name">Name: </label> <br>
                 <div class="name-input">
                     <select class="form-control" id="name" name="name" required [(ngModel)]="person.name" #namea="ngModel">
-                        <option hidden value="null">choose person</option>
+                        <option hidden value="''">choose person</option>
                         <option *ngFor="let p of existPersons" value="{{p.name}}">{{p.name}}</option>
                     </select>
                 </div>
-                <button *ngIf="i>0" class="bnt btn-danger x-btn" (click)="removePerson(i)">X</button>
+                <button *ngIf="i>0" class="btn btn-danger x-btn" (click)="removePerson(i)">X</button>
             </div>
-            <button type="button" class="bnt btn-info plus-btn" (click)="addNewPerson()">+</button>
+            <button type="button" class="btn btn-info plus-btn" (click)="addNewPerson()">+</button>
         </div>
         <div class="form-group">
             <label for="month">Date: </label><br/>

@@ -50,7 +50,7 @@
     </div>
 
     <div *ngIf="!addNewActive">
-        <button class="bnt btn-info" (click)="addNew()">Add new</button>
+        <button class="btn btn-info" (click)="addNew()">Add new</button>
     </div>
     <div *ngIf="addNewActive">
         <app-new-event (addNew)="newEventAdded($event)"></app-new-event>

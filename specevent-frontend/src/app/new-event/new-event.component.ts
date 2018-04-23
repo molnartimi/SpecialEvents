@@ -25,8 +25,16 @@ export class NewEventComponent implements OnInit{
     }
     
     ngOnInit() {
-        this.addNewPerson();
+        this.reset();
         this.rsApiService.getPersons().then(persons => this.existPersons = persons);
+    }
+    
+    private reset() {
+        this.eventType = null;
+        this.month = null;
+        this.day = null;
+        this.persons = [];
+        this.addNewPerson();
     }
     
     addNewPerson() {
@@ -44,6 +52,7 @@ export class NewEventComponent implements OnInit{
             .then(id => {
                 newEvent.id = id;
                 this.addNew.emit(newEvent);
+                this.reset();
             });
     }
 

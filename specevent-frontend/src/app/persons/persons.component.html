@@ -19,7 +19,7 @@
         </button>
     </div>
     <div *ngIf="!addNewActive">
-        <button class="bnt btn-info" (click)="addnew()">Add new</button>
+        <button class="btn btn-info" (click)="addnew()">Add new</button>
     </div>
     <div *ngIf="addNewActive">
         <form #newPerson="ngForm" (ngSubmit)="savePerson()">
