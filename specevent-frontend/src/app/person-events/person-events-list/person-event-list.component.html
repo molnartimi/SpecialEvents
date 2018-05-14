@@ -1,0 +1,40 @@
+<button class="btn backbtn" (click)="goBack()">
+    <img src="assets/icons/back.png" title="Go back" height="20">
+    Back
+</button>
+<h2>{{person.name}}</h2>
+<div class="container well">
+    <table class="table table-striped events">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th class="eventCol">Event</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let e of events">
+            <td>{{e.month | number:'2.0'}}.{{e.day | number:'2.0'}}.</td>
+            <td class="eventCol">
+                <img *ngIf="e.eventType==='BIRTH'" src="assets/icons/birth.png" height="40" title="birthday">
+                <img *ngIf="e.eventType==='NAME'" src="assets/icons/name.png" height="40" title="nameday">
+                <img *ngIf="e.eventType==='ANNY'" src="assets/icons/anni.png" height="40" title="anniversary">
+            </td>
+            <td class="lastCol">
+                <button class="btn" (click)="deleteEvent(e)">
+                    <img src="assets/icons/del.png" title="Delete event" height="20">
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <button class="btn" (click)="goToHints()">
+        Hints
+        <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
+    </button>
+    <button class="btn" (click)="editPerson()">
+        <img src="assets/icons/setting.png" title="Setting event" height="20">
+    </button>
+</div>

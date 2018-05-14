@@ -7,21 +7,29 @@ import {FormBuilder, FormsModule} from "@angular/forms";
 import {NewEventComponent} from "./new-event/new-event.component";
 import {EventListComponent} from "./event-list/event-list.component";
 import {RsApiService} from "./services/rs-api.service";
-import {PersonsModule} from "./persons/persons.module";
 import {GiftsService} from "./services/gifts.service";
 import {HttpModule} from "@angular/http";
+import {PersonListComponent} from "./person-list/persons.component";
+import {PersonEventListComponent} from "./person-events/person-events-list/person-event-list.component";
+import {PersonEventEditComponent} from "./person-events/person-event-edit/person-event-edit.component";
+import {PersonEventsComponent} from "./person-events/person-events.component";
+import {GiftsComponent} from "./gifts/gifts.component";
 
 
 @NgModule({
     declarations: [
         AppComponent,
         EventListComponent,
-        NewEventComponent
+        NewEventComponent,
+        PersonEventsComponent,
+        PersonListComponent,
+        PersonEventListComponent,
+        PersonEventEditComponent,
+        GiftsComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
-        PersonsModule,
         AppRoutingModule,
         HttpModule
     ],

@@ -6,11 +6,10 @@ import {PersonDto} from "../../common/person.dto";
  */
 
 @Component({
-    selector: 'person-settings',
-    templateUrl: 'person-settings.component.html',
-    styleUrls: ['person-settings.component.css']
+    templateUrl: 'person-event-edit.component.html',
+    styleUrls: ['person-event-edit.component.css']
 })
-export class PersonSettingsComponent implements OnInit {
+export class PersonEventEditComponent implements OnInit {
     @Input() person: PersonDto;
     newPerson: PersonDto;
     @Output() save: EventEmitter<PersonDto> = new EventEmitter<PersonDto>();

@@ -11,13 +11,12 @@ import {SpecEventDto} from "../../common/spec-event.dto";
 import {PersonDto} from "../../common/person.dto";
 
 @Component({
-    templateUrl: 'person-events.component.html',
-    styleUrls: ['person-events.component.css']
+    templateUrl: 'person-event-list.component.html',
+    styleUrls: ['person-event-list.component.css']
 })
-export class PersonEventsComponent implements OnInit {
+export class PersonEventListComponent implements OnInit {
     person: PersonDto;
     events: SpecEventDto[];
-    settingMode = false;
     valid: boolean;
 
     constructor(private route: ActivatedRoute,
@@ -27,17 +26,9 @@ export class PersonEventsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        /*this.route.paramMap
-          .switchMap((params: ParamMap) => this.rsApiService.getPerson(params.get('name')))
-          .subscribe((person: Person) => this.person = person);*/
-
         let id = this.route.snapshot.paramMap.get('id');
         this.rsApiService.getPerson(Number(id)).then(person => this.person = person);
         this.rsApiService.getPersonEvents(Number(id)).then(events => this.events = events);
-    }
-
-    onSettingMode(): void {
-        this.settingMode = true;
     }
 
     goToHints(): void {
