@@ -23,12 +23,12 @@ export class NewEventComponent implements OnInit{
 
     constructor(private rsApiService: RsApiService) {
     }
-    
+
     ngOnInit() {
         this.reset();
         this.rsApiService.getPersons().then(persons => this.existPersons = persons);
     }
-    
+
     private reset() {
         this.eventType = null;
         this.month = null;
@@ -36,11 +36,11 @@ export class NewEventComponent implements OnInit{
         this.persons = [];
         this.addNewPerson();
     }
-    
+
     addNewPerson() {
         this.persons.push(new PersonDto(0, ""));
     }
-    
+
     removePerson(index: number) {
         this.persons.splice(index, 1);
     }

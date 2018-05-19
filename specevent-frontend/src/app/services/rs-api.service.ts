@@ -14,6 +14,7 @@ export class RsApiService {
     private eventsUrl = "api/events";
     private personsUrl = "api/persons";
     private personUrl = "api/person";
+    private eventUrl = "api/event";
     private newPersonUrl = "api/new-person";
     private newEventUrl = "api/new-event";
     private deleteEventUrl = "api/delete-event";
@@ -37,6 +38,12 @@ export class RsApiService {
         return this.http.get(url)
             .toPromise()
             .then(response => response.json() as PersonDto);
+    }
+
+    getEvent(id: number): Promise<SpecEventDto> {
+       return this.http.get(this.eventUrl + "/" + id)
+         .toPromise()
+         .then(response => response.json() as SpecEventDto);
     }
 
     getPersonEvents(id: number): Promise<SpecEventDto[]> {

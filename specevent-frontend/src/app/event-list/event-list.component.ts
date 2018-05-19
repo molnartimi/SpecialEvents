@@ -47,13 +47,17 @@ export class EventListComponent implements OnInit {
         this.rsApiService.deleteEventFromPerson(person.id, event.id).then(success => {
             let personIndex = event.persons.indexOf(person);
             event.persons.splice(personIndex, 1);
-            if (event.persons.length == 0) 
+            if (event.persons.length == 0)
                 this.eventList.splice(this.eventList.indexOf(event), 1);
         });
     }
 
     goToEvent(event: SpecEventDto): void {
-        // this.router.navigate(['person', event.personId]);
+      this.router.navigate(['event', event.id, 'edit']);
+    }
+
+    goToPersonEvent(person: PersonDto, event: SpecEventDto): void {
+      this.router.navigate(['person', person.id, "edit"]);
     }
 
     goToHints(event: SpecEventDto): void {
@@ -66,9 +70,13 @@ export class EventListComponent implements OnInit {
             this.eventList = events;
         });
     }
-    
+
     addNew() {
         this.addNewActive = true;
+    }
+
+    closeAddNew() {
+        this.addNewActive = false;
     }
 
     newEventAdded(event) {

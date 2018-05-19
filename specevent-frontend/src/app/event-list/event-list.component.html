@@ -22,7 +22,7 @@
                             <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
                             Hints
                             </button>
-                            <button class="btn" (click)="goToEvent(e)">
+                            <button class="btn" (click)="goToPersonEvent(person, e)">
                                 <img src="assets/icons/setting.png" title="Setting person's events" height="20">
                             </button>
                             <button class="btn" (click)="deleteEventFromPerson(person, e)">
@@ -54,5 +54,8 @@
     </div>
     <div *ngIf="addNewActive">
         <app-new-event (addNew)="newEventAdded($event)"></app-new-event>
+    </div>
+    <div *ngIf="addNewActive">
+        <button class="btn btn-info" (click)="closeAddNew()">Close</button>
     </div>
 </div>

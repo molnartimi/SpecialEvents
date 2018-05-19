@@ -14,6 +14,7 @@ import {PersonEventListComponent} from "./person-events/person-events-list/perso
 import {PersonEventEditComponent} from "./person-events/person-event-edit/person-event-edit.component";
 import {PersonEventsComponent} from "./person-events/person-events.component";
 import {GiftsComponent} from "./gifts/gifts.component";
+import {EditEventComponent} from "./edit-event/edit-event.component";
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import {GiftsComponent} from "./gifts/gifts.component";
         AppComponent,
         EventListComponent,
         NewEventComponent,
+        EditEventComponent,
         PersonEventsComponent,
         PersonListComponent,
         PersonEventListComponent,

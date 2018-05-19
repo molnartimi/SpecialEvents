@@ -10,6 +10,7 @@ import {GiftsComponent} from "./gifts/gifts.component";
 import {PersonEventListComponent} from "./person-events/person-events-list/person-event-list.component";
 import {PersonEventsComponent} from "./person-events/person-events.component";
 import {PersonEventEditComponent} from "./person-events/person-event-edit/person-event-edit.component";
+import {EditEventComponent} from "./edit-event/edit-event.component";
 
 @NgModule({
     imports: [
@@ -22,6 +23,10 @@ import {PersonEventEditComponent} from "./person-events/person-event-edit/person
                 path: '',
                 redirectTo: '/events',
                 pathMatch: 'full'
+            },
+            {
+                path: 'event/:id/edit',
+                component: EditEventComponent
             },
             {
                 path: 'persons',

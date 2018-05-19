@@ -44,7 +44,14 @@ public class WebController {
 	public PersonDto getPerson(@PathVariable("id") Long id) {
 		return personService.getPerson(id);
 	}
-	
+
+	// returns one event
+	@GetMapping(value = "/event/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public SpecEventDto getEvent(@PathVariable("id") Long id) {
+		return specEventService.getEvent(id);
+	}
+
+
 	// Create new person
 	@PostMapping(value = "/new-person", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long addNewPerson(@RequestBody PersonDto person) {
@@ -73,7 +80,9 @@ public class WebController {
 	@PutMapping(value = "/edit-events", produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean editEvent(@RequestBody SpecEventDto[] events) {
 		for (SpecEventDto event: events) {
-			specEventService.edit(event);
+			Set<PersonEntity> persons = this.personService.toEntity(event.getPersons());
+			specEventService.edit(event, persons);
+			personService.editEvent(persons, specEventService.getEntity(event.getId()));
 		}
 		return true; // TODO false
 	}

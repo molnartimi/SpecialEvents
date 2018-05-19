@@ -46,12 +46,13 @@ public class SpecEventService {
 	}
 	
 	@Transactional
-	public void edit(SpecEventDto event) {
+	public void edit(SpecEventDto event, Set<PersonEntity> persons) {
 		SpecEventEntity entity = specEventRepository.findOne(event.getId());
 		if (entity != null) {
 			entity.setMonth(event.getMonth());
 			entity.setDay(event.getDay());
 			entity.setEventType(event.getEventType());
+			entity.setPersons(persons);
 		}
 	}
 
@@ -98,4 +99,8 @@ public class SpecEventService {
 								event.getDay(),
 								event.getEventType().toString());
 	}
+
+    public SpecEventDto getEvent(Long id) {
+		return toDto(this.specEventRepository.findOne(id));
+    }
 }

@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PersonService {
@@ -90,5 +88,20 @@ public class PersonService {
 			result.add(personRepository.findOne(p.getId()));
 		}
 		return result;
+	}
+
+	@Transactional
+	public void editEvent(Set<PersonEntity> persons, SpecEventEntity event) {
+		List<PersonEntity> personEntities = Arrays.asList(personRepository.findAllByEvents_Id(event.getId()));
+		for (PersonEntity person: personEntities) {
+			if (!persons.contains(person)) {
+				person.getEvents().remove(event);
+			}
+		}
+		for (PersonEntity person: persons) {
+			if (!personEntities.contains(person)) {
+				person.addEvent(event);
+			}
+		}
 	}
 }

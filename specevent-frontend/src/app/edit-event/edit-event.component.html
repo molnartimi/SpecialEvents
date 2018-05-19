@@ -1,0 +1,49 @@
+<div class="inner-content">
+  <button class="btn backbtn" (click)="goBack()">
+    <img src="assets/icons/back.png" title="Go back" height="20">
+    Back
+  </button>
+  <h2>Edit event</h2>
+  <div class="container well">
+      <form #editEvent="ngForm" (ngSubmit)="saveEvent()">
+          <div class="form-group">
+              <label for="type">Event type: </label>
+              <select class="form-control" [(ngModel)]="event.eventType" id="type" name="type" required #type="ngModel">
+                  <option [value]="'BIRTH'">birthday</option>
+                  <option [value]="'NAME'">nameday</option>
+                  <option [value]="'ANNY'">anniversary</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <div *ngFor="let person of event.persons; let i=index">
+                  <div class="name-div">{{person.name}}</div>
+                  <button class="btn btn-danger x-btn" (click)="removePerson(i)">X</button>
+              </div>
+              <div class="name-input">
+                  <select class="form-control" id="name" name="name" required [(ngModel)]="newPerson" #namea="ngModel">
+                      <option hidden value="''">choose person</option>
+                      <option *ngFor="let p of existPersons" value="{{p.name}}">{{p.name}}</option>
+                  </select>
+              </div>
+              <button type="button" class="btn btn-info plus-btn" (click)="addPerson()" [disabled]="newPerson === ''">
+                  <img src="assets/icons/tick.png" title="Save event" height="20">
+              </button>
+          </div>
+          <div class="form-group">
+              <label for="month">Date: </label><br/>
+              <input class="month form-control" type="number" min="1" max="12" [(ngModel)]="event.month" id="month"
+                     name="month"
+                     required placeholder="xx" #montha="ngModel">.
+              <input class="day form-control" type="number" min="1" max="31" [(ngModel)]="event.day" id="day" name="day"
+                     required placeholder="xx" #daya="ngModel">.
+              <div [hidden]="(montha.valid || montha.pristine) && (daya.valid || daya.pristine)" class="alert alert-danger">
+                  Date is required!
+              </div>
+              <div *ngIf="!validDate()" class="alert alert-danger">
+                  Invalid date!
+              </div>
+          </div>
+          <button type="submit" class="btn btn-success" [disabled]="event.persons.length === 0 || !validDate()">Save</button>
+      </form>
+  </div>
+</div>
