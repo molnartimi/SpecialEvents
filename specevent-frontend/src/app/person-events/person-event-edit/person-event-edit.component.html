@@ -1,10 +1,10 @@
 <div id="setterPanel">
-    <input class="settedName" name="name" [(ngModel)]="newPerson.name" #names="ngModel" required>
+    <input class="settedName" name="name" [(ngModel)]="person.name" #names="ngModel" required>
     <div [hidden]="names.valid || names.pristine" class="alert alert-danger">
         Name is required!
     </div>
     <div class="container">
-        <div class="row well" *ngFor="let e of newPerson.events">
+        <div class="row well" *ngFor="let e of events">
             <div class="col-md-5 col-sm-5">
                 <div>
                     <input class="settedDate" type="number" min="1" max="12" [(ngModel)]="e.month" name="month"
@@ -22,9 +22,9 @@
             </div>
             <div class="col-md-5 col-sm-5">
                 <select class="form-control" [(ngModel)]="e.eventType" name="type">
-                    <option value="1">birthday</option>
-                    <option value="2">nameday</option>
-                    <option value="3">anniversary</option>
+                    <option value="BIRTH">birthday</option>
+                    <option value="NAME">nameday</option>
+                    <option value="ANNY">anniversary</option>
                 </select>
             </div>
         </div>

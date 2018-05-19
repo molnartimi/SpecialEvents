@@ -9,27 +9,17 @@ import {RsApiService} from "../../services/rs-api.service";
 import {Location} from "@angular/common";
 import {SpecEventDto} from "../../common/spec-event.dto";
 import {PersonDto} from "../../common/person.dto";
+import {PersonEventsComponent} from "../person-events.component";
 
 @Component({
+    selector: 'app-person-events',
     templateUrl: 'person-event-list.component.html',
     styleUrls: ['person-event-list.component.css']
 })
-export class PersonEventListComponent implements OnInit {
+export class PersonEventListComponent extends PersonEventsComponent{
     person: PersonDto;
     events: SpecEventDto[];
     valid: boolean;
-
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private rsApiService: RsApiService,
-                private location: Location) {
-    }
-
-    ngOnInit(): void {
-        let id = this.route.snapshot.paramMap.get('id');
-        this.rsApiService.getPerson(Number(id)).then(person => this.person = person);
-        this.rsApiService.getPersonEvents(Number(id)).then(events => this.events = events);
-    }
 
     goToHints(): void {
        // TODO this.router.navigate(['person', this.events.id, 'gifts']);
@@ -43,7 +33,7 @@ export class PersonEventListComponent implements OnInit {
             });
     }
 
-    goBack(): void {
-        this.location.back();
+    editPerson(): void {
+      this.router.navigate(['person', this.id, "edit"]);
     }
 }

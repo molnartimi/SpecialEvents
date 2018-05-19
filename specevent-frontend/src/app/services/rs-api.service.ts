@@ -19,6 +19,8 @@ export class RsApiService {
     private deleteEventUrl = "api/delete-event";
     private deleteEventFromPersonUrl = "api/delete-event-person";
     private deletePersonUrl = "api/delete-person";
+    private editPersonNameUrl = "api/edit-person";
+    private editEventsUrl = "api/edit-events";
 
     constructor(private giftService: GiftsService,
                 private http: Http) {
@@ -111,5 +113,17 @@ export class RsApiService {
         return this.http.post(this.newPersonUrl, newPerson)
             .toPromise()
             .then( response => response.json() as number);
+    }
+
+    editPerson(person: PersonDto) {
+      return this.http.put(this.editPersonNameUrl, person)
+        .toPromise()
+        .then(response => response.json() as boolean);
+    }
+
+    editEvents(events: SpecEventDto[]): Promise<boolean> {
+      return this.http.put(this.editEventsUrl, events)
+        .toPromise()
+        .then(response => response.json() as boolean);
     }
 }

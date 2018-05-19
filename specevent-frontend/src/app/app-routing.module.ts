@@ -28,22 +28,23 @@ import {PersonEventEditComponent} from "./person-events/person-event-edit/person
                 component: PersonListComponent
             },
             {
-                path: 'person',
+                path: 'person/:id',
                 component: PersonEventsComponent,
                 children: [
                     {
-                        path: ':id',
+                        path: '',
                         component: PersonEventListComponent
                     },
                     {
-                        path: ':id/edit',
+                        path: 'edit',
                         component: PersonEventEditComponent
+                    },
+                    {   path: 'gifts',
+                        component: GiftsComponent
                     }
                 ]
-            },
-            {path: 'person/:id/gifts', component: GiftsComponent}
-            ]
-        )
+            }
+        ])
     ],
     exports: [
         RouterModule

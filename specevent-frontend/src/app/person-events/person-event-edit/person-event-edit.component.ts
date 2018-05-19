@@ -1,30 +1,23 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {PersonDto} from "../../common/person.dto";
+import {PersonEventsComponent} from "../person-events.component";
 
 /**
  * Created by NB-72 on 2017. 07. 12..
  */
 
 @Component({
+    selector: 'app-edit-person-events',
     templateUrl: 'person-event-edit.component.html',
     styleUrls: ['person-event-edit.component.css']
 })
-export class PersonEventEditComponent implements OnInit {
-    @Input() person: PersonDto;
-    newPerson: PersonDto;
-    @Output() save: EventEmitter<PersonDto> = new EventEmitter<PersonDto>();
+export class PersonEventEditComponent extends PersonEventsComponent{
     valid: boolean = true;
 
-    ngOnInit(): void {
-        this.newPerson = new PersonDto(0, this.person.name);
-        // for (let e of this.person.events) {
-        //     this.newPerson.events.push(new SpecEvent(this.person.name, e.eventType, e.month, e.day));
-        // }
-    }
-
     savePerson() {
-        document.getElementById("setterPanel").className = "exit";
-        this.save.emit(this.newPerson);
+        this.rsApiService.editPerson(this.person).then(response => {
+          this.rsApiService.editEvents(this.events).then(response => this.goBack());
+        });
     }
 
     validDate(month: number, day: number): boolean {

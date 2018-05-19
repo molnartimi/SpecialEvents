@@ -78,6 +78,13 @@ public class SpecEventService {
 			specEventRepository.delete(event);
 		}
 	}
+
+	public boolean isEventChanged(SpecEventDto event) {
+		SpecEventEntity eventEntity = specEventRepository.findOne(event.getId());
+		return eventEntity.getMonth() != event.getMonth() ||
+				eventEntity.getDay() != event.getDay() ||
+				!eventEntity.getEventType().equals(event.getEventType());
+	}
 	
 	
 	public static SpecEventDto toDto(SpecEventEntity event) {

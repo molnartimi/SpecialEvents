@@ -64,27 +64,18 @@ public class WebController {
 
 	// Edit only the persons's name!
 	@PutMapping(value = "/edit-person", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void editPerson(@RequestBody PersonDto person) {
+	public boolean editPerson(@RequestBody PersonDto person) {
 		personService.edit(person);
+		return true; // TODO false
 	}
 	
 	// Event modification for all person of event
-	@PutMapping(value = "/edit-event", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void editEvent(@RequestBody SpecEventDto event) {
-		specEventService.edit(event);
-	}
-
-	// Event modification for one person
-	// Create new event for him
-	@PutMapping(value = "/edit-person-event", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void editEvent(@RequestBody SpecEventDto event, @RequestParam String personId) {
-		personService.deleteEventFromPerson(specEventService.getEntity(event.getId()), personId);
-		
-		Set<PersonDto> person = new HashSet<PersonDto>();
-		PersonEntity personEntity = personService.getEntity(personId);
-		person.add(new PersonDto(personEntity.getId(), personEntity.getName()));
-		
-		addNewEvent(new SpecEventDto(event.getId(), null, event.getMonth(), event.getDay(), event.getEventType()));
+	@PutMapping(value = "/edit-events", produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean editEvent(@RequestBody SpecEventDto[] events) {
+		for (SpecEventDto event: events) {
+			specEventService.edit(event);
+		}
+		return true; // TODO false
 	}
 
 	// Delete person
