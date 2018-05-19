@@ -60,8 +60,8 @@ export class EventListComponent implements OnInit {
       this.router.navigate(['person', person.id, "edit"]);
     }
 
-    goToHints(event: SpecEventDto): void {
-        // this.router.navigate(['person', event.personId, 'gifts']);
+    goToHints(person: PersonDto): void {
+        this.router.navigate(['person', person.id, 'gifts']);
     }
 
 

@@ -18,9 +18,8 @@
                     <tr *ngFor="let person of e.persons">
                         <td class="personName">{{person.name}}</td>
                         <td>
-                            <button class="btn" (click)="goToHints(e)">
-                            <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
-                            Hints
+                            <button class="btn" (click)="goToHints(person)">
+                              <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
                             </button>
                             <button class="btn" (click)="goToPersonEvent(person, e)">
                                 <img src="assets/icons/setting.png" title="Setting person's events" height="20">

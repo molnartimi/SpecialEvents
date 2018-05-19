@@ -1,8 +1,11 @@
 package com.molnart.specialevents.domain.service;
 
+import com.molnart.specialevents.domain.dto.GiftDto;
 import com.molnart.specialevents.domain.dto.PersonDto;
 import com.molnart.specialevents.domain.dto.SpecEventDto;
 import com.molnart.specialevents.domain.events.SpecEventEntity;
+import com.molnart.specialevents.domain.gifts.GiftEntity;
+import com.molnart.specialevents.domain.gifts.GiftRepository;
 import com.molnart.specialevents.domain.person.PersonEntity;
 import com.molnart.specialevents.domain.person.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,8 @@ public class PersonService {
 
 	@Autowired
 	private PersonRepository personRepository;
+	@Autowired
+	private GiftRepository giftRepository;
 	
 	public PersonEntity getEntity(String id) {
 		return personRepository.findOne(Long.parseLong(id));
@@ -92,7 +97,7 @@ public class PersonService {
 
 	@Transactional
 	public void editEvent(Set<PersonEntity> persons, SpecEventEntity event) {
-		List<PersonEntity> personEntities = Arrays.asList(personRepository.findAllByEvents_Id(event.getId()));
+		List<PersonEntity> personEntities = Arrays.asList(personRepository.findAllByEvents(event));
 		for (PersonEntity person: personEntities) {
 			if (!persons.contains(person)) {
 				person.getEvents().remove(event);
@@ -103,5 +108,40 @@ public class PersonService {
 				person.addEvent(event);
 			}
 		}
+	}
+
+	public Set<GiftDto> getGifts(long personId) {
+		return toDto(personRepository.findOne(personId).getGifts());
+	}
+
+	@Transactional
+	public void saveGifts(GiftDto[] gifts, long personId) {
+		PersonEntity person = personRepository.findOne(personId);
+		Set<GiftEntity> entities = new HashSet<GiftEntity>();
+		for (GiftEntity gift: person.getGifts()) {
+			if (!entities.contains(gift)) {
+				person.getGifts().remove(gift);
+				giftRepository.delete(gift.getId());
+			}
+		}
+		for (GiftDto gift: gifts) {
+			GiftEntity entity = giftRepository.findOne(gift.getId());
+			if (entity == null) {
+				entity = new GiftEntity(gift.getId(), gift.getName(), gift.isDone());
+				person.getGifts().add(entity);
+				giftRepository.save(entity);
+			} else {
+				entity.setName(gift.getName());
+				entity.setDone(gift.isDone());
+			}
+		}
+	}
+
+	private Set<GiftDto> toDto(Set<GiftEntity> gifts) {
+		Set<GiftDto> dtos = new HashSet<GiftDto>();
+		for (GiftEntity gift: gifts) {
+			dtos.add(new GiftDto(gift.getName(), gift.getId(), gift.isDone()));
+		}
+		return dtos;
 	}
 }

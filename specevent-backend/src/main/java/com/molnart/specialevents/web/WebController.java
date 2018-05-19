@@ -1,5 +1,6 @@
 package com.molnart.specialevents.web;
 
+import com.molnart.specialevents.domain.dto.GiftDto;
 import com.molnart.specialevents.domain.dto.PersonDto;
 import com.molnart.specialevents.domain.dto.SpecEventDto;
 import com.molnart.specialevents.domain.events.SpecEventEntity;
@@ -112,5 +113,16 @@ public class WebController {
 		PersonEntity person = personService.deleteEventFromPerson(specEventService.getEntity(Long.parseLong(id)), personId);
 		specEventService.deletePersonFromEvent(id, person);
 		return true;
+	}
+
+	@GetMapping(value = "gifts", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Set<GiftDto> getPersonGifts(@RequestParam("id") String id) {
+		return personService.getGifts(Long.parseLong(id));
+	}
+
+	@PostMapping(value = "save-gifts", produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean savePersonGifts(@RequestBody GiftDto[] gifts, @RequestParam("id") String id) {
+		personService.saveGifts(gifts, Long.parseLong(id));
+		return true; // TODO false
 	}
 }

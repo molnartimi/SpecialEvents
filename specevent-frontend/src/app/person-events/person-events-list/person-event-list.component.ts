@@ -22,7 +22,7 @@ export class PersonEventListComponent extends PersonEventsComponent{
     valid: boolean;
 
     goToHints(): void {
-       // TODO this.router.navigate(['person', this.events.id, 'gifts']);
+       this.router.navigate(['person', this.id, 'gifts']);
     }
 
     deleteEvent(event: SpecEventDto): void {

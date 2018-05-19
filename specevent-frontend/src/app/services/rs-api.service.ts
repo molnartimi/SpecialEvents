@@ -3,11 +3,11 @@
  */
 
 import {Injectable} from "@angular/core";
-import {GiftsService} from "./gifts.service";
 import {Http, RequestOptions, Headers, URLSearchParams} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import {PersonDto} from "../common/person.dto";
 import {SpecEventDto} from "../common/spec-event.dto";
+import {GiftDto} from "../common/gift.dto";
 
 @Injectable()
 export class RsApiService {
@@ -22,10 +22,10 @@ export class RsApiService {
     private deletePersonUrl = "api/delete-person";
     private editPersonNameUrl = "api/edit-person";
     private editEventsUrl = "api/edit-events";
+    private giftsUrl = "api/gifts";
+    private saveGiftsUrl = "api/save-gifts";
 
-    constructor(private giftService: GiftsService,
-                private http: Http) {
-    }
+    constructor(private http: Http) {}
 
     getPersons(): Promise<PersonDto[]> {
         return this.http.get(this.personsUrl)
@@ -130,6 +130,30 @@ export class RsApiService {
 
     editEvents(events: SpecEventDto[]): Promise<boolean> {
       return this.http.put(this.editEventsUrl, events)
+        .toPromise()
+        .then(response => response.json() as boolean);
+    }
+
+    getGifts(id: number): Promise<GiftDto[]> {
+      let myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      let myParams = new URLSearchParams();
+      myParams.append('id', id.toString());
+      let options = new RequestOptions({headers: myHeaders, params: myParams});
+
+      return this.http.get(this.giftsUrl, options)
+        .toPromise()
+        .then(response => response.json() as GiftDto[]);
+    }
+
+    saveGifts(id: number, gifts: GiftDto[]): Promise<boolean> {
+      let myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      let myParams = new URLSearchParams();
+      myParams.append('id', id.toString());
+      let options = new RequestOptions({headers: myHeaders, params: myParams});
+
+      return this.http.post(this.saveGiftsUrl, gifts, options)
         .toPromise()
         .then(response => response.json() as boolean);
     }

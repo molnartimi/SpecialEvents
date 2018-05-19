@@ -7,7 +7,6 @@ import {FormBuilder, FormsModule} from "@angular/forms";
 import {NewEventComponent} from "./new-event/new-event.component";
 import {EventListComponent} from "./event-list/event-list.component";
 import {RsApiService} from "./services/rs-api.service";
-import {GiftsService} from "./services/gifts.service";
 import {HttpModule} from "@angular/http";
 import {PersonListComponent} from "./person-list/persons.component";
 import {PersonEventListComponent} from "./person-events/person-events-list/person-event-list.component";
@@ -37,7 +36,6 @@ import {EditEventComponent} from "./edit-event/edit-event.component";
     ],
     providers: [
         RsApiService,
-        GiftsService,
         FormBuilder
     ],
     bootstrap: [AppComponent]

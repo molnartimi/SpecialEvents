@@ -4,9 +4,9 @@
 
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {Gift, GiftsService} from "../services/gifts.service";
 import {Location} from "@angular/common";
 import {RsApiService} from "../services/rs-api.service";
+import {GiftDto} from "../common/gift.dto";
 
 @Component({
     templateUrl: 'gifts.component.html',
@@ -15,38 +15,35 @@ import {RsApiService} from "../services/rs-api.service";
 export class GiftsComponent implements OnInit {
     id: number;
     name: string;
-    gifts: Gift[] = [{gift: "alma", done: true}];
+    gifts: GiftDto[] = [];
     newGift: string = '';
 
     constructor(private route: ActivatedRoute,
-                private giftsService: GiftsService,
-                private personService: RsApiService,
+                private rsApiService: RsApiService,
                 private location: Location) {
     }
 
     ngOnInit() {
-        this.id = Number(this.route.snapshot.paramMap.get('id'));
-        this.personService.getPerson(this.id).then(person => this.name = person.name);
-
-        this.giftsService.getGifts(this.id).then(gifts => this.gifts = gifts);
+        this.id = Number(this.route.parent.snapshot.paramMap.get('id'));
+        this.rsApiService.getPerson(this.id).then(person => this.name = person.name);
+        this.rsApiService.getGifts(this.id).then(gifts => this.gifts = gifts);
     }
 
-    saveNewGift(): void {
-        this.giftsService.addGift(this.id, this.newGift);
-        this.update();
+    saveGifts(): void {
+        this.rsApiService.saveGifts(this.id, this.gifts);
+        this.goBack();
+    }
+
+    addGift() {
+        this.gifts.push(new GiftDto(0, this.newGift, false));
+        this.newGift = "";
     }
 
     goBack(): void {
         this.location.back();
     }
 
-    deleteGift(gift: Gift): void {
-        this.giftsService.deleteGift(this.id, gift);
-        this.update();
-    }
-
-    update(): void {
-        this.giftsService.getGifts(this.id).then(gifts => this.gifts = gifts);
-        this.newGift = "";
+    deleteGift(idx: number): void {
+        this.gifts.splice(idx, 1);
     }
 }

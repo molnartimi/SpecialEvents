@@ -1,6 +1,7 @@
 package com.molnart.specialevents.domain.person;
 
 import com.molnart.specialevents.domain.events.SpecEventEntity;
+import com.molnart.specialevents.domain.gifts.GiftEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,6 +21,9 @@ public class PersonEntity  implements Serializable {
 			joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))
 	private Set<SpecEventEntity> events = new HashSet<SpecEventEntity>();
+
+	@OneToMany(fetch = FetchType.EAGER)
+	private Set<GiftEntity> gifts;
 	
 	protected PersonEntity(){}
 	public PersonEntity(String name) {
@@ -44,5 +48,13 @@ public class PersonEntity  implements Serializable {
 	
 	public Set<SpecEventEntity> getEvents() {
 		return events;
+	}
+
+	public void setGifts(Set<GiftEntity> gifts) {
+		this.gifts = gifts;
+	}
+
+	public Set<GiftEntity> getGifts() {
+		return gifts;
 	}
 }
