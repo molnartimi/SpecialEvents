@@ -14,6 +14,11 @@ import {PersonEventEditComponent} from "./person-events/person-event-edit/person
 import {PersonEventsComponent} from "./person-events/person-events.component";
 import {GiftsComponent} from "./gifts/gifts.component";
 import {EditEventComponent} from "./edit-event/edit-event.component";
+import {LoginComponent} from "./login/login.component";
+import {XhrInterceptor} from "./services/XhrInterceptor";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import {RegisterComponent} from "./register/register.component";
+import {WelcomeComponent} from "./welcome/welcome.component";
 
 
 @NgModule({
@@ -26,17 +31,23 @@ import {EditEventComponent} from "./edit-event/edit-event.component";
         PersonListComponent,
         PersonEventListComponent,
         PersonEventEditComponent,
-        GiftsComponent
+        GiftsComponent,
+        LoginComponent,
+        RegisterComponent,
+        WelcomeComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         AppRoutingModule,
-        HttpModule
+        HttpModule,
+        HttpClientModule
     ],
     providers: [
         RsApiService,
-        FormBuilder
+        FormBuilder,
+        HttpClient//,
+       // { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
 })

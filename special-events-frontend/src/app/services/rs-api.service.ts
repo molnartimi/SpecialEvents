@@ -8,6 +8,7 @@ import 'rxjs/add/operator/toPromise';
 import {PersonDto} from "../common/person.dto";
 import {SpecEventDto} from "../common/spec-event.dto";
 import {GiftDto} from "../common/gift.dto";
+import {UserDto} from "../common/user.dto";
 
 @Injectable()
 export class RsApiService {
@@ -24,8 +25,57 @@ export class RsApiService {
     private editEventsUrl = "api/edit-events";
     private giftsUrl = "api/gifts";
     private saveGiftsUrl = "api/save-gifts";
+    private loginUrl = "api/login";
+    private logoutUrl = "logout";
+    private registrateUrl = "api/register";
+
+    private authenticatedFlag = false;
 
     constructor(private http: Http) {}
+
+    get authenticated(): boolean {
+      return !!localStorage.getItem("currentUser")
+    }
+
+    public login(user: UserDto): Promise<any> {
+
+        let headers = new Headers();
+        headers.append('Accept', 'application/json')
+        let base64Credential: string = btoa( user.username+ ':' + user.password);
+        headers.append("Authorization", "Basic " + base64Credential);
+
+        let options = new RequestOptions();
+        options.headers=headers;
+
+        return this.http.get(this.loginUrl ,  options)
+            .toPromise()
+            .then(response => {
+                let user = response.json().principal;
+                if (user) {
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.authenticatedFlag = true;
+                }
+            });
+    }
+
+    logout(): Promise<any> {
+        return this.http.post(this.logoutUrl,{})
+            .toPromise()
+            .then(response => {
+                localStorage.removeItem('currentUser');
+                this.authenticatedFlag = false;
+            })
+    }
+
+    createAccount(user: UserDto): Promise<any> {
+        return this.http.post(this.registrateUrl, user)
+          .toPromise()
+          .then(response => {
+            if (response) {
+              this.login(user);
+            }
+          })
+    }
 
     getPersons(): Promise<PersonDto[]> {
         return this.http.get(this.personsUrl)

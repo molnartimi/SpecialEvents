@@ -11,17 +11,33 @@ import {PersonEventListComponent} from "./person-events/person-events-list/perso
 import {PersonEventsComponent} from "./person-events/person-events.component";
 import {PersonEventEditComponent} from "./person-events/person-event-edit/person-event-edit.component";
 import {EditEventComponent} from "./edit-event/edit-event.component";
+import {LoginComponent} from "./login/login.component";
+import {RegisterComponent} from "./register/register.component";
+import {AppComponent} from "./app.component";
+import {WelcomeComponent} from "./welcome/welcome.component";
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {
+                path: 'login',
+                component: LoginComponent
+            },
+            {
+                path: 'register',
+                component: RegisterComponent
+            },
+            {
                 path: 'events',
                 component: EventListComponent
             },
             {
+                path: 'welcome',
+                component: WelcomeComponent
+            },
+            {
                 path: '',
-                redirectTo: '/events',
+                redirectTo: '/welcome',
                 pathMatch: 'full'
             },
             {
