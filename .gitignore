@@ -1,7 +1,33 @@
-/specevent-backend/target/
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
-/specevent-frontend/package-lock.json
-/specevent-frontend/node_modules/
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+/special-events-backend/target/
+*.iml
+/special-events-frontend/package-lock.json
+/special-events-frontend/node_modules/
 *.mwb
 *.mwb.bak
 /.idea/
