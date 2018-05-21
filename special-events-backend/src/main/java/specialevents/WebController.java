@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import specialevents.domain.dto.GiftDto;
 import specialevents.domain.dto.PersonDto;
@@ -48,31 +50,44 @@ public class WebController {
 		return principal;
 	}
 
+	@CrossOrigin
+	@RequestMapping("/logout")
+	public boolean user() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		authentication.setAuthenticated(false);
+		return true;
+	}
+
 	// returns only the persons with their ids and names
+	@CrossOrigin
 	@GetMapping(value = "/persons", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Set<PersonDto> getPersons() {
 		return personService.getPersons();
 	}
 
 	// returns all events with all properties
+	@CrossOrigin
 	@GetMapping(value = "/events", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Set<SpecEventDto> getEvents() {
 		return specEventService.getEvents();
 	}
 	
 	// returns one person's events
+	@CrossOrigin
 	@GetMapping(value = "/person/{id}/events", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Set<SpecEventDto> getPersonEvents(@PathVariable("id") Long id) {
 		return specEventService.getPersonEvents(id);
 	}
 
 	// returns one person's datas
+	@CrossOrigin
 	@GetMapping(value = "/person/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PersonDto getPerson(@PathVariable("id") Long id) {
 		return personService.getPerson(id);
 	}
 
 	// returns one event
+	@CrossOrigin
 	@GetMapping(value = "/event/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SpecEventDto getEvent(@PathVariable("id") Long id) {
 		return specEventService.getEvent(id);
@@ -80,6 +95,7 @@ public class WebController {
 
 
 	// Create new person
+	@CrossOrigin
 	@PostMapping(value = "/new-person", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long addNewPerson(@RequestBody PersonDto person) {
 		Long newId = personService.add(person);
@@ -88,6 +104,7 @@ public class WebController {
 	
 	// Create new event
 	// Check the person list, create new eventEntity, add entity to persons
+	@CrossOrigin
 	@PostMapping(value = "/new-event", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long addNewEvent(@RequestBody SpecEventDto event) {
 		Set<PersonEntity> persons = personService.toEntity(event.getPersons());
@@ -97,6 +114,7 @@ public class WebController {
 	}
 
 	// Edit only the persons's name!
+	@CrossOrigin
 	@PutMapping(value = "/edit-person", produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean editPerson(@RequestBody PersonDto person) {
 		personService.edit(person);
@@ -104,6 +122,7 @@ public class WebController {
 	}
 	
 	// Event modification for all person of event
+	@CrossOrigin
 	@PutMapping(value = "/edit-events", produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean editEvent(@RequestBody SpecEventDto[] events) {
 		for (SpecEventDto event: events) {
@@ -116,6 +135,7 @@ public class WebController {
 
 	// Delete person
 	// Also delete event relations from all events
+	@CrossOrigin
 	@DeleteMapping(value = "/delete-person", produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean deletePerson(@RequestParam("id") String id) {
 		Set<SpecEventEntity> entities = personService.delete(id);
@@ -125,6 +145,7 @@ public class WebController {
 
 	// Delete event
 	// ALso delete person relations from all persons
+	@CrossOrigin
 	@DeleteMapping(value = "/delete-event", produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean deleteEvent(@RequestParam("id") String id) {
 		SpecEventEntity event = specEventService.getEntity(Long.parseLong(id));
@@ -134,6 +155,7 @@ public class WebController {
 	}
 
 	// Delete event from one person
+	@CrossOrigin
 	@DeleteMapping(value = "/delete-event-person", produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean deleteEvent(@RequestParam("personId") String personId, @RequestParam("id") String id) {
 		PersonEntity person = personService.deleteEventFromPerson(specEventService.getEntity(Long.parseLong(id)), personId);
@@ -141,11 +163,13 @@ public class WebController {
 		return true;
 	}
 
+	@CrossOrigin
 	@GetMapping(value = "gifts", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Set<GiftDto> getPersonGifts(@RequestParam("id") String id) {
 		return personService.getGifts(Long.parseLong(id));
 	}
 
+	@CrossOrigin
 	@PostMapping(value = "save-gifts", produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean savePersonGifts(@RequestBody GiftDto[] gifts, @RequestParam("id") String id) {
 		personService.saveGifts(gifts, Long.parseLong(id));

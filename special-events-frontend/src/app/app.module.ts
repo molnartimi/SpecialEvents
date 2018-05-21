@@ -15,8 +15,6 @@ import {PersonEventsComponent} from "./person-events/person-events.component";
 import {GiftsComponent} from "./gifts/gifts.component";
 import {EditEventComponent} from "./edit-event/edit-event.component";
 import {LoginComponent} from "./login/login.component";
-import {XhrInterceptor} from "./services/XhrInterceptor";
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {RegisterComponent} from "./register/register.component";
 import {WelcomeComponent} from "./welcome/welcome.component";
 
@@ -40,14 +38,11 @@ import {WelcomeComponent} from "./welcome/welcome.component";
         BrowserModule,
         FormsModule,
         AppRoutingModule,
-        HttpModule,
-        HttpClientModule
+        HttpModule
     ],
     providers: [
         RsApiService,
-        FormBuilder,
-        HttpClient//,
-       // { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }
+        FormBuilder
     ],
     bootstrap: [AppComponent]
 })

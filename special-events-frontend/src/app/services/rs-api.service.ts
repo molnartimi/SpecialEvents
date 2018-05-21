@@ -26,7 +26,7 @@ export class RsApiService {
     private giftsUrl = "api/gifts";
     private saveGiftsUrl = "api/save-gifts";
     private loginUrl = "api/login";
-    private logoutUrl = "logout";
+    private logoutUrl = "api/logout";
     private registrateUrl = "api/register";
 
     private authenticatedFlag = false;
