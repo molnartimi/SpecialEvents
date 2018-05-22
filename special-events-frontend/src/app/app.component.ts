@@ -1,6 +1,7 @@
 import {Component,} from '@angular/core';
 import {RsApiService} from "./services/rs-api.service";
 import {Router} from "@angular/router";
+import {UserService} from "./services/user.service";
 
 @Component({
     selector: 'app-root',
@@ -8,23 +9,21 @@ import {Router} from "@angular/router";
     styleUrls: ['app.component.css']
 })
 export class AppComponent {
-    constructor(private rsApiServive: RsApiService,
-                private router: Router) {
-
-    }
+    constructor(private userService: UserService,
+                private router: Router) {}
 
     title = 'Special events';
 
     logout() {
-      this.rsApiServive.logout().then(() => this.router.navigate(['']));
+      this.userService.logout().then(() => this.router.navigate(['']));
     }
 
     get authenticated(): boolean {
-      return this.rsApiServive.authenticated;
+      return this.userService.authenticated;
     }
 
     get admin(): boolean {
-      return this.rsApiServive.isAdmin;
+      return this.userService.isAdmin;
     }
 }
 

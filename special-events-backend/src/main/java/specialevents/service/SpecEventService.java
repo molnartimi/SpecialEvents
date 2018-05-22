@@ -1,9 +1,9 @@
-package specialevents.domain.service;
+package specialevents.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import specialevents.domain.dto.PersonDto;
-import specialevents.domain.dto.SpecEventDto;
+import specialevents.domain.person.PersonDto;
+import specialevents.domain.events.SpecEventDto;
 import specialevents.domain.events.SpecEventEntity;
 import specialevents.domain.events.SpecEventRepository;
 import specialevents.domain.person.PersonEntity;

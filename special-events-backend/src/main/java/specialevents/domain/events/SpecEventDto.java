@@ -1,4 +1,6 @@
-package specialevents.domain.dto;
+package specialevents.domain.events;
+
+import specialevents.domain.person.PersonDto;
 
 import java.util.HashSet;
 import java.util.Set;

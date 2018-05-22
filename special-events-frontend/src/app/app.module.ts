@@ -19,6 +19,7 @@ import {RegisterComponent} from "./register/register.component";
 import {WelcomeComponent} from "./welcome/welcome.component";
 import {AdminComponent} from "./admin/admin.component";
 import {EditUserComponent} from "./edit-user/edit-user.component";
+import {UserService} from "./services/user.service";
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {EditUserComponent} from "./edit-user/edit-user.component";
     ],
     providers: [
         RsApiService,
+        UserService,
         FormBuilder
     ],
     bootstrap: [AppComponent]

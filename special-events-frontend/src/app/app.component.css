@@ -3,6 +3,8 @@
     font-weight: bold;
 }
 
+a { cursor: pointer; }
+
 .nav-link {
     font-size: large;
 }

@@ -30,9 +30,6 @@
                    required placeholder="xx" #montha="ngModel">.
             <input class="day form-control" type="number" min="1" max="31" [(ngModel)]="day" id="day" name="day"
                    required placeholder="xx" #daya="ngModel">.
-            <div [hidden]="(montha.valid || montha.pristine) && (daya.valid || daya.pristine)" class="alert alert-danger">
-                Date is required!
-            </div>
             <div *ngIf="!validDate()" class="alert alert-danger">
                 Invalid date!
             </div>

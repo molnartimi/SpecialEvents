@@ -1,4 +1,4 @@
-package specialevents.domain.dto;
+package specialevents.domain.user;
 
 public class UserDto {
 	private long id;

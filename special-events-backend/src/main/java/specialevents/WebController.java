@@ -1,25 +1,18 @@
 package specialevents;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import specialevents.domain.dto.GiftDto;
-import specialevents.domain.dto.PersonDto;
-import specialevents.domain.dto.SpecEventDto;
-import specialevents.domain.dto.UserDto;
+import specialevents.domain.gifts.GiftDto;
+import specialevents.domain.person.PersonDto;
+import specialevents.domain.events.SpecEventDto;
 import specialevents.domain.events.SpecEventEntity;
 import specialevents.domain.person.PersonEntity;
-import specialevents.domain.service.PersonService;
-import specialevents.domain.service.SpecEventService;
-import specialevents.domain.service.UserService;
-import specialevents.domain.user.UserEntity;
+import specialevents.service.PersonService;
+import specialevents.service.SpecEventService;
+import specialevents.service.UserService;
 
 import java.security.Principal;
 import java.util.Collection;
@@ -33,31 +26,7 @@ public class WebController {
 	@Autowired
 	SpecEventService specEventService;
 	@Autowired
-	private UserService userService;
-
-	@CrossOrigin
-	@PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean createUser(@RequestBody UserDto newUser) {
-		if (userService.find(newUser.getUsername()) != null) {
-			return false;
-		}
-		userService.save(newUser);
-		return true;
-	}
-
-	@CrossOrigin
-	@RequestMapping("/login")
-	public Principal user(Principal principal) {
-		return principal;
-	}
-
-	@CrossOrigin
-	@RequestMapping("/logout")
-	public boolean user() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		authentication.setAuthenticated(false);
-		return true;
-	}
+	UserService userService;
 
 	// returns only the persons with their ids and names
 	@CrossOrigin
@@ -71,18 +40,6 @@ public class WebController {
 	@GetMapping(value = "/events", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Collection<SpecEventDto> getEvents(@RequestParam("id") String userId) {
 		return specEventService.getEvents(personService.getPersonEntities(Long.parseLong(userId)));
-	}
-
-	@CrossOrigin
-	@GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Set<UserDto> getEvents() {
-		return userService.getUsers();
-	}
-
-	@CrossOrigin
-	@GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserDto getUser(@PathVariable("id") Long userId) {
-		return userService.getUser(userId);
 	}
 	
 	// returns one person's events
@@ -133,13 +90,6 @@ public class WebController {
 		personService.edit(person);
 		return true; // TODO false
 	}
-
-	@CrossOrigin
-	@PutMapping(value = "/edit-user", produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean editUser(@RequestBody UserDto user) {
-		userService.edit(user);
-		return true; // TODO false
-	}
 	
 	// Event modification for all person of event
 	@CrossOrigin
@@ -171,16 +121,6 @@ public class WebController {
 		SpecEventEntity event = specEventService.getEntity(Long.parseLong(id));
 		personService.deleteEvent(event);
 		specEventService.delete(id);
-		return true;
-	}
-
-	@CrossOrigin
-	@DeleteMapping(value = "/delete-user", produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean deleteUser(@RequestParam("id") String id) {
-		for (PersonDto person: personService.getPersons(Long.parseLong(id))) {
-			deletePerson(String.valueOf(person.getId()));
-		}
-		userService.deleteUser(Long.parseLong(id));
 		return true;
 	}
 

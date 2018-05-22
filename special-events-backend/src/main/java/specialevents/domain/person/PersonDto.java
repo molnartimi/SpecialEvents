@@ -1,4 +1,4 @@
-package specialevents.domain.dto;
+package specialevents.domain.person;
 
 public class PersonDto {
 	private String name;

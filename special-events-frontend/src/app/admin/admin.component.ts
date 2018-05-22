@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {SpecEventDto} from "../common/spec-event.dto";
 import {PersonDto} from "../common/person.dto";
 import {UserDto} from "../common/user.dto";
+import {UserService} from "../services/user.service";
 
 @Component({
     templateUrl: 'admin.component.html',
@@ -16,16 +17,16 @@ import {UserDto} from "../common/user.dto";
 export class AdminComponent implements OnInit {
     users: UserDto[];
 
-    constructor(private rsApiService: RsApiService,
+    constructor(private userService: UserService,
                 private router: Router) {
     }
 
     ngOnInit(): void {
-      this.rsApiService.getUsers().then(response => this.users = response);
+      this.userService.getUsers().then(response => this.users = response);
     }
 
     deleteUser(user: UserDto): void {
-         this.rsApiService.deleteUser(user.id).then(success => {
+         this.userService.deleteUser(user.id).then(success => {
              let index = this.users.indexOf(user);
              this.users.splice(index, 1);
          });
@@ -39,13 +40,7 @@ export class AdminComponent implements OnInit {
       this.router.navigate(["user", user.id, "edit"]);
     }
 
-    update(): void {
-        this.rsApiService.getUsers().then(response => {
-            this.users = response;
-        });
-    }
-
     get currentUserId(): number {
-      return Number(this.rsApiService.currentUserId);
+      return Number(this.userService.currentUserId);
     }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {RsApiService} from "../services/rs-api.service";
 import {UserDto} from "../common/user.dto";
+import {UserService} from "../services/user.service";
 
 @Component({
   templateUrl: 'login.component.html',
@@ -11,12 +12,12 @@ export class LoginComponent {
 
   user: UserDto;
 
-  constructor(private rsApiService: RsApiService, private router: Router) {
+  constructor(private userService: UserService, private router: Router) {
     this.user = new UserDto(0, "", "", "", "");
   }
 
   login() {
-    this.rsApiService.login(this.user).then(() => this.router.navigate(['events']));
+    this.userService.login(this.user).then(() => this.router.navigate(['events']));
   }
 
 }

@@ -25,60 +25,34 @@ export class RsApiService {
     private editEventsUrl = "api/edit-events";
     private giftsUrl = "api/gifts";
     private saveGiftsUrl = "api/save-gifts";
-    private loginUrl = "api/login";
-    private logoutUrl = "api/logout";
-    private registrateUrl = "api/register";
-    private getUsersUrl = "api/users";
-    private deleteUserUrl = "api/delete-user";
-    private editUserUrl = "api/edit-user";
-    private userUrl = "api/user";
+    private deleteUserUrl = "api/userapi/delete-user";
+    private editUserUrl = "api/userapi/edit-user";
 
     constructor(private http: Http) {}
 
-    get authenticated(): boolean {
-      return !!localStorage.getItem("currentUser")
+    public post(url, callback, body?, options?): Promise<any> {
+      return this.http.post(url,body ? body : {}, options ? options : null)
+        .toPromise()
+        .then(response => callback(response));
     }
 
-    get isAdmin(): boolean {
-      return JSON.parse(localStorage.getItem('currentUser')).role === "ADMIN";
+    public get(url, callback, options?): Promise<any> {
+      return this.http.get(url, options ? options : null)
+        .toPromise()
+        .then(response => callback(response));
     }
 
-    public login(user: UserDto): Promise<any> {
-
-        let headers = new Headers();
-        headers.append('Accept', 'application/json')
-        let base64Credential: string = btoa( user.username+ ':' + user.password);
-        headers.append("Authorization", "Basic " + base64Credential);
-
-        let options = new RequestOptions();
-        options.headers=headers;
-
-        return this.http.get(this.loginUrl ,  options)
-            .toPromise()
-            .then(response => {
-                let user = response.json().principal;
-                if (user) {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }
-            });
+    public put(url, callback, body?, options?): Promise<any> {
+      return this.http.put(url, body ? body : {}, options ? options : null)
+        .toPromise()
+        .then(response => callback(response));
     }
 
-    logout(): Promise<any> {
-        return this.http.post(this.logoutUrl,{})
-            .toPromise()
-            .then(response => {
-                localStorage.removeItem('currentUser');
-            })
-    }
+    public delete(url, callback, options?): Promise<any> {
+      return this.http.delete(url, options ? options : null)
+        .toPromise()
+        .then( response => callback(response));
 
-    createAccount(user: UserDto): Promise<any> {
-        return this.http.post(this.registrateUrl, user)
-          .toPromise()
-          .then(response => {
-            if (response) {
-              this.login(user);
-            }
-          })
     }
 
     getPersons(): Promise<PersonDto[]> {
@@ -99,12 +73,6 @@ export class RsApiService {
        return this.http.get(this.eventUrl + "/" + id)
          .toPromise()
          .then(response => response.json() as SpecEventDto);
-    }
-
-    getUser(id: number): Promise<UserDto> {
-      return this.http.get(this.userUrl + "/" + id)
-        .toPromise()
-        .then(response => response.json() as UserDto);
     }
 
     getPersonEvents(id: number): Promise<SpecEventDto[]> {
@@ -210,12 +178,6 @@ export class RsApiService {
       return this.http.post(this.saveGiftsUrl, gifts, options)
         .toPromise()
         .then(response => response.json() as boolean);
-    }
-
-    getUsers(): Promise<UserDto[]> {
-      return this.http.get(this.getUsersUrl)
-        .toPromise()
-        .then(response => response.json() as UserDto[]);
     }
 
     private createHttpOptions(paramNames: string[], paramValues: string[]): RequestOptions {

@@ -1,8 +1,8 @@
-package specialevents.domain.service;
+package specialevents.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import specialevents.domain.dto.UserDto;
+import specialevents.domain.user.UserDto;
 import specialevents.domain.user.UserEntity;
 import specialevents.domain.user.UserRepository;
 
@@ -10,10 +10,6 @@ import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author kamal berriga
- *
- */
 @Service
 public class UserService {
 
