@@ -12,7 +12,7 @@ export class LoginComponent {
   user: UserDto;
 
   constructor(private rsApiService: RsApiService, private router: Router) {
-    this.user = new UserDto(0, "", "", "");
+    this.user = new UserDto(0, "", "", "", "");
   }
 
   login() {

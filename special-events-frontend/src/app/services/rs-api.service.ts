@@ -28,13 +28,19 @@ export class RsApiService {
     private loginUrl = "api/login";
     private logoutUrl = "api/logout";
     private registrateUrl = "api/register";
-
-    private authenticatedFlag = false;
+    private getUsersUrl = "api/users";
+    private deleteUserUrl = "api/delete-user";
+    private editUserUrl = "api/edit-user";
+    private userUrl = "api/user";
 
     constructor(private http: Http) {}
 
     get authenticated(): boolean {
       return !!localStorage.getItem("currentUser")
+    }
+
+    get isAdmin(): boolean {
+      return JSON.parse(localStorage.getItem('currentUser')).role === "ADMIN";
     }
 
     public login(user: UserDto): Promise<any> {
@@ -53,7 +59,6 @@ export class RsApiService {
                 let user = response.json().principal;
                 if (user) {
                     localStorage.setItem('currentUser', JSON.stringify(user));
-                    this.authenticatedFlag = true;
                 }
             });
     }
@@ -63,7 +68,6 @@ export class RsApiService {
             .toPromise()
             .then(response => {
                 localStorage.removeItem('currentUser');
-                this.authenticatedFlag = false;
             })
     }
 
@@ -78,7 +82,8 @@ export class RsApiService {
     }
 
     getPersons(): Promise<PersonDto[]> {
-        return this.http.get(this.personsUrl)
+        let options = this.createDefaultHttpOptions(this.currentUserId);
+        return this.http.get(this.personsUrl, options)
             .toPromise()
             .then(response => this.order(response.json() as PersonDto[]));
     }
@@ -96,6 +101,12 @@ export class RsApiService {
          .then(response => response.json() as SpecEventDto);
     }
 
+    getUser(id: number): Promise<UserDto> {
+      return this.http.get(this.userUrl + "/" + id)
+        .toPromise()
+        .then(response => response.json() as UserDto);
+    }
+
     getPersonEvents(id: number): Promise<SpecEventDto[]> {
         let url = this.personUrl + '/' + id + '/events';
         return this.http.get(url)
@@ -104,7 +115,8 @@ export class RsApiService {
     }
 
     getEvents(): Promise<SpecEventDto[]> {
-        return this.http.get(this.eventsUrl)
+        let options = this.createDefaultHttpOptions(this.currentUserId);
+        return this.http.get(this.eventsUrl, options)
             .toPromise()
             .then(response => response.json() as SpecEventDto[]);
     }
@@ -116,12 +128,7 @@ export class RsApiService {
     }
 
     deleteEvent(id: number): Promise<boolean> {
-
-        let myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
-        let myParams = new URLSearchParams();
-        myParams.append('id', id.toString());
-        let options = new RequestOptions({headers: myHeaders, params: myParams});
+        let options = this.createDefaultHttpOptions(id.toString());
 
         return this.http.delete(this.deleteEventUrl, options)
             .toPromise()
@@ -129,13 +136,7 @@ export class RsApiService {
     }
 
     deleteEventFromPerson(personId: number, id: number): Promise<boolean> {
-
-        let myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
-        let myParams = new URLSearchParams();
-        myParams.append('id', id.toString());
-        myParams.append('personId', personId.toString());
-        let options = new RequestOptions({headers: myHeaders, params: myParams});
+        let options = this.createHttpOptions(['id', 'personId'], [id.toString(), personId.toString()]);
 
         return this.http.delete(this.deleteEventFromPersonUrl, options)
             .toPromise()
@@ -143,16 +144,20 @@ export class RsApiService {
     }
 
     deletePerson(id: number): Promise<boolean> {
-
-        let myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
-        let myParams = new URLSearchParams();
-        myParams.append('id', id.toString());
-        let options = new RequestOptions({headers: myHeaders, params: myParams});
+        let options = this.createDefaultHttpOptions(id.toString());
 
         return this.http.delete(this.deletePersonUrl, options)
             .toPromise()
             .then( response => response.json() as boolean);
+
+    }
+
+    deleteUser(id: number): Promise<boolean> {
+        let options = this.createDefaultHttpOptions(id.toString());
+
+        return this.http.delete(this.deleteUserUrl, options)
+          .toPromise()
+          .then( response => response.json() as boolean);
 
     }
 
@@ -167,15 +172,22 @@ export class RsApiService {
     }
 
     savePerson(newPerson: PersonDto): Promise<number> {
-        return this.http.post(this.newPersonUrl, newPerson)
+        let options = this.createDefaultHttpOptions(this.currentUserId);
+        return this.http.post(this.newPersonUrl, newPerson, options)
             .toPromise()
             .then( response => response.json() as number);
     }
 
-    editPerson(person: PersonDto) {
+    editPerson(person: PersonDto): Promise<boolean> {
       return this.http.put(this.editPersonNameUrl, person)
         .toPromise()
         .then(response => response.json() as boolean);
+    }
+
+    editUser(user: UserDto): Promise<boolean> {
+        return this.http.put(this.editUserUrl, user)
+          .toPromise()
+          .then(response => response.json() as boolean);
     }
 
     editEvents(events: SpecEventDto[]): Promise<boolean> {
@@ -185,11 +197,7 @@ export class RsApiService {
     }
 
     getGifts(id: number): Promise<GiftDto[]> {
-      let myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/json');
-      let myParams = new URLSearchParams();
-      myParams.append('id', id.toString());
-      let options = new RequestOptions({headers: myHeaders, params: myParams});
+      let options = this.createDefaultHttpOptions(id.toString());
 
       return this.http.get(this.giftsUrl, options)
         .toPromise()
@@ -197,14 +205,34 @@ export class RsApiService {
     }
 
     saveGifts(id: number, gifts: GiftDto[]): Promise<boolean> {
-      let myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/json');
-      let myParams = new URLSearchParams();
-      myParams.append('id', id.toString());
-      let options = new RequestOptions({headers: myHeaders, params: myParams});
+      let options = this.createDefaultHttpOptions(id.toString());
 
       return this.http.post(this.saveGiftsUrl, gifts, options)
         .toPromise()
         .then(response => response.json() as boolean);
+    }
+
+    getUsers(): Promise<UserDto[]> {
+      return this.http.get(this.getUsersUrl)
+        .toPromise()
+        .then(response => response.json() as UserDto[]);
+    }
+
+    private createHttpOptions(paramNames: string[], paramValues: string[]): RequestOptions {
+      let myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      let myParams = new URLSearchParams();
+      for (let i in paramNames) {
+        myParams.append(paramNames[i], paramValues[i]);
+      }
+      return new RequestOptions({headers: myHeaders, params: myParams});
+    }
+
+    private createDefaultHttpOptions(id: string): RequestOptions {
+      return this.createHttpOptions(['id'], [id]);
+    }
+
+    public get currentUserId(): string {
+      return JSON.parse(localStorage.getItem('currentUser')).id.toString();
     }
 }

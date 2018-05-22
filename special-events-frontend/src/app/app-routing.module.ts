@@ -15,6 +15,8 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {AppComponent} from "./app.component";
 import {WelcomeComponent} from "./welcome/welcome.component";
+import {AdminComponent} from "./admin/admin.component";
+import {EditUserComponent} from "./edit-user/edit-user.component";
 
 @NgModule({
     imports: [
@@ -64,6 +66,14 @@ import {WelcomeComponent} from "./welcome/welcome.component";
                         component: GiftsComponent
                     }
                 ]
+            },
+            {
+                path: 'admin',
+                component: AdminComponent
+            },
+            {
+                path: 'user/:id/edit',
+                component: EditUserComponent
             }
         ])
     ],

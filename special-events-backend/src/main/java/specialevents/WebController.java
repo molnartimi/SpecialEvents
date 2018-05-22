@@ -22,6 +22,7 @@ import specialevents.domain.service.UserService;
 import specialevents.domain.user.UserEntity;
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Set;
 
 @RestController
@@ -61,15 +62,27 @@ public class WebController {
 	// returns only the persons with their ids and names
 	@CrossOrigin
 	@GetMapping(value = "/persons", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Set<PersonDto> getPersons() {
-		return personService.getPersons();
+	public Set<PersonDto> getPersons(@RequestParam("id") String userId) {
+		return personService.getPersons(Long.parseLong(userId));
 	}
 
 	// returns all events with all properties
 	@CrossOrigin
 	@GetMapping(value = "/events", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Set<SpecEventDto> getEvents() {
-		return specEventService.getEvents();
+	public Collection<SpecEventDto> getEvents(@RequestParam("id") String userId) {
+		return specEventService.getEvents(personService.getPersonEntities(Long.parseLong(userId)));
+	}
+
+	@CrossOrigin
+	@GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Set<UserDto> getEvents() {
+		return userService.getUsers();
+	}
+
+	@CrossOrigin
+	@GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserDto getUser(@PathVariable("id") Long userId) {
+		return userService.getUser(userId);
 	}
 	
 	// returns one person's events
@@ -97,8 +110,8 @@ public class WebController {
 	// Create new person
 	@CrossOrigin
 	@PostMapping(value = "/new-person", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Long addNewPerson(@RequestBody PersonDto person) {
-		Long newId = personService.add(person);
+	public Long addNewPerson(@RequestBody PersonDto person, @RequestParam("id") String userId) {
+		Long newId = personService.add(person, userService.find(Long.parseLong(userId)));
 		return newId;
 	}
 	
@@ -118,6 +131,13 @@ public class WebController {
 	@PutMapping(value = "/edit-person", produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean editPerson(@RequestBody PersonDto person) {
 		personService.edit(person);
+		return true; // TODO false
+	}
+
+	@CrossOrigin
+	@PutMapping(value = "/edit-user", produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean editUser(@RequestBody UserDto user) {
+		userService.edit(user);
 		return true; // TODO false
 	}
 	
@@ -151,6 +171,16 @@ public class WebController {
 		SpecEventEntity event = specEventService.getEntity(Long.parseLong(id));
 		personService.deleteEvent(event);
 		specEventService.delete(id);
+		return true;
+	}
+
+	@CrossOrigin
+	@DeleteMapping(value = "/delete-user", produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean deleteUser(@RequestParam("id") String id) {
+		for (PersonDto person: personService.getPersons(Long.parseLong(id))) {
+			deletePerson(String.valueOf(person.getId()));
+		}
+		userService.deleteUser(Long.parseLong(id));
 		return true;
 	}
 

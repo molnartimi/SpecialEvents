@@ -2,6 +2,7 @@ package specialevents.domain.person;
 
 import specialevents.domain.events.SpecEventEntity;
 import specialevents.domain.gifts.GiftEntity;
+import specialevents.domain.user.UserEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,10 +25,14 @@ public class PersonEntity  implements Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private Set<GiftEntity> gifts;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private UserEntity user;
 	
 	protected PersonEntity(){}
-	public PersonEntity(String name) {
+	public PersonEntity(String name, UserEntity user) {
 		this.name = name;
+		this.user = user;
 	}
 	
 	public String getName() {

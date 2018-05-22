@@ -17,6 +17,8 @@ import {EditEventComponent} from "./edit-event/edit-event.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {WelcomeComponent} from "./welcome/welcome.component";
+import {AdminComponent} from "./admin/admin.component";
+import {EditUserComponent} from "./edit-user/edit-user.component";
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import {WelcomeComponent} from "./welcome/welcome.component";
         GiftsComponent,
         LoginComponent,
         RegisterComponent,
-        WelcomeComponent
+        WelcomeComponent,
+        AdminComponent,
+        EditUserComponent
     ],
     imports: [
         BrowserModule,

@@ -22,6 +22,10 @@ export class AppComponent {
     get authenticated(): boolean {
       return this.rsApiServive.authenticated;
     }
+
+    get admin(): boolean {
+      return this.rsApiServive.isAdmin;
+    }
 }
 
 

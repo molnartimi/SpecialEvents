@@ -7,4 +7,14 @@ import {UserDto} from "../common/user.dto";
   templateUrl: 'welcome.component.html',
   styleUrls: ['welcome.component.css']
 })
-export class WelcomeComponent {}
+export class WelcomeComponent {
+  constructor(private rsApiService: RsApiService) {}
+
+  get authenticated(): boolean {
+    return this.rsApiService.authenticated;
+  }
+
+  get username(): string {
+    return JSON.parse(localStorage.getItem('currentUser')).fullName;
+  }
+}

@@ -1,5 +1,5 @@
-<div class="inner-content" *ngIf="!authenticated">
-  <h2>Welcome on Specil Events!</h2>
+<div class="inner-content">
+  <h2>Welcome {{authenticated ? username : 'on Specil Events'}}!</h2>
   <h4>In this app you can save and organize the special events of your beloved.</h4>
-  <h3>Register or login to start!</h3>
+  <h3 *ngIf="!authenticated">Register or login to start!</h3>
 </div>

@@ -12,7 +12,7 @@ export class RegisterComponent {
   newUser: UserDto;
 
   constructor(private rsApiService: RsApiService, private router: Router) {
-    this.newUser = new UserDto(0, "", "", "");
+    this.newUser = new UserDto(0, "", "", "", "");
   }
 
   register() {

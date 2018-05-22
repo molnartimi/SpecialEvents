@@ -9,6 +9,7 @@ import specialevents.domain.gifts.GiftEntity;
 import specialevents.domain.gifts.GiftRepository;
 import specialevents.domain.person.PersonEntity;
 import specialevents.domain.person.PersonRepository;
+import specialevents.domain.user.UserEntity;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -25,17 +26,21 @@ public class PersonService {
 		return personRepository.findById(Long.parseLong(id)).get();
 	}
 	
-	public Set<PersonDto> getPersons() {
+	public Set<PersonDto> getPersons(Long userId) {
 		Set<PersonDto> list = new HashSet<PersonDto>();
-		Iterable<PersonEntity> persons = personRepository.findAll();
+		Iterable<PersonEntity> persons = getPersonEntities(userId);
 		for (PersonEntity person : persons) {
 			list.add(toDto(person));
 		}
 		return list;
 	}
+
+	public Iterable<PersonEntity> getPersonEntities(Long userId) {
+		return this.personRepository.findAllByUserId(userId);
+	}
 	
-	public Long add(PersonDto person) {
-		PersonEntity newPerson = new PersonEntity(person.getName());
+	public Long add(PersonDto person, UserEntity user) {
+		PersonEntity newPerson = new PersonEntity(person.getName(), user);
 		personRepository.save(newPerson);
 		return newPerson.getId();
 	}
@@ -116,24 +121,32 @@ public class PersonService {
 	@Transactional
 	public void saveGifts(GiftDto[] gifts, long personId) {
 		PersonEntity person = personRepository.findById(personId).get();
-		Set<GiftEntity> entities = new HashSet<GiftEntity>();
 		for (GiftEntity gift: person.getGifts()) {
-			if (!entities.contains(gift)) {
+			if (deletedGiftFrom(gift, gifts)) {
 				person.getGifts().remove(gift);
 				giftRepository.delete(gift);
 			}
 		}
 		for (GiftDto gift: gifts) {
-			GiftEntity entity = giftRepository.findById(gift.getId()).get();
-			if (entity == null) {
-				entity = new GiftEntity(gift.getId(), gift.getName(), gift.isDone());
-				person.getGifts().add(entity);
-				giftRepository.save(entity);
+			Optional<GiftEntity> entity = giftRepository.findById(gift.getId());
+			if (entity.isPresent()) {
+				entity.get().setName(gift.getName());
+				entity.get().setDone(gift.isDone());
 			} else {
-				entity.setName(gift.getName());
-				entity.setDone(gift.isDone());
+				GiftEntity newEntity = new GiftEntity(gift.getId(), gift.getName(), gift.isDone());
+				person.getGifts().add(newEntity);
+				giftRepository.save(newEntity);
 			}
 		}
+	}
+
+	private boolean deletedGiftFrom(GiftEntity gift, GiftDto[] gifts) {
+		for (GiftDto giftDto: gifts) {
+			if (gift.getId() == giftDto.getId()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private Set<GiftDto> toDto(Set<GiftEntity> gifts) {

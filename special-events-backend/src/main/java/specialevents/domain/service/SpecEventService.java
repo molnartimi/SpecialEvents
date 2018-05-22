@@ -9,8 +9,7 @@ import specialevents.domain.events.SpecEventRepository;
 import specialevents.domain.person.PersonEntity;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class SpecEventService {
@@ -22,12 +21,14 @@ public class SpecEventService {
 		return specEventRepository.findById(id).get();
 	}
 	
-	public Set<SpecEventDto> getEvents() {
-		Set<SpecEventDto> result = new HashSet<SpecEventDto>();
-		for (SpecEventEntity event: specEventRepository.findAll()) {
-			result.add(toDto(event));
+	public Collection<SpecEventDto> getEvents(Iterable<PersonEntity> persons) {
+		Map<Long, SpecEventDto> result= new HashMap<>();
+		for (PersonEntity person: persons) {
+			for (SpecEventEntity event: specEventRepository.findAllByPersons(person)) {
+				result.put(event.getId(), toDto(event));
+			}
 		}
-		return result;
+		return result.values();
 	}
 	
 	public Set<SpecEventDto> getPersonEvents(long id) {
