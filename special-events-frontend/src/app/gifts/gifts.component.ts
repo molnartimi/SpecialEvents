@@ -1,7 +1,3 @@
-/**
- * Created by NB-72 on 2017. 07. 10..
- */
-
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";

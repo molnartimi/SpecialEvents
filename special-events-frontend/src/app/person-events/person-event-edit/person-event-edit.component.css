@@ -8,41 +8,11 @@
 }
 
 .settedName {
-    margin: 1em 2em 1.2em;
+    margin: 1em 2em 1.2em 0;
+    padding-left: 0.5em;
     font-size: 25px;
 }
 
 input {
     width: 50%;
-}
-
-#setterPanel {
-    animation: appear .8s;
-    position: relative;
-}
-
-#setterPanel.exit {
-    animation: disappear .5s;
-}
-
-@keyframes appear {
-    from {
-        left: -100px;
-        opacity: 0;
-    }
-    to {
-        left: 0px;
-        opacity: 1;
-    }
-}
-
-@keyframes disappear {
-    from {
-        left: 0px;
-        opacity: 1;
-    }
-    to {
-        left: -100px;
-        opacity: 0;
-    }
 }

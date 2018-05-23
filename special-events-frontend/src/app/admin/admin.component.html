@@ -1,31 +1,28 @@
-<div class="inner-content">
-    <h2>Users</h2>
-    <div class="container well">
-        <table class="table table-striped events">
-            <thead>
-            <tr>
-                <th>Username</th>
-                <th>Full name</th>
-                <th>Role</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let user of users">
-                <td>{{user.username}}</td>
-                <td>{{user.fullName}}</td>
-                <td>{{user.role}}</td>
-                <td class="lastCol">
-                    <button class="btn" (click)="deleteUser(user)" *ngIf="user.id != currentUserId">
-                        <img src="assets/icons/del.png" title="Delete event" height="20">
-                    </button>
-                    <button class="btn" (click)="goToUser(user)">
-                        <img src="assets/icons/setting.png" title="Setting person's events" height="20">
-                    </button>
-                </td>
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<h2>Users</h2>
+<div class="container well">
+  <table class="table table-striped events">
+    <thead>
+    <tr>
+      <th>Username</th>
+      <th>Full name</th>
+      <th>Role</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.username}}</td>
+      <td>{{user.fullName}}</td>
+      <td>{{user.role}}</td>
+      <td class="lastCol">
+        <button class="btn" (click)="deleteUser(user)" *ngIf="user.id != currentUserId">
+          <img src="assets/icons/del.png" title="Delete user" height="20">
+        </button>
+        <button class="btn" (click)="goToUser(user)">
+          <img src="assets/icons/setting.png" title="Edit user" height="20">
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>

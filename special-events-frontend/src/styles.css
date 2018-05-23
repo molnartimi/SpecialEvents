@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+
 h2 {
   margin: 1em 0 1.2em;
 }
@@ -18,4 +18,17 @@ label {
 
 .inner-content {
   margin: 2em 5em;
+}
+
+th, td {
+  font-size: 16pt;
+}
+
+table .lastCol {
+  text-align: right;
+}
+
+.month, .day {
+  width: 80px;
+  display: inline;
 }

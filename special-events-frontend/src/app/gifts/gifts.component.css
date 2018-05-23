@@ -11,12 +11,12 @@ h2 {
     margin-top: 1em;
 }
 
-label {
-    font-size: larger;
-}
-
 .deletebtn {
     width: auto;
+}
+
+.empty-list {
+  padding: 1em;
 }
 
 td {

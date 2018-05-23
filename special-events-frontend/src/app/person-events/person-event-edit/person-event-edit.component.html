@@ -1,35 +1,35 @@
 <div id="setterPanel">
-    <input class="settedName" name="name" [(ngModel)]="person.name" #names="ngModel" required>
-    <div [hidden]="names.valid || names.pristine" class="alert alert-danger">
-        Name is required!
-    </div>
-    <div class="container">
-        <div class="row well" *ngFor="let e of events">
-            <div class="col-md-5 col-sm-5">
-                <div>
-                    <input class="settedDate" type="number" min="1" max="12" [(ngModel)]="e.month" name="month"
-                           #months="ngModel" required>.
-                    <input class="settedDate" type="number" min="1" max="31" [(ngModel)]="e.day" name="day"
-                           #days="ngModel" required>.
-                </div>
-                <div [hidden]="(months.valid || months.pristine) && (days.valid || days.pristine)"
-                     class="alert alert-danger">
-                    Date is required!
-                </div>
-                <div *ngIf="!validDate(e.month,e.day)" class="alert alert-danger">
-                    Invalid date!
-                </div>
-            </div>
-            <div class="col-md-5 col-sm-5">
-                <select class="form-control" [(ngModel)]="e.eventType" name="type">
-                    <option value="BIRTH">birthday</option>
-                    <option value="NAME">nameday</option>
-                    <option value="ANNY">anniversary</option>
-                </select>
-            </div>
+  <input class="settedName" name="name" [(ngModel)]="person.name" #names="ngModel" required>
+  <div [hidden]="names.valid || names.pristine" class="alert alert-danger">
+    Name is required!
+  </div>
+  <div class="container">
+    <div class="row well" *ngFor="let e of events">
+      <div class="col-md-5 col-sm-5">
+        <div>
+          <input class="settedDate" type="number" min="1" max="12" [(ngModel)]="e.month" name="month"
+                 #months="ngModel" required>.
+          <input class="settedDate" type="number" min="1" max="31" [(ngModel)]="e.day" name="day"
+                 #days="ngModel" required>.
         </div>
-        <button class="btn btn-success" [disabled]="!valid" (click)="savePerson()">
-            <img src="assets/icons/tick.png" title="Save event" height="20">
-        </button>
+        <div [hidden]="(months.valid || months.pristine) && (days.valid || days.pristine)"
+             class="alert alert-danger">
+          Date is required!
+        </div>
+        <div *ngIf="!validDate(e.month,e.day)" class="alert alert-danger">
+          Invalid date!
+        </div>
+      </div>
+      <div class="col-md-5 col-sm-5">
+        <select class="form-control" [(ngModel)]="e.eventType" name="type">
+          <option value="BIRTH">birthday</option>
+          <option value="NAME">nameday</option>
+          <option value="ANNY">anniversary</option>
+        </select>
+      </div>
     </div>
+    <button class="btn btn-success" [disabled]="!valid" (click)="savePerson()">
+      Save
+    </button>
+  </div>
 </div>

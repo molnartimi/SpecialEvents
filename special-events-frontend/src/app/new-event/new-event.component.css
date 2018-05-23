@@ -1,10 +1,5 @@
-.month, .day {
-    width: 80px;
-    display: inline;
-}
-
-select, input {
-    width: inherit;
+select {
+  width: 200px;
 }
 
 .x-btn {

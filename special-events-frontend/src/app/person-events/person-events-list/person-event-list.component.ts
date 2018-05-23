@@ -19,7 +19,6 @@ import {PersonEventsComponent} from "../person-events.component";
 export class PersonEventListComponent extends PersonEventsComponent{
     person: PersonDto;
     events: SpecEventDto[];
-    valid: boolean;
 
     goToHints(): void {
        this.router.navigate(['person', this.id, 'gifts']);

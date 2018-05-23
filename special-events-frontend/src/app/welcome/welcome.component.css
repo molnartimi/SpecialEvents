@@ -1,3 +1,9 @@
 .inner-content {
   font-size: 2em;
 }
+
+img {
+  margin-left: 50%;
+  margin-top: 5em;
+  width: 40%;
+}

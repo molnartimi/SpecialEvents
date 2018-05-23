@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {RsApiService} from "../services/rs-api.service";
 import {UserDto} from "../common/user.dto";
 import {UserService} from "../services/user.service";
 

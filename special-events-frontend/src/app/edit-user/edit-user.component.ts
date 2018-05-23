@@ -1,7 +1,3 @@
-/**
- * Created by NB-72 on 2017. 07. 04..
- */
-
 import {Component, OnInit} from '@angular/core';
 import {UserDto} from "../common/user.dto";
 import {ActivatedRoute, Router} from "@angular/router";

@@ -1,41 +1,41 @@
 <h2>Add new event</h2>
 <div class="container well">
-    <form #newEvent="ngForm" (ngSubmit)="saveEvent()">
-        <div class="form-group">
-            <label for="type">Event type: </label>
-            <select class="form-control" [(ngModel)]="eventType" id="type" name="type" required #type="ngModel">
-                <option hidden value="null">choose type</option>
-                <option [value]="'BIRTH'">birthday</option>
-                <option [value]="'NAME'">nameday</option>
-                <option [value]="'ANNY'">anniversary</option>
-            </select>
+  <form #newEvent="ngForm" (ngSubmit)="saveEvent()">
+    <div class="form-group">
+      <label for="type">Event type: </label>
+      <select class="form-control" [(ngModel)]="eventType" id="type" name="type" required #type="ngModel">
+        <option hidden value="null">choose type</option>
+        <option [value]="'BIRTH'">birthday</option>
+        <option [value]="'NAME'">nameday</option>
+        <option [value]="'ANNY'">anniversary</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <div class="name-div" *ngFor="let person of persons; let i=index">
+        <label for="name">Name: </label> <br>
+        <div class="name-input">
+          <select class="form-control" id="name" name="name" required [(ngModel)]="person.name" #namea="ngModel">
+            <option hidden value="''">choose person</option>
+            <option *ngFor="let p of existPersons" value="{{p.name}}">{{p.name}}</option>
+          </select>
         </div>
-        <div class="form-group">
-            <div class="name-div" *ngFor="let person of persons; let i=index">
-                <label for="name">Name: </label> <br>
-                <div class="name-input">
-                    <select class="form-control" id="name" name="name" required [(ngModel)]="person.name" #namea="ngModel">
-                        <option hidden value="''">choose person</option>
-                        <option *ngFor="let p of existPersons" value="{{p.name}}">{{p.name}}</option>
-                    </select>
-                </div>
-                <button *ngIf="i>0" class="btn btn-danger x-btn" (click)="removePerson(i)">X</button>
-            </div>
-            <button type="button" class="btn btn-info plus-btn" (click)="addNewPerson()">+</button>
-        </div>
-        <div class="form-group">
-            <label for="month">Date: </label><br/>
-            <input class="month form-control" type="number" min="1" max="12" [(ngModel)]="month" id="month"
-                   name="month"
-                   required placeholder="xx" #montha="ngModel">.
-            <input class="day form-control" type="number" min="1" max="31" [(ngModel)]="day" id="day" name="day"
-                   required placeholder="xx" #daya="ngModel">.
-            <div *ngIf="!validDate()" class="alert alert-danger">
-                Invalid date!
-            </div>
-        </div>
-        <button type="submit" class="btn btn-success" [disabled]="!newEvent.form.valid || !validDate()">Save event
-        </button>
-    </form>
+        <button *ngIf="i>0" class="btn btn-danger x-btn" (click)="removePerson(i)">X</button>
+      </div>
+      <button type="button" class="btn btn-info plus-btn" (click)="addNewPerson()">+</button>
+    </div>
+    <div class="form-group">
+      <label for="month">Date: </label><br/>
+      <input class="month form-control" type="number" min="1" max="12" [(ngModel)]="month" id="month"
+             name="month"
+             required placeholder="xx" #montha="ngModel">.
+      <input class="day form-control" type="number" min="1" max="31" [(ngModel)]="day" id="day" name="day"
+             required placeholder="xx" #daya="ngModel">.
+      <div *ngIf="!validDate()" class="alert alert-danger">
+        Invalid date!
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!newEvent.form.valid || !validDate()">Save event
+    </button>
+  </form>
 </div>
 

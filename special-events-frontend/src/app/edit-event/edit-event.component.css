@@ -1,8 +1,3 @@
-.month, .day {
-    width: 80px;
-    display: inline;
-}
-
 select, input {
     width: inherit;
 }
@@ -10,16 +5,22 @@ select, input {
 .x-btn {
     margin-left: 1em;
     display: inline-block;
+    width: 40px;
 }
 
 .plus-btn {
-    margin-top: 1em;
+    margin-left: 1em;
 }
 
 .name-div {
     margin-top: 0.5em;
     font-size: 1.7em;
     display: inline-block;
+    min-width: 150px;
+}
+
+select {
+    min-width: 150px;
 }
 
 .name-input {

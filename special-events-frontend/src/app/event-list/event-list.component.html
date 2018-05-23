@@ -1,60 +1,51 @@
-<div class="inner-content">
-    <div id="snackbar">New event is saved</div>
-    <h2>Event list</h2>
-    <div class="container well">
-        <table class="table table-striped events">
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Name</th>
-                <th class="eventCol">Event</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let e of eventList">
-                <td>{{e.month | number:'2.0'}}.{{e.day | number:'2.0'}}.</td>
-                <table class="table person-table">
-                    <tr *ngFor="let person of e.persons">
-                        <td class="personName">{{person.name}}</td>
-                        <td>
-                            <button class="btn" (click)="goToHints(person)">
-                              <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
-                            </button>
-                            <button class="btn" (click)="goToPersonEvent(person, e)">
-                                <img src="assets/icons/setting.png" title="Setting person's events" height="20">
-                            </button>
-                            <button class="btn" (click)="deleteEventFromPerson(person, e)">
-                                <img src="assets/icons/del.png" title="Delete event" height="20">
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-                <td class="eventCol">
-                    <img *ngIf="e.eventType==='BIRTH'" src="assets/icons/birth.png" height="40" title="birthday">
-                    <img *ngIf="e.eventType==='NAME'" src="assets/icons/name.png" height="40" title="nameday">
-                    <img *ngIf="e.eventType==='ANNY'" src="assets/icons/anni.png" height="40" title="anniversary">
-                </td>
-                <td class="lastCol">
-                    <button class="btn" (click)="deleteEvent(e)">
-                        <img src="assets/icons/del.png" title="Delete event" height="20">
-                    </button>
-                    <button class="btn" (click)="goToEvent(e)">
-                        <img src="assets/icons/setting.png" title="Setting person's events" height="20">
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<h2>Event list</h2>
+<div class="container well">
+  <table class="table table-striped events">
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Name</th>
+      <th class="eventCol">Event</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let e of eventList">
+      <td>{{e.month | number:'2.0'}}.{{e.day | number:'2.0'}}.</td>
+      <table class="table person-table">
+        <tr *ngFor="let person of e.persons">
+          <td class="personName">{{person.name}}</td>
+          <td class="lastCol">
+            <button class="btn" (click)="goToHints(person)">
+              <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
+            </button>
+          </td>
+        </tr>
+      </table>
+      <td class="eventCol">
+        <img *ngIf="e.eventType==='BIRTH'" src="assets/icons/birth.png" height="40" title="birthday">
+        <img *ngIf="e.eventType==='NAME'" src="assets/icons/name.png" height="40" title="nameday">
+        <img *ngIf="e.eventType==='ANNY'" src="assets/icons/anni.png" height="40" title="anniversary">
+      </td>
+      <td class="lastCol">
+        <button class="btn" (click)="deleteEvent(e)">
+          <img src="assets/icons/del.png" title="Delete event" height="20">
+        </button>
+        <button class="btn" (click)="goToEvent(e)">
+          <img src="assets/icons/setting.png" title="Edit event" height="20">
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
-    <div *ngIf="!addNewActive">
-        <button class="btn btn-info" (click)="addNew()">Add new</button>
-    </div>
-    <div *ngIf="addNewActive">
-        <app-new-event (addNew)="newEventAdded($event)"></app-new-event>
-    </div>
-    <div *ngIf="addNewActive">
-        <button class="btn btn-info" (click)="closeAddNew()">Close</button>
-    </div>
+<div *ngIf="!addNewActive">
+  <button class="btn btn-info" (click)="addNew()">Add new</button>
+</div>
+<div *ngIf="addNewActive">
+  <app-new-event (addNew)="newEventAdded($event)"></app-new-event>
+</div>
+<div *ngIf="addNewActive">
+  <button class="btn btn-info" (click)="closeAddNew()">Close</button>
 </div>

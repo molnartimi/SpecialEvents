@@ -1,15 +1,11 @@
-/**
- * Created by NB-72 on 2017. 07. 04..
- */
-
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {RsApiService} from "../services/rs-api.service";
+import {Component, OnInit} from '@angular/core';
 import {SpecEventDto} from "../common/spec-event.dto";
 import {PersonDto} from "../common/person.dto";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 import {EventService} from "../services/event.service";
 import {PersonService} from "../services/person.service";
+import {validDate} from "../common/date-validation";
 
 @Component({
     templateUrl: 'edit-event.component.html',
@@ -52,17 +48,7 @@ export class EditEventComponent implements OnInit{
     }
 
     validDate(): boolean {
-        let shortMonths = [4, 6, 9, 11];
-        if (this.event.month == null || this.event.day == null)
-            return true;
-        if (this.event.month < 1 || this.event.month > 12 || this.event.day < 1 || this.event.day > 31)
-            return false;
-        if (shortMonths.find(n => n == this.event.month))
-            return (this.event.day <= 30);
-        else if (this.event.month == 2)
-            return (this.event.day <= 29);
-        else
-            return true;
+        return validDate(this.event.month, this.event.day);
     }
 
     goBack(): void {

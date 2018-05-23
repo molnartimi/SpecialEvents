@@ -1,9 +1,4 @@
-/**
- * Created by NB-72 on 2017. 07. 06..
- */
-
 import {Component, OnInit} from "@angular/core";
-import {RsApiService} from "../services/rs-api.service";
 import {Router} from "@angular/router";
 import {PersonDto} from "../common/person.dto";
 import {PersonService} from "../services/person.service";

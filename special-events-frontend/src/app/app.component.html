@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Special Events</title>
+  <meta charset="UTF-8">
+  <title>Special Events</title>
 </head>
 <body>
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand cim" routerLink="/" routerLinkActive="active">{{title}}</a>
-        </div>
-
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav mr-auto">
-                <li class="nav-item" *ngIf="authenticated">
-                    <a class="nav-link" routerLink="/events" routerLinkActive="active">Events</a>
-                </li>
-                <li class="nav-item" *ngIf="authenticated">
-                    <a class="nav-link" routerLink="/persons" routerLinkActive="active">Persons</a>
-                </li>
-                <li class="nav-item" *ngIf="authenticated && admin">
-                    <a class="nav-link" routerLink="/admin" routerLinkActive="active">User settings</a>
-                </li>
-                <li class="nav-item" *ngIf="!authenticated">
-                    <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
-                </li>
-                <li class="nav-item" *ngIf="!authenticated">
-                    <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
-                </li>
-                <li class="nav-item" *ngIf="authenticated">
-                    <a class="nav-link" (click)="logout()">Logout</a>
-                </li>
-            </ul>
-        </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand cim" routerLink="/" routerLinkActive="active">{{title}}</a>
     </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item" *ngIf="authenticated">
+          <a class="nav-link" routerLink="/events" routerLinkActive="active">Events</a>
+        </li>
+        <li class="nav-item" *ngIf="authenticated">
+          <a class="nav-link" routerLink="/persons" routerLinkActive="active">Persons</a>
+        </li>
+        <li class="nav-item" *ngIf="authenticated && admin">
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active">User settings</a>
+        </li>
+        <li class="nav-item" *ngIf="!authenticated">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="!authenticated">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+        </li>
+        <li class="nav-item" *ngIf="authenticated">
+          <a class="nav-link" (click)="logout()">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
-<router-outlet></router-outlet>
+<div class="inner-content">
+  <router-outlet></router-outlet>
+</div>
 </body>
 </html>
