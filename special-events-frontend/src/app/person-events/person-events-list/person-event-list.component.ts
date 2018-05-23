@@ -26,7 +26,7 @@ export class PersonEventListComponent extends PersonEventsComponent{
     }
 
     deleteEvent(event: SpecEventDto): void {
-        this.rsApiService.deleteEventFromPerson(this.person.id, event.id)
+        this.eventService.deleteEventFromPerson(this.person.id, event.id)
             .then(success => {
                 let index = this.events.indexOf(event);
                 this.events.splice(index, 1);

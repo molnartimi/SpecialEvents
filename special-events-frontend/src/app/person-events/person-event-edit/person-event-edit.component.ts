@@ -16,7 +16,7 @@ export class PersonEventEditComponent extends PersonEventsComponent{
 
     savePerson() {
         this.rsApiService.editPerson(this.person).then(response => {
-          this.rsApiService.editEvents(this.events).then(response => this.goBack());
+          this.eventService.editEvents(this.events).then(response => this.goBack());
         });
     }
 

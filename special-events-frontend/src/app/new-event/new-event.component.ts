@@ -6,6 +6,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {RsApiService} from "../services/rs-api.service";
 import {SpecEventDto} from "../common/spec-event.dto";
 import {PersonDto} from "../common/person.dto";
+import {EventService} from "../services/event.service";
 
 @Component({
     selector: "app-new-event",
@@ -21,7 +22,8 @@ export class NewEventComponent implements OnInit{
     @Output()
     addNew: EventEmitter<SpecEventDto> = new EventEmitter<SpecEventDto>();
 
-    constructor(private rsApiService: RsApiService) {
+    constructor(private rsApiService: RsApiService,
+                private eventService: EventService) {
     }
 
     ngOnInit() {
@@ -48,7 +50,7 @@ export class NewEventComponent implements OnInit{
     saveEvent(): void {
         this.persons.map(p => p.id = this.existPersons.find(p2 => p.name === p2.name).id);
         let newEvent = new SpecEventDto(0, this.month, this.day, this. eventType, this.persons);
-        this.rsApiService.addNewEvent(newEvent)
+        this.eventService.addNewEvent(newEvent)
             .then(id => {
                 newEvent.id = id;
                 this.addNew.emit(newEvent);
