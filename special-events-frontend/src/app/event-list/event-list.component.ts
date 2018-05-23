@@ -7,6 +7,7 @@ import {RsApiService} from "../services/rs-api.service";
 import {Router} from "@angular/router";
 import {SpecEventDto} from "../common/spec-event.dto";
 import {PersonDto} from "../common/person.dto";
+import {EventService} from "../services/event.service";
 
 @Component({
     templateUrl: 'event-list.component.html',
@@ -17,12 +18,12 @@ export class EventListComponent implements OnInit {
     saved: boolean = false;
     addNewActive: boolean = false;
 
-    constructor(private rsApiService: RsApiService,
+    constructor(private eventService: EventService,
                 private router: Router) {
     }
 
     ngOnInit(): void {
-        this.rsApiService.getEvents().then(events => {
+        this.eventService.getEvents().then(events => {
             this.eventList = events;
         });
 
@@ -37,14 +38,14 @@ export class EventListComponent implements OnInit {
     }
 
     deleteEvent(event: SpecEventDto): void {
-         this.rsApiService.deleteEvent(event.id).then(success => {
+         this.eventService.deleteEvent(event.id).then(success => {
              let index = this.eventList.indexOf(event);
              this.eventList.splice(index, 1);
          });
     }
 
     deleteEventFromPerson(person: PersonDto, event: SpecEventDto): void {
-        this.rsApiService.deleteEventFromPerson(person.id, event.id).then(success => {
+        this.eventService.deleteEventFromPerson(person.id, event.id).then(success => {
             let personIndex = event.persons.indexOf(person);
             event.persons.splice(personIndex, 1);
             if (event.persons.length == 0)
@@ -66,7 +67,7 @@ export class EventListComponent implements OnInit {
 
 
     update(): void {
-        this.rsApiService.getEvents().then(events => {
+        this.eventService.getEvents().then(events => {
             this.eventList = events;
         });
     }

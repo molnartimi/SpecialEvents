@@ -4,6 +4,7 @@ import {PersonDto} from "../common/person.dto";
 import {RsApiService} from "../services/rs-api.service";
 import {SpecEventDto} from "../common/spec-event.dto";
 import {ActivatedRoute, Router} from "@angular/router";
+import {EventService} from "../services/event.service";
 
 @Component({
     templateUrl: 'person-events.component.html',
@@ -17,6 +18,7 @@ export class PersonEventsComponent implements OnInit{
   constructor(private route: ActivatedRoute,
               protected router: Router,
               protected rsApiService: RsApiService,
+              protected eventService: EventService,
               private location: Location) {}
 
   ngOnInit(): void {
@@ -30,6 +32,6 @@ export class PersonEventsComponent implements OnInit{
 
   load(): void {
     this.rsApiService.getPerson(this.id).then(person => this.person = person);
-    this.rsApiService.getPersonEvents(this.id).then(events => this.events = events);
+    this.eventService.getPersonEvents(this.id).then(events => this.events = events);
   }
 }

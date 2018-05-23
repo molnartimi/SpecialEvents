@@ -7,6 +7,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 import {RsApiService} from "../services/rs-api.service";
 import {GiftDto} from "../common/gift.dto";
+import {GiftService} from "../services/gift.service";
 
 @Component({
     templateUrl: 'gifts.component.html',
@@ -20,17 +21,18 @@ export class GiftsComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private rsApiService: RsApiService,
+                private giftService: GiftService,
                 private location: Location) {
     }
 
     ngOnInit() {
         this.id = Number(this.route.parent.snapshot.paramMap.get('id'));
         this.rsApiService.getPerson(this.id).then(person => this.name = person.name);
-        this.rsApiService.getGifts(this.id).then(gifts => this.gifts = gifts);
+        this.giftService.getGifts(this.id).then(gifts => this.gifts = gifts);
     }
 
     saveGifts(): void {
-        this.rsApiService.saveGifts(this.id, this.gifts);
+        this.giftService.saveGifts(this.id, this.gifts);
         this.goBack();
     }
 
