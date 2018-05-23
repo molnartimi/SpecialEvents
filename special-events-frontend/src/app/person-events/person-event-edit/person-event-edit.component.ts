@@ -15,7 +15,7 @@ export class PersonEventEditComponent extends PersonEventsComponent{
     valid: boolean = true;
 
     savePerson() {
-        this.rsApiService.editPerson(this.person).then(response => {
+        this.personService.editPerson(this.person).then(response => {
           this.eventService.editEvents(this.events).then(response => this.goBack());
         });
     }

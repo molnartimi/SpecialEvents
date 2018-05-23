@@ -9,6 +9,7 @@ import {PersonDto} from "../common/person.dto";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {EventService} from "../services/event.service";
+import {PersonService} from "../services/person.service";
 
 @Component({
     templateUrl: 'edit-event.component.html',
@@ -21,7 +22,7 @@ export class EditEventComponent implements OnInit{
     existPersons: PersonDto[] = [];
     newPerson = "";
 
-    constructor(private rsApiService: RsApiService,
+    constructor(private personService: PersonService,
                 private eventService: EventService,
                 private route: ActivatedRoute,
                 private location: Location) {
@@ -29,7 +30,7 @@ export class EditEventComponent implements OnInit{
 
     ngOnInit() {
         this.id = Number(this.route.snapshot.paramMap.get('id'));
-        this.rsApiService.getPersons().then(persons => this.existPersons = persons);
+        this.personService.getPersons().then(persons => this.existPersons = persons);
         this.eventService.getEvent(this.id).then(event => this.event = event);
     }
 

@@ -1,11 +1,11 @@
-package specialevents;
+package specialevents.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import specialevents.domain.dto.GiftDto;
-import specialevents.domain.service.PersonService;
+import specialevents.domain.gifts.GiftDto;
+import specialevents.service.PersonService;
 
 import java.util.Set;
 

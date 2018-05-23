@@ -1,14 +1,15 @@
-package specialevents;
+package specialevents.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import specialevents.domain.dto.SpecEventDto;
+import specialevents.domain.events.SpecEventDto;
 import specialevents.domain.events.SpecEventEntity;
 import specialevents.domain.person.PersonEntity;
-import specialevents.domain.service.PersonService;
-import specialevents.domain.service.SpecEventService;
+import specialevents.service.PersonService;
+import specialevents.service.SpecEventService;
 
+import java.util.Collection;
 import java.util.Set;
 
 @RestController
@@ -20,8 +21,8 @@ public class EventController {
 	SpecEventService specEventService;
 	
 	@GetMapping(value = "/events", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Set<SpecEventDto> getEvents() {
-		return specEventService.getEvents();
+	public Collection<SpecEventDto> getEvents(@RequestParam("id") String userId) {
+		return specEventService.getEvents(personService.getPersonEntities(Long.parseLong(userId)));
 	}
 
 	

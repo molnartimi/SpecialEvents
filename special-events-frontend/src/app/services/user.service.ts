@@ -73,7 +73,7 @@ export class UserService {
   }
 
   deleteUser(id: number): Promise<boolean> {
-    let options = this.createDefaultHttpOptions(id.toString());
+    let options = RsApiService.createDefaultHttpOptions(id.toString());
     return this.rsApiService.delete(
       this.URL + this.DELETE,
       function(response) {
@@ -105,21 +105,5 @@ export class UserService {
     options.headers=headers;
 
     return options;
-  }
-
-
-
-  private createHttpOptions(paramNames: string[], paramValues: string[]): RequestOptions {
-    let myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    let myParams = new URLSearchParams();
-    for (let i in paramNames) {
-      myParams.append(paramNames[i], paramValues[i]);
-    }
-    return new RequestOptions({headers: myHeaders, params: myParams});
-  }
-
-  private createDefaultHttpOptions(id: string): RequestOptions {
-    return this.createHttpOptions(['id'], [id]);
   }
 }

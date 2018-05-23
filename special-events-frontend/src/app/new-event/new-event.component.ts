@@ -7,6 +7,7 @@ import {RsApiService} from "../services/rs-api.service";
 import {SpecEventDto} from "../common/spec-event.dto";
 import {PersonDto} from "../common/person.dto";
 import {EventService} from "../services/event.service";
+import {PersonService} from "../services/person.service";
 
 @Component({
     selector: "app-new-event",
@@ -22,13 +23,13 @@ export class NewEventComponent implements OnInit{
     @Output()
     addNew: EventEmitter<SpecEventDto> = new EventEmitter<SpecEventDto>();
 
-    constructor(private rsApiService: RsApiService,
+    constructor(private personService: PersonService,
                 private eventService: EventService) {
     }
 
     ngOnInit() {
         this.reset();
-        this.rsApiService.getPersons().then(persons => this.existPersons = persons);
+        this.personService.getPersons().then(persons => this.existPersons = persons);
     }
 
     private reset() {
