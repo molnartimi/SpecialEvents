@@ -58,4 +58,12 @@ export class NewEventComponent implements OnInit{
     validDate(): boolean {
         return validDate(this.month, this.day);
     }
+
+    get notSelectedPersons(): PersonDto[] {
+      let p = this.persons;
+      let missing = this.existPersons.filter(item => (this.persons.indexOf(item) < 0));
+      return missing;
+    }
+
+    checkDatas() {}
 }

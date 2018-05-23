@@ -1,4 +1,10 @@
 <h2>Person list</h2>
+<div>
+  <label>Search persons by name:</label>
+  <input [(ngModel)]="find" name="find">
+  <button class="btn btn-default" (click)="getFilteredPersons(true)" [disabled]="!find || find === ''">Find</button>
+  <a (click)="getFilteredPersons(false)">Show all</a>
+</div>
 <div class="list-group">
   <button class="list-group-item" *ngFor="let p of personList" (click)="onSelect(p)">
     <table>

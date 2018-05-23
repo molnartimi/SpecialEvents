@@ -21,22 +21,48 @@ public class SpecEventService {
 		return specEventRepository.findById(id).get();
 	}
 	
-	public Collection<SpecEventDto> getEvents(Iterable<PersonEntity> persons) {
+	public Collection<SpecEventDto> getEvents(Iterable<PersonEntity> persons,
+											  String personFilter,
+											  String monthFilter,
+											  String typeFilter) {
 		Map<Long, SpecEventDto> result= new HashMap<>();
 		for (PersonEntity person: persons) {
 			for (SpecEventEntity event: specEventRepository.findAllByPersons(person)) {
-				result.put(event.getId(), toDto(event));
+				if (meetFilter(event, personFilter, monthFilter, typeFilter))
+					result.put(event.getId(), toDto(event));
 			}
 		}
-		return result.values();
+		ArrayList<SpecEventDto> events = new ArrayList<>(result.values());
+		Collections.sort(events, new EventComparator());
+		return events;
 	}
-	
-	public Set<SpecEventDto> getPersonEvents(long id) {
+
+	private boolean meetFilter(SpecEventEntity event, String personFilter, String monthFilter, String typeFilter) {
+		if (personFilter != null && !personFilter.isEmpty() && !containsPerson(event.getPersons(), personFilter))
+			return false;
+		if (monthFilter != null && !monthFilter.isEmpty() && event.getMonth() != Integer.valueOf(monthFilter))
+			return false;
+		if (typeFilter != null && !typeFilter.isEmpty() && !typeFilter.equals(event.getEventType()))
+			return false;
+		return true;
+	}
+
+	private boolean containsPerson(Set<PersonEntity> persons, String personFilter) {
+		for (PersonEntity person: persons) {
+			if (person.getName().toUpperCase().contains(personFilter.toUpperCase()))
+				return true;
+		}
+		return false;
+	}
+
+	public Collection<SpecEventDto> getPersonEvents(long id) {
 		Set<SpecEventDto> result = new HashSet<SpecEventDto>();
 		for (SpecEventEntity event: specEventRepository.findAllByPersons_Id(id)) {
 			result.add(toDto(event));
 		}
-		return result;
+		ArrayList<SpecEventDto> events = new ArrayList<>(result);
+		Collections.sort(events, new EventComparator());
+		return events;
 	}
 	
 	public SpecEventEntity addEvent(SpecEventDto event, Set<PersonEntity> toPersons) {
@@ -103,4 +129,19 @@ public class SpecEventService {
     public SpecEventDto getEvent(Long id) {
 		return toDto(this.specEventRepository.findById(id).get());
     }
+
+	private class EventComparator implements Comparator<SpecEventDto> {
+
+		@Override
+		public int compare(SpecEventDto e1, SpecEventDto e2) {
+			if (e1.getMonth() < e2.getMonth())
+				return -1;
+			else if (e1.getMonth() > e2.getMonth())
+				return 1;
+			else if (e1.getDay() < e2.getDay())
+				return -1;
+			else
+				return 1;
+		}
+	}
 }

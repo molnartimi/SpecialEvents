@@ -18,8 +18,11 @@ export class EventService {
     constructor(private rsApiService: RsApiService,
                 private userService: UserService) {}
 
-    getEvents(): Promise<SpecEventDto[]> {
-        let options = RsApiService.createDefaultHttpOptions(this.userService.currentUserId);
+    getEvents(personFilter?, monthFilter?, typeFilter?): Promise<SpecEventDto[]> {
+        let options = RsApiService.createHttpOptions(
+          ['id', 'person', 'month', 'type'],
+          [this.userService.currentUserId, personFilter ? personFilter : '',
+                      monthFilter ? monthFilter.toString() : '', typeFilter ? typeFilter : '']);
         return this.rsApiService.get(
           this.URL + this.ALL_EVENTS,
           function (response) {

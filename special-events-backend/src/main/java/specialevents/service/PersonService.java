@@ -26,11 +26,13 @@ public class PersonService {
 		return personRepository.findById(Long.parseLong(id)).get();
 	}
 	
-	public Set<PersonDto> getPersons(Long userId) {
+	public Set<PersonDto> getPersons(Long userId, String filter) {
 		Set<PersonDto> list = new HashSet<PersonDto>();
+		String f = (filter != null) ? filter.toUpperCase() : null;
 		Iterable<PersonEntity> persons = getPersonEntities(userId);
 		for (PersonEntity person : persons) {
-			list.add(toDto(person));
+			if (f == null || person.getName().toUpperCase().contains(f))
+				list.add(toDto(person));
 		}
 		return list;
 	}

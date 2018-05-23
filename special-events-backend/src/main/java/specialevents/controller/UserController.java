@@ -77,7 +77,7 @@ public class UserController {
 	@CrossOrigin
 	@DeleteMapping(value = "/delete-user", produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean deleteUser(@RequestParam("id") String id) {
-		for (PersonDto person: personService.getPersons(Long.parseLong(id))) {
+		for (PersonDto person: personService.getPersons(Long.parseLong(id), null)) {
 			Set<SpecEventEntity> entities = personService.delete(String.valueOf(person.getId()));
 			specEventService.deletePerson(entities, String.valueOf(person.getId()));
 		}

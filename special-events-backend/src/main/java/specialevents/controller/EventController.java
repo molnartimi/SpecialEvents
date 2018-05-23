@@ -21,8 +21,14 @@ public class EventController {
 	SpecEventService specEventService;
 	
 	@GetMapping(value = "/events", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Collection<SpecEventDto> getEvents(@RequestParam("id") String userId) {
-		return specEventService.getEvents(personService.getPersonEntities(Long.parseLong(userId)));
+	public Collection<SpecEventDto> getEvents(@RequestParam("id") String userId,
+											  @RequestParam("person") String personFilter,
+											  @RequestParam("month") String monthFilter,
+											  @RequestParam("type") String typeFilter) {
+		return specEventService.getEvents(
+				personService.getPersonEntities(Long.parseLong(userId)),
+				personFilter, monthFilter, typeFilter
+		);
 	}
 
 	
@@ -33,7 +39,7 @@ public class EventController {
 	
 	
 	@GetMapping(value = "/person/{id}/events", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Set<SpecEventDto> getPersonEvents(@PathVariable("id") Long id) {
+	public Collection<SpecEventDto> getPersonEvents(@PathVariable("id") Long id) {
 		return specEventService.getPersonEvents(id);
 	}
 

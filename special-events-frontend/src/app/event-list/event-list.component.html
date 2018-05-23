@@ -1,4 +1,19 @@
 <h2>Event list</h2>
+<div class="filter">
+  <h3>Search events</h3>
+  <label>By person name:</label>
+  <input [(ngModel)]="personFilter" name="personFilter">
+  <label>By month:</label>
+  <input type="number" class="monthFilter" [(ngModel)]="monthFilter" name="monthFilter">
+  <label>By event type:</label>
+  <select [(ngModel)]="typeFilter" name="typeFilter">
+    <option [value]="'BIRTH'">birthday</option>
+    <option [value]="'NAME'">nameday</option>
+    <option [value]="'ANNY'">anniversary</option>
+  </select>
+  <button class="btn btn-default" (click)="getFilteredEvents(true)">Find</button>
+  <a (click)="getFilteredEvents(false)">Show all</a>
+</div>
 <div class="container well">
   <table class="table table-striped events">
     <thead>

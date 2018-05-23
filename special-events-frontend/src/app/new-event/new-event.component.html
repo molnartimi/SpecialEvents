@@ -3,7 +3,7 @@
   <form #newEvent="ngForm" (ngSubmit)="saveEvent()">
     <div class="form-group">
       <label for="type">Event type: </label>
-      <select class="form-control" [(ngModel)]="eventType" id="type" name="type" required #type="ngModel">
+      <select class="form-control" [(ngModel)]="eventType" id="type" name="type" required #type="ngModel" (click)="checkDatas()">
         <option hidden value="null">choose type</option>
         <option [value]="'BIRTH'">birthday</option>
         <option [value]="'NAME'">nameday</option>
@@ -14,9 +14,9 @@
       <div class="name-div" *ngFor="let person of persons; let i=index">
         <label for="name">Name: </label> <br>
         <div class="name-input">
-          <select class="form-control" id="name" name="name" required [(ngModel)]="person.name" #namea="ngModel">
+          <select class="form-control" id="name" name="name" required [(ngModel)]="person.name" #namea="ngModel" (click)="checkDatas()">
             <option hidden value="''">choose person</option>
-            <option *ngFor="let p of existPersons" value="{{p.name}}">{{p.name}}</option>
+            <option *ngFor="let p of notSelectedPersons" value="{{p.name}}">{{p.name}}</option>
           </select>
         </div>
         <button *ngIf="i>0" class="btn btn-danger x-btn" (click)="removePerson(i)">X</button>

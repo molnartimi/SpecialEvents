@@ -11,6 +11,7 @@ export class PersonListComponent implements OnInit {
     personList: PersonDto[];
     newName: string;
     addNewActive: boolean = false;
+    find: string;
     private deleted: boolean = false;
 
     constructor(private personService: PersonService,
@@ -52,5 +53,12 @@ export class PersonListComponent implements OnInit {
             this.personList.push(newPerson);
             this.newName = null;
         });
+    }
+
+    getFilteredPersons(filtered: boolean) {
+      if (!filtered)
+        this.personService.getPersons().then(persons => this.personList = persons);
+      else 
+        this.personService.getPersons(this.find).then(persons => this.personList = persons);
     }
 }

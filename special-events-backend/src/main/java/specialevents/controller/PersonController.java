@@ -25,8 +25,8 @@ public class PersonController {
 
 	@CrossOrigin
 	@GetMapping(value = "/persons", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Set<PersonDto> getPersons(@RequestParam("id") String userId) {
-		return personService.getPersons(Long.parseLong(userId));
+	public Set<PersonDto> getPersons(@RequestParam("id") String userId, @RequestParam("filter") String filter) {
+		return personService.getPersons(Long.parseLong(userId), filter);
 	}
 
 

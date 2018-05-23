@@ -15,8 +15,10 @@ export class PersonService {
   constructor(private rsApiService: RsApiService,
               private userService: UserService) {}
 
-  getPersons(): Promise<PersonDto[]> {
-    let options = RsApiService.createDefaultHttpOptions(this.userService.currentUserId);
+  getPersons(filter?: string): Promise<PersonDto[]> {
+    let options = RsApiService.createHttpOptions(
+      ['id', 'filter'],
+      [this.userService.currentUserId, filter ? filter : '']);
     return this.rsApiService.get(
       this.URL + this.ALL_PERSONS,
       function (response) {

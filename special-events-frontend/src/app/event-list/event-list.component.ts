@@ -12,6 +12,10 @@ export class EventListComponent implements OnInit {
     eventList: SpecEventDto[];
     addNewActive: boolean = false;
 
+    personFilter: string;
+    monthFilter: number;
+    typeFilter: string;
+
     constructor(private eventService: EventService,
                 private router: Router) {
     }
@@ -48,5 +52,15 @@ export class EventListComponent implements OnInit {
     newEventAdded(event) {
         this.addNewActive = false;
         this.eventList.push(event);
+    }
+
+    getFilteredEvents(filtered: boolean) {
+      if (!filtered)
+        this.eventService.getEvents().then(events => this.eventList = events);
+      else
+        this.eventService.getEvents(this.personFilter, this.monthFilter, this.typeFilter).then(events => this.eventList = events);
+      this.personFilter = null;
+      this.typeFilter = null;
+      this.monthFilter = null;
     }
 }
