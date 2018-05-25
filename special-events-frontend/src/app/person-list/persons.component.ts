@@ -58,7 +58,8 @@ export class PersonListComponent implements OnInit {
     getFilteredPersons(filtered: boolean) {
       if (!filtered)
         this.personService.getPersons().then(persons => this.personList = persons);
-      else 
+      else
         this.personService.getPersons(this.find).then(persons => this.personList = persons);
+      this.find = null;
     }
 }

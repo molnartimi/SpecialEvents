@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {RsApiService} from "./rs-api.service";
 import {UserDto} from "../common/user.dto";
-import {Headers, RequestOptions, URLSearchParams} from "@angular/http";
+import {Headers, RequestOptions} from "@angular/http";
+import {Md5} from "ts-md5";
 
 @Injectable()
 export class UserService {
@@ -19,6 +20,7 @@ export class UserService {
   constructor(private rsApiService: RsApiService) {}
 
   login(user: UserDto): Promise<any> {
+    //user.password = Md5.hashStr(user.password, false).toString();
     return this.rsApiService.get(
       this.URL + this.LOGIN,
       function(response) {
@@ -37,6 +39,7 @@ export class UserService {
   }
 
   register(user: UserDto): Promise<any> {
+    //user.password = Md5.hashStr(user.password, false).toString();
     return this.rsApiService.post(
       this.URL + this.REGISTER,
       function() {},

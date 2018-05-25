@@ -11,7 +11,8 @@
     <option [value]="'NAME'">nameday</option>
     <option [value]="'ANNY'">anniversary</option>
   </select>
-  <button class="btn btn-default" (click)="getFilteredEvents(true)">Find</button>
+  <button class="btn btn-default" (click)="getFilteredEvents(true)"
+          [disabled]="!personFilter && !monthFilter && !typeFilter">Find</button>
   <a (click)="getFilteredEvents(false)">Show all</a>
 </div>
 <div class="container well">
@@ -30,7 +31,7 @@
       <table class="table person-table">
         <tr *ngFor="let person of e.persons">
           <td class="personName">{{person.name}}</td>
-          <td class="lastCol">
+          <td>
             <button class="btn" (click)="goToHints(person)">
               <img src="assets/icons/gift.png" title="Hints for gifts" height="20">
             </button>

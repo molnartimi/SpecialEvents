@@ -7,13 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import specialevents.domain.user.UserEntity;
 
-
-/**
- * This Service class for providing the user credentials from the database.
- * 
- * @author kamal berriga
- *
- */
 @Service
 public class AppUserDetailsService implements UserDetailsService {
 
